@@ -1,17 +1,31 @@
-cmake_minimum_required(VERSION 3.28)
-project(CMakeSFMLProject LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.16)
+project(NotSimpleGame LANGUAGES CXX)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Fetch SFML
 include(FetchContent)
 FetchContent_Declare(SFML
-    GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 3.0.1
-    GIT_SHALLOW ON
-    EXCLUDE_FROM_ALL
-    SYSTEM)
+        GIT_REPOSITORY https://github.com/SFML/SFML.git
+        GIT_TAG 2.5.1
+        GIT_SHALLOW ON
+)
 FetchContent_MakeAvailable(SFML)
 
+# Create your executable
 add_executable(main src/main.cpp)
-target_compile_features(main PRIVATE cxx_std_17)
-target_link_libraries(main PRIVATE SFML::Graphics)
+
+# Link SFML libraries
+target_link_libraries(main PRIVATE sfml-graphics sfml-audio sfml-window sfml-system)
+
+# Copy SFML DLLs to output directory (Windows)
+if(WIN32)
+    add_custom_command(TARGET main POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:sfml-graphics>
+            $<TARGET_FILE:sfml-audio>
+            $<TARGET_FILE:sfml-window>
+            $<TARGET_FILE:sfml-system>
+            $<TARGET_FILE_DIR:main>)
+endif()
