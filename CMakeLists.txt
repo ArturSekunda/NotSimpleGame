@@ -18,7 +18,9 @@ add_executable(main src/main.cpp
         src/managers/assetsManager.cpp
         src/managers/assetsManager.h
         src/managers/inputManager.cpp
-        src/managers/inputManager.h)
+        src/managers/inputManager.h
+        src/math/darkMath.cpp
+        src/math/darkMath.h)
 
 # Link SFML libraries
 target_link_libraries(main PRIVATE sfml-graphics sfml-audio sfml-window sfml-system sfml-network)
