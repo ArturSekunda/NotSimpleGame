@@ -22,11 +22,14 @@ add_executable(main src/main.cpp
         src/math/darkMath.cpp
         src/math/darkMath.h
         src/entity/player.cpp
-        src/entity/player.h)
+        src/entity/player.h
+        src/handlers/debugHandler.cpp
+        src/handlers/debugHandler.h)
 
 # Link SFML libraries
 target_link_libraries(main PRIVATE sfml-graphics sfml-audio sfml-window sfml-system sfml-network)
 
+include_directories(${CMAKE_SOURCE_DIR}/src)
 # Copy SFML DLLs to output directory (Windows)
 if(WIN32)
     add_custom_command(TARGET main POST_BUILD

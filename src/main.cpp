@@ -3,10 +3,12 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+#include "handlers/debugHandler.h"
+
 
 int main() {
-    //For Debugging
-    bool DebugeMode = true;
+
+    bool DeveloperMode = true;
 
     // Create a Window and render it
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Test");
@@ -69,6 +71,10 @@ int main() {
                 CameraView.setSize(event.size.width, event.size.height);
                 window.setView(CameraView);
             }
+
+            if (event.type == sf::Event::KeyPressed && DeveloperMode) {
+                inputManager::getInstance().debugInput(event);
+            }
         }
 
         //DeltaTime
@@ -82,17 +88,18 @@ int main() {
         sf::FloatRect enemyBounds = enemy.getGlobalBounds();
 
         // Collision Detection
-        if (DebugeMode) {
+        if (debugHandler::getInstance().getWantToShowCollisionBoxes()) {
             playerBoundsRect.setPosition(shape.getPosition());
             enemyBoundsRect.setPosition(enemy.getPosition());
         }
+
         if (playerBounds.intersects(enemyBounds)) {
             std::cout << "Collision Detected!" << std::endl;
             //TODO: Handle Collision
         }
 
         // Movement
-        sf::Vector2f movement = inputManager::pMovementDirection(deltaTime, speed);
+        sf::Vector2f movement = inputManager::getInstance().pMovementDirection(deltaTime, speed);
         if (movement.x != 0.f || movement.y != 0.f) {
             isMoving = true;
             shape.move(movement);
@@ -107,10 +114,11 @@ int main() {
             window.setView(CameraView);
         }
 
+
         window.clear();
 
         // Draw everything here
-        if (DebugeMode) {
+        if (debugHandler::getInstance().getWantToShowCollisionBoxes()) {
             window.draw(playerBoundsRect);
             window.draw(enemyBoundsRect);
         }

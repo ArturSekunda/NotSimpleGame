@@ -12,10 +12,12 @@ float darkMath::calculateDistance(const sf::Vector2f& pointA, const sf::Vector2f
     return std::sqrt(deltaX * deltaX + deltaY * deltaY);
 }
 
+// Function to move towards a direction
 sf::Vector2f darkMath::goTowards(float deltaTime, float speed, sf::Vector2f direction, float distance) {
     return direction * (speed / distance) * deltaTime;
 }
 
+// Function to get direction vector from one point to another
 sf::Vector2f darkMath::vectorDirection(const sf::Vector2f &to, const sf::Vector2f &from) {
     return to - from;
 }

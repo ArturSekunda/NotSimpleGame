@@ -1,11 +1,15 @@
-
 #include "inputManager.h"
+#include "../src/handlers/debugHandler.h"
 
 #include <iostream>
 
+#include "SFML/Window/Event.hpp"
 #include "SFML/Window/Keyboard.hpp"
 
 
+
+
+// Function to get player movement direction based on keyboard input
 sf::Vector2f inputManager::pMovementDirection(float deltaTime, float speed) {
     sf::Vector2f direction(0.f, 0.f);
 
@@ -27,6 +31,20 @@ sf::Vector2f inputManager::pMovementDirection(float deltaTime, float speed) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         direction.y += speed * deltaTime;
     }
-    std::cout << "Speed: " << speed << std::endl;
+    //std::cout << "Speed: " << speed << std::endl;
+
     return direction;
+}
+
+void inputManager::debugInput(const sf::Event &event) {
+    switch (event.key.code) {
+        case sf::Keyboard::P: {
+            debugHandler::getInstance().ToggleDebug();
+        }break;
+        case sf::Keyboard::K: {
+            debugHandler::getInstance().ShowCollisionBoxes();
+        }break;
+        default:
+            break;
+    }
 }
