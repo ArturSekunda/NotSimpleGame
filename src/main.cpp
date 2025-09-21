@@ -1,24 +1,38 @@
-#include <cmath>
+#include "math/darkMath.h"
+#include "managers/inputManager.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-float calculateDistance(const sf::Vector2f& pointA, const sf::Vector2f& pointB) {
-    float deltaX = pointB.x - pointA.x;
-    float deltaY = pointB.y - pointA.y;
-    return std::sqrt(deltaX * deltaX + deltaY * deltaY);
-}
 
 int main() {
-
-    bool DebugeMode = false;
+    //For Debugging
+    bool DebugeMode = true;
 
     // Create a Window and render it
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Test");
+
     // Creating a circleShape (Player)
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
     shape.setPosition(350, 250);
     shape.setOrigin(shape.getRadius(), shape.getRadius());
+
+    // For Debugging collision
+
+    sf::RectangleShape playerBoundsRect;
+    playerBoundsRect.setSize(sf::Vector2f(shape.getRadius() * 2, shape.getRadius() * 2));
+    playerBoundsRect.setFillColor(sf::Color::Transparent);
+    playerBoundsRect.setOutlineColor(sf::Color::Blue);
+    playerBoundsRect.setOutlineThickness(2);
+    playerBoundsRect.setOrigin(shape.getRadius(), shape.getRadius());
+
+    sf::RectangleShape enemyBoundsRect;
+    enemyBoundsRect.setSize(sf::Vector2f(200.f, 200.f));
+    enemyBoundsRect.setFillColor(sf::Color::Transparent);
+    enemyBoundsRect.setOutlineColor(sf::Color::Red);
+    enemyBoundsRect.setOutlineThickness(2);
+    enemyBoundsRect.setOrigin(enemyBoundsRect.getSize().x / 2, enemyBoundsRect.getSize().y / 2);
+
 
     // Enemy
     sf::CircleShape enemy(100.f);
@@ -32,69 +46,78 @@ int main() {
     //Stats
     auto playerHP = 100.f;
     auto enemyHP = 100.f;
+    bool isMoving = false;
 
 
     window.setFramerateLimit(60);
     auto speed  =  200.f;
     auto enemySpeed = 100.f;
 
+    // Camera
+    sf::View CameraView = window.getDefaultView();
+
+    // Game Loop
     while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
         // Create an event
         sf::Event event;
         // Event Handler
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed){
                 window.close();
-            if (event.type == sf::Event::Resized) {
-                window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+            }
+            if (event.type == sf::Event::Resized){
+                CameraView.setSize(event.size.width, event.size.height);
+                window.setView(CameraView);
             }
         }
 
         //DeltaTime
         auto deltaTime = clock.restart().asSeconds();
 
+        // Enemy Movement towards player
+        enemy.move(darkMath::goTowards(deltaTime, enemySpeed, darkMath::vectorDirection(shape.getPosition(), enemy.getPosition()), darkMath::calculateDistance(shape.getPosition(), enemy.getPosition())));
 
-        sf::Vector2f shapePos = shape.getPosition();
-        sf::Vector2f enemyPos = enemy.getPosition();
-        float distance = calculateDistance(shapePos, enemyPos);
-        sf::Vector2f direction = shapePos - enemyPos;
-        enemy.move(direction * (enemySpeed / distance) * deltaTime);
-        std::cout << "Distance: " << distance << std::endl;
-        std::cout << "Direction: " << direction.x << ", " << direction.y << std::endl;
+        // Get Global Bounds
+        sf::FloatRect playerBounds = shape.getGlobalBounds();
+        sf::FloatRect enemyBounds = enemy.getGlobalBounds();
 
+        // Collision Detection
         if (DebugeMode) {
-            std::cout << "Player: " << shapePos.x << ", " << shapePos.y << std::endl;
-            std::cout << "Enemy: " << enemyPos.x << ", " << enemyPos.y << std::endl;
+            playerBoundsRect.setPosition(shape.getPosition());
+            enemyBoundsRect.setPosition(enemy.getPosition());
+        }
+        if (playerBounds.intersects(enemyBounds)) {
+            std::cout << "Collision Detected!" << std::endl;
+            //TODO: Handle Collision
         }
 
-
-        // Check if key is pressed
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            shape.move(-speed * deltaTime, 0.f);
-
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            shape.move(speed * deltaTime, 0.f);
-
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            shape.move(0.f, -speed * deltaTime);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            shape.move(0.f, speed * deltaTime);
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-            speed = 400.f;
+        // Movement
+        sf::Vector2f movement = inputManager::pMovementDirection(deltaTime, speed);
+        if (movement.x != 0.f || movement.y != 0.f) {
+            isMoving = true;
+            shape.move(movement);
         }else {
-            speed = 200.f;
+            isMoving = false;
+        }
+        //std::cout << "isMoving: " << isMoving << std::endl;
+
+        // Camera Follow Player
+        if (isMoving) {
+            CameraView.setCenter(shape.getPosition());
+            window.setView(CameraView);
         }
 
-            window.clear();
-            window.draw(shape);
-            window.draw(enemy);
-            window.display();
-        }
+        window.clear();
 
-        return 0;
+        // Draw everything here
+        if (DebugeMode) {
+            window.draw(playerBoundsRect);
+            window.draw(enemyBoundsRect);
+        }
+        window.draw(shape);
+        window.draw(enemy);
+
+        window.display();
     }
+    return 0;
+}

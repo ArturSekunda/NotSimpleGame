@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(NotSimpleGame LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Fetch SFML
@@ -20,7 +20,9 @@ add_executable(main src/main.cpp
         src/managers/inputManager.cpp
         src/managers/inputManager.h
         src/math/darkMath.cpp
-        src/math/darkMath.h)
+        src/math/darkMath.h
+        src/entity/player.cpp
+        src/entity/player.h)
 
 # Link SFML libraries
 target_link_libraries(main PRIVATE sfml-graphics sfml-audio sfml-window sfml-system sfml-network)

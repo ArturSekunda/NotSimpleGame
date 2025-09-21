@@ -5,12 +5,13 @@
 
 #ifndef NOTSIMPLEGAME_INPUTMANAGER_H
 #define NOTSIMPLEGAME_INPUTMANAGER_H
-#include "SFML/Window/Keyboard.hpp"
+#include "SFML/System/Vector2.hpp"
 
 class SFML;
 
 class inputManager {
-    void processInput(sf::Keyboard *keyboard);
+public:
+    static sf::Vector2f pMovementDirection(float deltaTime,float speed);
 };
 
 
