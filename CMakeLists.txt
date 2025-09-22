@@ -28,7 +28,9 @@ add_executable(main src/main.cpp
         src/entities/player/player.cpp
         src/entities/player/player.h
         src/handlers/collisionHandler.cpp
-        src/handlers/collisionHandler.h)
+        src/handlers/collisionHandler.h
+        src/entities/enemies/basicEnemy.cpp
+        src/entities/enemies/basicEnemy.h)
 
 # Link SFML libraries
 target_link_libraries(main PRIVATE sfml-graphics sfml-audio sfml-window sfml-system sfml-network)
