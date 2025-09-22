@@ -19,12 +19,16 @@ add_executable(main src/main.cpp
         src/managers/assetsManager.h
         src/managers/inputManager.cpp
         src/managers/inputManager.h
-        src/math/darkMath.cpp
-        src/math/darkMath.h
-        src/entity/player.cpp
-        src/entity/player.h
+        src/core/darkMath.cpp
+        src/core/darkMath.h
         src/handlers/debugHandler.cpp
-        src/handlers/debugHandler.h)
+        src/handlers/debugHandler.h
+        src/entities/baseEntity.cpp
+        src/entities/baseEntity.h
+        src/entities/player/player.cpp
+        src/entities/player/player.h
+        src/handlers/collisionHandler.cpp
+        src/handlers/collisionHandler.h)
 
 # Link SFML libraries
 target_link_libraries(main PRIVATE sfml-graphics sfml-audio sfml-window sfml-system sfml-network)

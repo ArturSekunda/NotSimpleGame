@@ -36,14 +36,20 @@ sf::Vector2f inputManager::pMovementDirection(float deltaTime, float speed) {
     return direction;
 }
 
+// Function to handle debug input
 void inputManager::debugInput(const sf::Event &event) {
     switch (event.key.code) {
+
+        // Toggle debug mode with 'P'
         case sf::Keyboard::P: {
             debugHandler::getInstance().ToggleDebug();
         }break;
+
+        // Show/Hide collision boxes with 'K'
         case sf::Keyboard::K: {
             debugHandler::getInstance().ShowCollisionBoxes();
         }break;
+
         default:
             break;
     }

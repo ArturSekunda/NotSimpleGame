@@ -1,0 +1,13 @@
+//
+// Created by lukas on 22.09.2025.
+//
+
+#ifndef NOTSIMPLEGAME_COLLISIONHANDLER_H
+#define NOTSIMPLEGAME_COLLISIONHANDLER_H
+
+
+class collisionHandler {
+};
+
+
+#endif //NOTSIMPLEGAME_COLLISIONHANDLER_H

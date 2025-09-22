@@ -1,4 +1,4 @@
-#include "math/darkMath.h"
+#include "core/darkMath.h"
 #include "managers/inputManager.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>

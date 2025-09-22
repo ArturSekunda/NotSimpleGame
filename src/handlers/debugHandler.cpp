@@ -15,7 +15,6 @@ void debugHandler::ToggleDebug() {
         isEnabled = false;
         wantToShowCollisionBoxes = false;
         std::cout << "Debug mode disabled." << std::endl;
-
     }
 }
 
