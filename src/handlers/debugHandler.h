@@ -2,11 +2,6 @@
 #ifndef NOTSIMPLEGAME_DEBUGHANDLER_H
 #define NOTSIMPLEGAME_DEBUGHANDLER_H
 
-namespace sf {
-
-    class RenderWindow;
-
-}
 
 class debugHandler {
 

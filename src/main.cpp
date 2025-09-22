@@ -1,57 +1,28 @@
-#include "entities/player/player.h"
-#include "entities/enemies/basicEnemy.h"
-#include "core/darkMath.h"
-#include "managers/inputManager.h"
+#include "core/game.h"
 #include <iostream>
 #include <memory>
 #include <SFML/Graphics.hpp>
-
 #include "handlers/debugHandler.h"
 
 
 int main() {
 
+    sf::Clock DeltaTimeClock;
+
     bool DeveloperMode = true;
 
+    game::getInstance().initializeEntities();
+
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 4;
+
     // Create a Window and render it
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Test");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Test", sf::Style::Default, settings);
 
-    // Player
-    auto playerPtr = std::make_unique<player>();
-    if (!playerPtr) {
-        std::cerr << "Failed to create player instance.\n";
-        return -1;
-    }
-    // Get the player's shape
-    sf::Shape& playerShape = *playerPtr->getEntityShape();
-    if (&playerShape == nullptr) {
-        std::cerr << "Player shape is null.\n";
-        return -1;
-    }
+    // Get player and enemy shapes
+    sf::Shape &Player = game::getInstance().getPlayerShape();
+    sf::Shape &Enemy = game::getInstance().getEnemyShape();
 
-    // Movement flag
-    bool isMoving = playerPtr->getIsMoving();
-
-    // Enemy
-    auto enemyPtr = std::make_unique<basicEnemy>();
-    if (!enemyPtr) {
-        std::cerr << "Failed to create enemy instance.\n";
-        return -1;
-    }
-    sf::Shape& enemyShape = *enemyPtr->getEntityShape();
-    if (&enemyShape == nullptr) {
-        std::cerr << "Enemy shape is null.\n";
-        return -1;
-    }
-
-    // Get the player's collision box
-    sf::RectangleShape& playerCollisionBox = *playerPtr->getCollisionBox();
-
-    // Enemy Collision Box for Debugging
-    sf::RectangleShape& enemyCollisionBox = *enemyPtr->getCollisionBox();
-
-    // Clock for delta time
-    sf::Clock clock;
 
     window.setFramerateLimit(60);
 
@@ -77,29 +48,24 @@ int main() {
             }
         }
 
-        //DeltaTime
-        auto deltaTime = clock.restart().asSeconds();
+        game::getInstance().setDeltaTime(DeltaTimeClock.restart().asSeconds());
+        // Update Game Logic
 
-        // Update Entities
-        playerPtr->Update(deltaTime);
-        enemyPtr->Update(deltaTime);
-
-        // Enemy AI - Chase Player
-        enemyPtr->chasePlayer(playerShape,deltaTime);
+        game::getInstance().Updater();
 
         // Debug Info
         //std::cout << "Enemy position: " << enemyShape.getPosition().x << ", " << enemyShape.getPosition().y << std::endl;
         //std::cout << "Player position: " << playerShape.getPosition().x << ", " << playerShape.getPosition().y << std::endl;
 
         // Get Global Bounds
-        sf::FloatRect playerBounds = playerShape.getGlobalBounds();
-        sf::FloatRect enemyBounds = enemyShape.getGlobalBounds();
+        sf::FloatRect playerBounds = Player.getGlobalBounds();
+        sf::FloatRect enemyBounds = Enemy.getGlobalBounds();
 
         // Collision Detection
         if (debugHandler::getInstance().getWantToShowCollisionBoxes()) {
 
-            playerCollisionBox.setPosition(playerShape.getPosition());
-            enemyCollisionBox.setPosition(enemyShape.getPosition());
+            game::getInstance().getPlayerCollisionBox().setPosition(Player.getPosition());
+            game::getInstance().getEnemyCollisionBox().setPosition(Enemy.getPosition());
         }
 
         if (playerBounds.intersects(enemyBounds)) {
@@ -109,8 +75,8 @@ int main() {
         //std::cout << "isMoving: " << isMoving << std::endl;
 
         // Camera Follow Player
-        if (isMoving) {
-            CameraView.setCenter(playerShape.getPosition());
+        if (game::getInstance().getPlayerPtr()->getIsMoving()) {
+            CameraView.setCenter(Player.getPosition());
             window.setView(CameraView);
         }
 
@@ -118,11 +84,11 @@ int main() {
 
         // Draw everything here
         if (debugHandler::getInstance().getWantToShowCollisionBoxes()) {
-            window.draw(playerCollisionBox);
-            window.draw(enemyCollisionBox);
+            window.draw(game::getInstance().getPlayerCollisionBox());
+            window.draw(game::getInstance().getEnemyCollisionBox());
         }
-        window.draw(playerShape);
-        window.draw(enemyShape);
+        window.draw(Player);
+        window.draw(Enemy);
 
         window.display();
     }
