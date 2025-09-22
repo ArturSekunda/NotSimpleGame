@@ -1,6 +1,8 @@
+#include "entities/player/player.h"
 #include "core/darkMath.h"
 #include "managers/inputManager.h"
 #include <iostream>
+#include <memory>
 #include <SFML/Graphics.hpp>
 
 #include "handlers/debugHandler.h"
@@ -13,21 +15,24 @@ int main() {
     // Create a Window and render it
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Test");
 
-    // Creating a circleShape (Player)
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    shape.setPosition(350, 250);
-    shape.setOrigin(shape.getRadius(), shape.getRadius());
+    // Player
+    auto playerPtr = std::make_unique<player>();
+    if (!playerPtr) {
+        std::cerr << "Failed to create player instance." << std::endl;
+        return -1;
+    }
+    // Get the player's shape
+    sf::Shape& shape = *playerPtr->getEntityShape();
+    if (&shape == nullptr) {
+        std::cerr << "Player shape is null." << std::endl;
+        return -1;
+    }
 
-    // For Debugging collision
 
-    sf::RectangleShape playerBoundsRect;
-    playerBoundsRect.setSize(sf::Vector2f(shape.getRadius() * 2, shape.getRadius() * 2));
-    playerBoundsRect.setFillColor(sf::Color::Transparent);
-    playerBoundsRect.setOutlineColor(sf::Color::Blue);
-    playerBoundsRect.setOutlineThickness(2);
-    playerBoundsRect.setOrigin(shape.getRadius(), shape.getRadius());
+    // Get the player's collision box
+    sf::RectangleShape& playerCollisionBox = *playerPtr->getCollisionBox();
 
+    // Enemy Collision Box for Debugging
     sf::RectangleShape enemyBoundsRect;
     enemyBoundsRect.setSize(sf::Vector2f(200.f, 200.f));
     enemyBoundsRect.setFillColor(sf::Color::Transparent);
@@ -46,13 +51,10 @@ int main() {
     sf::Clock clock;
 
     //Stats
-    auto playerHP = 100.f;
-    auto enemyHP = 100.f;
     bool isMoving = false;
 
 
     window.setFramerateLimit(60);
-    auto speed  =  200.f;
     auto enemySpeed = 100.f;
 
     // Camera
@@ -89,7 +91,9 @@ int main() {
 
         // Collision Detection
         if (debugHandler::getInstance().getWantToShowCollisionBoxes()) {
-            playerBoundsRect.setPosition(shape.getPosition());
+
+
+            playerCollisionBox.setPosition(shape.getPosition());
             enemyBoundsRect.setPosition(enemy.getPosition());
         }
 
@@ -99,7 +103,7 @@ int main() {
         }
 
         // Movement
-        sf::Vector2f movement = inputManager::getInstance().pMovementDirection(deltaTime, speed);
+        sf::Vector2f movement = inputManager::getInstance().pMovementDirection(deltaTime, playerPtr->getSpeed());
         if (movement.x != 0.f || movement.y != 0.f) {
             isMoving = true;
             shape.move(movement);
@@ -119,7 +123,7 @@ int main() {
 
         // Draw everything here
         if (debugHandler::getInstance().getWantToShowCollisionBoxes()) {
-            window.draw(playerBoundsRect);
+            window.draw(playerCollisionBox);
             window.draw(enemyBoundsRect);
         }
         window.draw(shape);

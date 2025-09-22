@@ -5,9 +5,13 @@
 
 
 class player : public baseEntity {
+private:
+    void createPlayerShape();
+    sf::RectangleShape createCollisionBox();
 public:
-    player() = default;
+    player();
     ~player() override = default;
+
 };
 
 

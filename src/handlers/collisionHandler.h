@@ -4,9 +4,18 @@
 
 #ifndef NOTSIMPLEGAME_COLLISIONHANDLER_H
 #define NOTSIMPLEGAME_COLLISIONHANDLER_H
+#include "SFML/Graphics/Rect.hpp"
 
 
 class collisionHandler {
+public:
+    collisionHandler();
+    static collisionHandler& getInstance() {
+        static collisionHandler instance;
+        return instance;
+    }
+
+    bool isColliding(sf::FloatRect& player, sf::FloatRect& enemy);
 };
 
 
