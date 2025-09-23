@@ -2,6 +2,8 @@
 #include <iostream>
 #include <memory>
 #include <SFML/Graphics.hpp>
+
+#include "handlers/collisionHandler.h"
 #include "handlers/debugHandler.h"
 
 
@@ -21,7 +23,8 @@ int main() {
 
     // Get player and enemy shapes
     sf::Shape &Player = game::getInstance().getPlayerShape();
-    sf::Shape &Enemy = game::getInstance().getEnemyShape();
+    sf::Shape& playerShape = game::getInstance().getPlayerShape();
+
 
 
     window.setFramerateLimit(60);
@@ -48,31 +51,29 @@ int main() {
             }
         }
 
+        // Delta Time Calculation
         game::getInstance().setDeltaTime(DeltaTimeClock.restart().asSeconds());
-        // Update Game Logic
 
+        // Update Game Logic
         game::getInstance().Updater();
 
-        // Debug Info
-        //std::cout << "Enemy position: " << enemyShape.getPosition().x << ", " << enemyShape.getPosition().y << std::endl;
-        //std::cout << "Player position: " << playerShape.getPosition().x << ", " << playerShape.getPosition().y << std::endl;
-
-        // Get Global Bounds
-        sf::FloatRect playerBounds = Player.getGlobalBounds();
-        sf::FloatRect enemyBounds = Enemy.getGlobalBounds();
+        auto enemies = game::getInstance().getEnemyPtrTable();
 
         // Collision Detection
-        if (debugHandler::getInstance().getWantToShowCollisionBoxes()) {
+        std::vector<int> collidingEnemies = collisionHandler::getInstance().checkAllCollisions(playerShape, enemies);
 
-            game::getInstance().getPlayerCollisionBox().setPosition(Player.getPosition());
-            game::getInstance().getEnemyCollisionBox().setPosition(Enemy.getPosition());
-        }
+        // Handle Collisions
+        for (auto& enemy : enemies) {
+            if (enemy && enemy->getEntityShape()) {
+                sf::FloatRect playerBounds = game::getInstance().getPlayerShape().getGlobalBounds();
+                sf::FloatRect enemyBounds = enemy->getEntityShape()->getGlobalBounds();
 
-        if (playerBounds.intersects(enemyBounds)) {
-           // std::cout << "Collision Detected!" << std::endl;
-            //TODO: Handle Collision
+                if (playerBounds.intersects(enemyBounds)) {
+                    std::cout << "Collision with enemy!\n";
+                    std::cout << "Enemies count: " << collidingEnemies.size() << "\n";
+                }
+            }
         }
-        //std::cout << "isMoving: " << isMoving << std::endl;
 
         // Camera Follow Player
         if (game::getInstance().getPlayerPtr()->getIsMoving()) {
@@ -82,13 +83,23 @@ int main() {
 
         window.clear();
 
-        // Draw everything here
+
+        // Draw debug info
         if (debugHandler::getInstance().getWantToShowCollisionBoxes()) {
             window.draw(game::getInstance().getPlayerCollisionBox());
-            window.draw(game::getInstance().getEnemyCollisionBox());
+            for (const auto& enemy : enemies) {
+                if (enemy && enemy->getCollisionBox()) {
+                    window.draw(*enemy->getCollisionBox());
+                }
+            }
         }
+
         window.draw(Player);
-        window.draw(Enemy);
+        for (const auto& enemy : enemies) {
+            if (enemy && enemy->getEntityShape()) {
+                window.draw(*enemy->getEntityShape());
+            }
+        }
 
         window.display();
     }

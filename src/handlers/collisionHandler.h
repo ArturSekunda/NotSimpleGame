@@ -4,18 +4,33 @@
 
 #ifndef NOTSIMPLEGAME_COLLISIONHANDLER_H
 #define NOTSIMPLEGAME_COLLISIONHANDLER_H
-#include "SFML/Graphics/Rect.hpp"
+#include <memory>
+#include <vector>
 
+
+namespace sf {
+    class Shape;
+}
+
+class basicEnemy;
 
 class collisionHandler {
 public:
-    collisionHandler();
+
+    collisionHandler() = default;
+
+    ~collisionHandler() = default;
+
     static collisionHandler& getInstance() {
         static collisionHandler instance;
         return instance;
     }
 
-    bool isColliding(sf::FloatRect& player, sf::FloatRect& enemy);
+    bool isColliding(const sf::Shape& player, const sf::Shape& enemy);
+
+    std::vector<int> checkAllCollisions(const sf::Shape& player, const std::vector<std::shared_ptr<basicEnemy>>& enemies);
+
+
 };
 
 

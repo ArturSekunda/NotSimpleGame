@@ -3,29 +3,43 @@
 //
 
 #include "game.h"
+#include "handlers/collisionHandler.h"
 
 #include <iostream>
 #include <memory>
 
+#include "handlers/debugHandler.h"
+
 // Initialize player and enemy instances
 void game::initializeEntities() {
+
     playerInstance = std::make_shared<player>();
-    enemyInstance = std::make_shared<basicEnemy>();
+
+    basicEnemies.push_back(std::make_shared<basicEnemy>());
+    basicEnemies.push_back(std::make_shared<basicEnemy>());
+
+    if (!basicEnemies.empty()) {
+        addEnemyToList(basicEnemies.front());
+    } else {
+        std::cerr << "Failed to create enemy instance.\n";
+    }
+
 }
 
 // Update game logic, player and enemy states
 void game::Updater() {
 
-    if (!playerInstance || !enemyInstance) {
-        std::cout << "ERROR IN GAME UPDATER\n";
-        std::cerr << "Failed to create player or enemy instance.\n";
-        return;
-    }
+    if (!playerInstance) return;
 
-    enemyInstance->Update(DeltaTime);
     playerInstance->Update(DeltaTime);
 
-    enemyInstance->chasePlayer(getPlayerShape(), DeltaTime);
+    // Aktualizuj wszystkich wrogów
+    for (auto& enemy : basicEnemies) {
+        if (enemy) {
+            enemy->Update(DeltaTime);
+            enemy->chasePlayer(getPlayerShape(), DeltaTime);
+        }
+    }
 
 }
 
@@ -35,20 +49,16 @@ std::shared_ptr<player> game::getPlayerPtr() {
 }
 
 // Return a shared pointer to a basic enemy instance
-std::shared_ptr<basicEnemy> game::getEnemyPtr() {
-    return enemyInstance;
+std::vector<std::shared_ptr<basicEnemy>> game::getEnemyPtrTable() {
+    return basicEnemies;
 }
-
-// Return a reference to the enemy's shape
-sf::Shape &game::getEnemyShape() {
-    if (!enemyInstance) {
-        throw std::runtime_error("Enemy not initialized");
+// Remove an enemy from the list by index
+void game::decreaseEnemyFromList(size_t index) {
+    if (index < basicEnemies.size() && index != static_cast<size_t>(-1)) {
+        basicEnemies.erase(basicEnemies.begin() + index);
+    } else {
+        std::cerr << "Invalid index for removing enemy: " << index << "\n";
     }
-    auto shape = enemyInstance->getEntityShape();
-    if (!shape) {
-        throw std::runtime_error("Enemy shape is null");
-    }
-    return *shape;
 }
 
 // Return a reference to the player's shape

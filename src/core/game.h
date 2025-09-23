@@ -23,20 +23,23 @@ public:
     void initializeEntities();
 
     std::shared_ptr<player> getPlayerPtr();
-    std::shared_ptr<basicEnemy> getEnemyPtr();
 
+    std::vector<std::shared_ptr<basicEnemy>> getEnemyPtrTable();
 
-    sf::Shape &getEnemyShape();
+    void addEnemyToList(const std::shared_ptr<basicEnemy>& enemy) {
+        basicEnemies.push_back(enemy);
+    }
+
+    void decreaseEnemyFromList(size_t index);
+
+    size_t getEnemyListSize() const { return basicEnemies.size(); }
+
 
     sf::Shape &getPlayerShape();
 
     // Getters for collision boxes
     sf::RectangleShape& getPlayerCollisionBox() {
         return *getPlayerPtr()->getCollisionBox();
-    }
-
-    sf::RectangleShape& getEnemyCollisionBox() {
-        return *getEnemyPtr()->getCollisionBox();
     }
 
     // Delta Time Setter
@@ -47,9 +50,9 @@ public:
 protected:
     float DeltaTime;
 
-    std::shared_ptr<player> playerInstance;
-    std::shared_ptr<basicEnemy> enemyInstance;
+    std::vector<std::shared_ptr<basicEnemy>> basicEnemies;
 
+    std::shared_ptr<player> playerInstance;
 
 };
 
