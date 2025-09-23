@@ -21,12 +21,6 @@ int main() {
     // Create a Window and render it
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Test", sf::Style::Default, settings);
 
-    // Get player and enemy shapes
-    sf::Shape &Player = game::getInstance().getPlayerShape();
-    sf::Shape& playerShape = game::getInstance().getPlayerShape();
-
-
-
     window.setFramerateLimit(60);
 
     // Camera
@@ -34,8 +28,10 @@ int main() {
 
     // Game Loop
     while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+
         // Create an event
         sf::Event event;
+
         // Event Handler
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed){
@@ -57,49 +53,9 @@ int main() {
         // Update Game Logic
         game::getInstance().Updater();
 
-        auto enemies = game::getInstance().getEnemyPtrTable();
-
-        // Collision Detection
-        std::vector<int> collidingEnemies = collisionHandler::getInstance().checkAllCollisions(playerShape, enemies);
-
-        // Handle Collisions
-        for (auto& enemy : enemies) {
-            if (enemy && enemy->getEntityShape()) {
-                sf::FloatRect playerBounds = game::getInstance().getPlayerShape().getGlobalBounds();
-                sf::FloatRect enemyBounds = enemy->getEntityShape()->getGlobalBounds();
-
-                if (playerBounds.intersects(enemyBounds)) {
-                    std::cout << "Collision with enemy!\n";
-                    std::cout << "Enemies count: " << collidingEnemies.size() << "\n";
-                }
-            }
-        }
-
-        // Camera Follow Player
-        if (game::getInstance().getPlayerPtr()->getIsMoving()) {
-            CameraView.setCenter(Player.getPosition());
-            window.setView(CameraView);
-        }
-
         window.clear();
 
-
-        // Draw debug info
-        if (debugHandler::getInstance().getWantToShowCollisionBoxes()) {
-            window.draw(game::getInstance().getPlayerCollisionBox());
-            for (const auto& enemy : enemies) {
-                if (enemy && enemy->getCollisionBox()) {
-                    window.draw(*enemy->getCollisionBox());
-                }
-            }
-        }
-
-        window.draw(Player);
-        for (const auto& enemy : enemies) {
-            if (enemy && enemy->getEntityShape()) {
-                window.draw(*enemy->getEntityShape());
-            }
-        }
+        game::getInstance().render(window, CameraView);
 
         window.display();
     }

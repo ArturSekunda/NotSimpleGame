@@ -18,10 +18,8 @@ void game::initializeEntities() {
     basicEnemies.push_back(std::make_shared<basicEnemy>());
     basicEnemies.push_back(std::make_shared<basicEnemy>());
 
-    if (!basicEnemies.empty()) {
+    if (basicEnemies.empty()) {
         addEnemyToList(basicEnemies.front());
-    } else {
-        std::cerr << "Failed to create enemy instance.\n";
     }
 
 }
@@ -29,11 +27,14 @@ void game::initializeEntities() {
 // Update game logic, player and enemy states
 void game::Updater() {
 
+    // Ensure player instance is valid
     if (!playerInstance) return;
 
+    // Update Player
     playerInstance->Update(DeltaTime);
 
-    // Aktualizuj wszystkich wrogów
+
+    // Update Enemies
     for (auto& enemy : basicEnemies) {
         if (enemy) {
             enemy->Update(DeltaTime);
@@ -41,6 +42,15 @@ void game::Updater() {
         }
     }
 
+    // Collision Detection
+    std::vector<int> collidingEnemies = collisionHandler::getInstance()
+        .checkAllCollisions(getPlayerShape(), basicEnemies);
+
+    // Handle Collisions
+    for (int enemyIndex : collidingEnemies) {
+        std::cout << "Collision with enemy " << enemyIndex << "!\n";
+
+    }
 }
 
 // Return a shared pointer to a player instance
@@ -71,5 +81,53 @@ sf::Shape& game::getPlayerShape() {
         throw std::runtime_error("Player shape is null");
     }
     return *shape;
+}
+
+void game::render(sf::RenderWindow &window, sf::View view) {
+
+    // Camera Follow Player
+    if (getPlayerPtr()->getIsMoving()) {
+        view.setCenter(getPlayerShape().getPosition());
+        window.setView(view);
+    }
+    renderPlayerAndEnemies(window);
+    renderDebug(window);
+}
+
+void game::renderDebug(sf::RenderWindow &window) {
+
+    DebugBoxes(window);
+
+}
+
+void game::renderPlayerAndEnemies(sf::RenderWindow &window) const {
+    if (playerInstance && playerInstance->getEntityShape()) {
+        window.draw(*playerInstance->getEntityShape());
+    }
+
+    for (const auto& enemy : basicEnemies) {
+        if (enemy && enemy->getEntityShape()) {
+            window.draw(*enemy->getEntityShape());
+        }
+    }
+}
+
+void game::DebugBoxes(sf::RenderWindow& window) {
+    if (debugHandler::getInstance().getWantToShowCollisionBoxes()) {
+
+        // Collision box for player
+        auto playerBox = getPlayerCollisionBox();
+        playerBox.setPosition(getPlayerShape().getPosition());
+        window.draw(playerBox);
+
+        // Collision boxes for enemies
+        for (const auto& enemy : basicEnemies) {
+            if (enemy && enemy->getCollisionBox()) {
+                auto& enemyBox = *enemy->getCollisionBox();
+                enemyBox.setPosition(enemy->getEntityShape()->getPosition());
+                window.draw(enemyBox);
+            }
+        }
+    }
 }
 
