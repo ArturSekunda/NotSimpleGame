@@ -20,7 +20,6 @@ class baseEntity {
     int maxMana;
     bool isAlive;
 
-
     std::shared_ptr<sf::Shape> entityShape; // Pointer to a SFML shape representing the entity
     std::shared_ptr<sf::RectangleShape> collisionBox; // Pointer to a SFML rectangle shape for collision detection
 
@@ -39,8 +38,6 @@ public: // Section for constructor and destructor
     sf::FloatRect getEntityBounds() const;
 
     sf::RectangleShape createCollisionBox() const;
-
-
 
 
 public: // Section for getters
@@ -71,6 +68,25 @@ public: // Section for setters
         entityShape = shape;
     }
     void setCollisionBox(std::shared_ptr<sf::RectangleShape> box) { collisionBox = box; }
+
+public: // Combat
+
+    void takeDamage(float dmg) {
+        if (dmg < 0) return; // Ignore negative damage
+        health -= dmg;
+        if (health <= 0) {
+            health = 0;
+            isAlive = false;
+        }
+    }
+
+    void heal(float amount) {
+        if (amount < 0) return; // Ignore negative healing
+        health += amount;
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+    }
 };
 
 

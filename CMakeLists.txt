@@ -33,8 +33,9 @@ add_executable(main src/main.cpp
         src/entities/enemies/basicEnemy.h
         src/core/game.cpp
         src/core/game.h
-        src/items/itemEffects.cpp
-        src/items/itemEffects.h)
+        src/items/itemAttributes.cpp
+        src/items/itemAttributes.h
+)
 
 # Link SFML libraries
 target_link_libraries(main PRIVATE sfml-graphics sfml-audio sfml-window sfml-system sfml-network)

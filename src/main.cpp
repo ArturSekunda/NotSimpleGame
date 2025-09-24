@@ -1,10 +1,5 @@
 #include "core/game.h"
-#include <iostream>
-#include <memory>
 #include <SFML/Graphics.hpp>
-
-#include "handlers/collisionHandler.h"
-#include "handlers/debugHandler.h"
 
 
 int main() {
