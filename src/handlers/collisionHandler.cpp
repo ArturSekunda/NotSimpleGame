@@ -16,13 +16,13 @@ bool collisionHandler::isColliding(const sf::Shape &player, const sf::Shape &ene
 }
 
 // Check collisions with all enemies and return indices of colliding ones
-std::vector<int> collisionHandler::checkAllCollisions(const sf::Shape& player, const std::vector<std::shared_ptr<basicEnemy>>& enemies) {
-     std::vector<int> collidingEnemies;
+std::vector<std::string> collisionHandler::checkAllCollisions(const sf::Shape& player, const std::vector<std::shared_ptr<baseEntity>> entitylist) {
+     std::vector<std::string> collidingEnemies;
 
-     for (int i = 0; i < enemies.size(); i++) {
-          if (enemies[i] && enemies[i]->getEntityShape()) {
-               if (isColliding(player, *enemies[i]->getEntityShape())) {
-                    collidingEnemies.push_back(i);
+     for (int i = 0; i < entitylist.size(); i++) {
+          if (entitylist[i] && entitylist[i]->getEntityID().type == EntityType::BASIC_ENEMY) {
+               if (isColliding(player, *entitylist[i]->getEntityShape())) {
+                    collidingEnemies.push_back(entitylist[i]->getEntityID().toString());
                }
           }
      }

@@ -25,7 +25,6 @@ public: // Initialization and Getters
 
     std::shared_ptr<player> getPlayerPtr();
 
-    std::vector<std::shared_ptr<basicEnemy>> getEnemyPtrTable();
 
     sf::Shape &getPlayerShape();
 
@@ -40,13 +39,33 @@ public: // Initialization and Getters
     }
 public: // Enemy Management
 
-    void addEnemyToList(const std::shared_ptr<basicEnemy>& enemy) {
-        basicEnemies.push_back(enemy);
+    template<typename T>
+    void addEntityIDToList(const std::shared_ptr<T>& entity) {
+        entityIDList.push_back(entity->getEntityID());
+    }
+
+    void addEntity(const std::shared_ptr<baseEntity>& entity) {
+        entityList.push_back(entity);
+    }
+
+    template<typename T>
+    void addEntityToList(const std::shared_ptr<T>& entity) {
+        static_assert(std::is_base_of_v<baseEntity, T>, "T must inherit from baseEntity");
+
+        if constexpr (std::is_same_v<T, player>) {
+            static int playerID = 0;
+            entity->setEntityID(EntityType::PLAYER, playerID++);
+        } else if constexpr (std::is_same_v<T, basicEnemy>) {
+            static int enemyID = 0;
+            entity->setEntityID(EntityType::BASIC_ENEMY, enemyID++);
+        }
+
+        addEntity(entity);
     }
 
     void decreaseEnemyFromList(size_t index);
 
-    size_t getEnemyListSize() const { return basicEnemies.size(); }
+    size_t getEntityIDListSize() const { return entityIDList.size(); }
 
 public: // Rendering
     void render(sf::RenderWindow &window, sf::View view);
@@ -62,7 +81,9 @@ protected: // Debug and instantiates
 
     float DeltaTime;
 
-    std::vector<std::shared_ptr<basicEnemy>> basicEnemies;
+    std::vector<EntityID> entityIDList;
+
+    std::vector<std::shared_ptr<baseEntity>> entityList;
 
     std::shared_ptr<player> playerInstance;
 

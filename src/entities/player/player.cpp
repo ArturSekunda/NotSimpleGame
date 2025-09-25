@@ -25,8 +25,33 @@ void player::handleMovement(float deltaTime) {
     }
 }
 
-player::player() {
+void player::setPlayerStats() {
+
+    // Core Stats
+    this->speed = 200.f;
+    this->health = 100.f;
+    this->maxHealth = 100.f;
+    this->mana = 50.f;
+    this->maxMana = 50.f;
+    this->isAlive = true;
+
+    // Attributes/Stats
+    this->strength = 2;
+    this->dexterity = 2;
+    this->intelligence = 2;
+    this->endurance = 2;
+    this->luck = 2;
+    this->charisma = 2;
+    this->defense = 0.f;
+}
+
+player::player(int localID) : baseEntity(localID) {
+
+    entityID.type = EntityType::PLAYER;
+    entityID.localID = localID;
+
     createPlayerShape();
+    setPlayerStats();
     this->collisionBox = std::make_shared<sf::RectangleShape>(createCollisionBox());
     if (!entityShape) {
         throw std::runtime_error("Failed to create player shape.");
@@ -38,12 +63,6 @@ player::player() {
     } else {
         entityShape->setPosition(sf::Vector2f(0.f, 0.f));
     }
-    this->speed = 200.f;
-    this->health = 100.f;
-    this->maxHealth = 100.f;
-    this->mana = 50;
-    this->maxMana = 50;
-    this->isAlive = true;
 }
 
 void player::Update(float deltaTime) {

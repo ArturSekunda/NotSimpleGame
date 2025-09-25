@@ -11,14 +11,18 @@ private: // Functions
     void createPlayerShape();
 
     void handleMovement(float deltaTime);
+
+    void setPlayerStats();
+
 private:
     bool isMoving = false;
 
 public:
-    player();
+    explicit player(int localID = 0);
     ~player() override = default;
 
     virtual void Update(float deltaTime) override;
+
 
 public: // Setters
 

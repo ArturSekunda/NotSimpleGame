@@ -13,7 +13,11 @@
 
 
 
-basicEnemy::basicEnemy() {
+basicEnemy::basicEnemy(int localID) : baseEntity(localID) {
+
+    entityID.type = EntityType::BASIC_ENEMY;
+    entityID.localID = localID;
+
     createRandomEnemyShape();
     this->collisionBox = std::make_shared<sf::RectangleShape>(createCollisionBox());
     if (!entityShape) {

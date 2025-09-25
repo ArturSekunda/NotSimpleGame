@@ -35,6 +35,8 @@ add_executable(main src/main.cpp
         src/core/game.h
         src/items/itemAttributes.cpp
         src/items/itemAttributes.h
+        src/managers/statsManager.cpp
+        src/managers/statsManager.h
 )
 
 # Link SFML libraries

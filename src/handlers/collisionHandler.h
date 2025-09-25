@@ -4,9 +4,12 @@
 
 #ifndef NOTSIMPLEGAME_COLLISIONHANDLER_H
 #define NOTSIMPLEGAME_COLLISIONHANDLER_H
+#include "entities/baseEntity.h"
 #include <memory>
 #include <vector>
 
+
+class baseEntity;
 
 namespace sf {
     class Shape;
@@ -28,7 +31,7 @@ public:
 
     bool isColliding(const sf::Shape& player, const sf::Shape& enemy);
 
-    std::vector<int> checkAllCollisions(const sf::Shape& player, const std::vector<std::shared_ptr<basicEnemy>>& enemies);
+    std::vector<std::string> checkAllCollisions(const sf::Shape &player, std::vector<std::shared_ptr<baseEntity>> entitylist);
 
 
 };

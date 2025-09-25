@@ -5,6 +5,30 @@
 #include "baseEntity.h"
 
 
+baseEntity::baseEntity(int localID):
+health(100.0f),
+maxHealth(100.0f),
+mana(50.0f),
+maxMana(50.0f),
+defense(0.0f),
+speed(100.0f),
+isAlive(true),
+strength(10),
+dexterity(10),
+intelligence(10),
+endurance(10),
+luck(10),
+charisma(10),
+entityShape(nullptr),
+collisionBox(nullptr)
+
+{
+    entityID.localID = localID;
+
+
+
+}
+
 // Update method to update the entity's state
 void baseEntity::Update(float deltaTime) {
     // Update entity logic here (e.g., regeneration, status effects)

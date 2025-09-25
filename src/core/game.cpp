@@ -13,14 +13,12 @@
 // Initialize player and enemy instances
 void game::initializeEntities() {
 
-    playerInstance = std::make_shared<player>();
+    playerInstance = std::make_shared<player>(0);
 
-    basicEnemies.push_back(std::make_shared<basicEnemy>());
-    basicEnemies.push_back(std::make_shared<basicEnemy>());
-
-    if (basicEnemies.empty()) {
-        addEnemyToList(basicEnemies.front());
+    for (int i = 0; i <= 3; i++) {
+        addEntityToList(std::make_shared<basicEnemy>(i));
     }
+
 
 }
 
@@ -30,24 +28,27 @@ void game::Updater() {
     // Ensure player instance is valid
     if (!playerInstance) return;
 
-    // Update Player
+    // Update player
     playerInstance->Update(DeltaTime);
 
 
-    // Update Enemies
-    for (auto& enemy : basicEnemies) {
-        if (enemy) {
-            enemy->Update(DeltaTime);
-            enemy->chasePlayer(getPlayerShape(), DeltaTime);
+    // Update enemy
+    for (auto& entity : entityList) {
+        if (entity) {
+            entity->Update(DeltaTime);
+            if (auto enemy = std::dynamic_pointer_cast<basicEnemy>(entity)) {
+
+                enemy->chasePlayer(getPlayerShape(),DeltaTime);
+            }
         }
     }
 
     // Collision Detection
-    std::vector<int> collidingEnemies = collisionHandler::getInstance()
-        .checkAllCollisions(getPlayerShape(), basicEnemies);
+    std::vector<std::string> collidingEnemies = collisionHandler::getInstance()
+        .checkAllCollisions(getPlayerShape(), entityList);
 
     // Handle Collisions
-    for (int enemyIndex : collidingEnemies) {
+    for (std::string_view enemyIndex : collidingEnemies) {
         std::cout << "Collision with enemy " << enemyIndex << "!\n";
 
     }
@@ -58,14 +59,10 @@ std::shared_ptr<player> game::getPlayerPtr() {
     return playerInstance;
 }
 
-// Return a shared pointer to a basic enemy instance
-std::vector<std::shared_ptr<basicEnemy>> game::getEnemyPtrTable() {
-    return basicEnemies;
-}
 // Remove an enemy from the list by index
 void game::decreaseEnemyFromList(size_t index) {
-    if (index < basicEnemies.size() && index != static_cast<size_t>(-1)) {
-        basicEnemies.erase(basicEnemies.begin() + index);
+    if (index < entityList.size() && index != static_cast<size_t>(-1)) {
+        entityList.erase(entityList.begin() + index);
     } else {
         std::cerr << "Invalid index for removing enemy: " << index << "\n";
     }
@@ -105,7 +102,7 @@ void game::renderPlayerAndEnemies(sf::RenderWindow &window) const {
         window.draw(*playerInstance->getEntityShape());
     }
 
-    for (const auto& enemy : basicEnemies) {
+    for (const auto& enemy : entityList) {
         if (enemy && enemy->getEntityShape()) {
             window.draw(*enemy->getEntityShape());
         }
@@ -121,7 +118,7 @@ void game::DebugBoxes(sf::RenderWindow& window) {
         window.draw(playerBox);
 
         // Collision boxes for enemies
-        for (const auto& enemy : basicEnemies) {
+        for (const auto& enemy : entityList) {
             if (enemy && enemy->getCollisionBox()) {
                 auto& enemyBox = *enemy->getCollisionBox();
                 enemyBox.setPosition(enemy->getEntityShape()->getPosition());

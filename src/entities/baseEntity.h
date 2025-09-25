@@ -11,23 +11,58 @@
 
 class SFML;
 
+enum class EntityType {
+    PLAYER,
+    BASIC_ENEMY
+};
+
+struct EntityID {
+    EntityType type;  // PLAYER, BASIC_ENEMY, GOBLIN, NPC...
+    int localID;      // 0, 1, 2... dla tego konkretnego typu
+
+    std::string toString() const {
+        return typeToString(type) + "_" + std::to_string(localID);
+    }
+
+    static std::string typeToString(EntityType type) {
+        switch (type) {
+            case EntityType::PLAYER: return "player";
+            case EntityType::BASIC_ENEMY: return "basic_enemy";
+            default:
+                return "unknown";
+
+        }
+    }
+};
+
 class baseEntity {
     protected: // Section for attributes
+
+    EntityID entityID;
+
     float health;
     float maxHealth;
+    float mana;
+    float maxMana;
+    float defense;
     float speed;
-    int mana;
-    int maxMana;
     bool isAlive;
 
     std::shared_ptr<sf::Shape> entityShape; // Pointer to a SFML shape representing the entity
     std::shared_ptr<sf::RectangleShape> collisionBox; // Pointer to a SFML rectangle shape for collision detection
 
+protected: //  Section for stats
+
+    int strength;
+    int dexterity;
+    int intelligence;
+    int endurance;
+    int luck;
+    int charisma;
+
+
 public: // Section for constructor and destructor
-    explicit baseEntity(float maxHp = 100.0f, float spd = 1.0f, int maxMp = 50)
-        : health(maxHp), maxHealth(maxHp), speed(spd),
-          mana(maxMp), maxMana(maxMp), isAlive(true), entityShape(nullptr) {
-    }
+     explicit baseEntity(int localID);
 
     virtual ~baseEntity() = default;
 
@@ -38,6 +73,7 @@ public: // Section for constructor and destructor
     sf::FloatRect getEntityBounds() const;
 
     sf::RectangleShape createCollisionBox() const;
+
 
 
 public: // Section for getters
@@ -51,6 +87,21 @@ public: // Section for getters
     sf::Vector2f getPosition() const { return getEntityShape()->getPosition(); }
     std::shared_ptr<sf::Shape> getEntityShape() const { return entityShape; }
     std::shared_ptr<sf::RectangleShape> getCollisionBox() const { return collisionBox; }
+    EntityID setEntityID(EntityType type, int localID) {
+        entityID.type = type;
+        entityID.localID = localID;
+        return entityID;
+    }
+
+    // Getters for stats
+    int getStrength() const { return strength; }
+    int getDexterity() const { return dexterity; }
+    int getIntelligence() const { return intelligence; }
+    int getEndurance() const { return endurance; }
+    int getLuck() const { return luck; }
+    int getCharisma() const { return charisma; }
+    float getDefense() const { return defense; }
+    EntityID getEntityID() const { return entityID; }
 
 
 public: // Section for setters
@@ -68,6 +119,15 @@ public: // Section for setters
         entityShape = shape;
     }
     void setCollisionBox(std::shared_ptr<sf::RectangleShape> box) { collisionBox = box; }
+
+    // Setters for stats
+    void setStrength(int s) { strength = s; }
+    void setDexterity(int d) { dexterity = d; }
+    void setIntelligence(int i) { intelligence = i; }
+    void setEndurance(int e) { endurance = e; }
+    void setLuck(int l) { luck = l; }
+    void setCharisma(int c) { charisma = c; }
+    void setDefense(float d) { defense = d; }
 
 public: // Combat
 

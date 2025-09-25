@@ -12,7 +12,7 @@ class basicEnemy : public baseEntity {
 private:
 
 public:
-    basicEnemy();
+    explicit basicEnemy(int localID);
     ~basicEnemy() override = default;
 
     virtual void Update(float deltaTime) override;
