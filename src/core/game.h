@@ -4,8 +4,13 @@
 
 #include "entities/player/player.h"
 #include "entities/enemies/basicEnemy.h"
-#include <SFML/Graphics.hpp>
+#include "TGUI/Backend/SFML-Graphics.hpp"
 
+
+namespace sf {
+    class View;
+    class RenderWindow;
+}
 
 class game {
 public:
@@ -69,11 +74,14 @@ public: // Enemy Management
 
 public: // Rendering
     void render(sf::RenderWindow &window, sf::View view);
+    void renderUI(tgui::SFML_GRAPHICS::Gui& gui);
 
 protected: // Render Helpers
+
     void renderDebug(sf::RenderWindow& window);
 
     void renderPlayerAndEnemies(sf::RenderWindow& window) const;
+
 
 protected: // Debug and instantiates
 

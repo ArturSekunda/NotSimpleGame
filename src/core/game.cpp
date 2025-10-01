@@ -9,15 +9,18 @@
 #include <memory>
 
 #include "handlers/debugHandler.h"
+#include "managers/UIManager.h"
+#include <SFML/Graphics.hpp>
+#include <TGUI/TGUI.hpp>
 
 // Initialize player and enemy instances
 void game::initializeEntities() {
 
     playerInstance = std::make_shared<player>(0);
 
-    for (int i = 0; i <= 3; i++) {
-        addEntityToList(std::make_shared<basicEnemy>(i));
-    }
+   // for (int i = 0; i <= 3; i++) {
+   //     addEntityToList(std::make_shared<basicEnemy>(i));
+   // }
 
 
 }
@@ -49,7 +52,7 @@ void game::Updater() {
 
     // Handle Collisions
     for (std::string_view enemyIndex : collidingEnemies) {
-        std::cout << "Collision with enemy " << enemyIndex << "!\n";
+        //std::cout << "Collision with enemy " << enemyIndex << "!\n";
 
     }
 }
@@ -89,6 +92,8 @@ void game::render(sf::RenderWindow &window, sf::View view) {
     }
     renderPlayerAndEnemies(window);
     renderDebug(window);
+
+
 }
 
 void game::renderDebug(sf::RenderWindow &window) {
@@ -107,6 +112,10 @@ void game::renderPlayerAndEnemies(sf::RenderWindow &window) const {
             window.draw(*enemy->getEntityShape());
         }
     }
+}
+
+void game::renderUI(tgui::Gui &gui) {
+    UIManager::getInstance().RenderMainGameHUD(gui);
 }
 
 void game::DebugBoxes(sf::RenderWindow& window) {
