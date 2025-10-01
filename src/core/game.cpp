@@ -85,11 +85,11 @@ sf::Shape& game::getPlayerShape() {
 
 void game::render(sf::RenderWindow &window, sf::View view) {
 
+
     // Camera Follow Player
-    if (getPlayerPtr()->getIsMoving()) {
-        view.setCenter(getPlayerShape().getPosition());
-        window.setView(view);
-    }
+    view.setCenter(getPlayerShape().getPosition());
+    window.setView(view);
+
     renderPlayerAndEnemies(window);
     renderDebug(window);
 
@@ -115,7 +115,7 @@ void game::renderPlayerAndEnemies(sf::RenderWindow &window) const {
 }
 
 void game::renderUI(tgui::Gui &gui) {
-    UIManager::getInstance().RenderMainGameHUD(gui);
+    UIManager::getInstance().RenderMainGameHUD(gui, *getPlayerPtr());
 }
 
 void game::DebugBoxes(sf::RenderWindow& window) {

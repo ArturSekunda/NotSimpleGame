@@ -20,13 +20,15 @@ private: // Functions
 private:
     bool isMoving = false;
 
+    std::string playerName = "Hero";
+
     int level = 1;
 
-    int levelMax = 10;
-    float EXP = 100.f;
+    int levelMax = 100;
+    float EXP = 50.f;
     float EXP_MAX = 100.f;
 
-    baseStats stats;
+    baseStats PlayerStats;
 
 public:
     explicit player(int localID = 0);
@@ -51,7 +53,11 @@ public: // Setters
         EXP_MAX = exp_max;
     }
     void setStats(baseStats stats) {
-        this->stats = stats;
+        PlayerStats = stats;
+    }
+
+    void setPlayerName(std::string name) {
+        playerName = name;
     }
 
 public: // Getters
@@ -69,7 +75,10 @@ public: // Getters
         return EXP_MAX;
     }
     baseStats getStats() const {
-        return stats;
+        return PlayerStats;
+    }
+    std::string getPlayerName() const {
+        return playerName;
     }
 
 };

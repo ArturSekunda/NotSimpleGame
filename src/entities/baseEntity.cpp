@@ -13,20 +13,11 @@ maxMana(50.0f),
 defense(0.0f),
 speed(100.0f),
 isAlive(true),
-strength(10),
-dexterity(10),
-intelligence(10),
-endurance(10),
-luck(10),
-charisma(10),
 entityShape(nullptr),
 collisionBox(nullptr)
 
 {
     entityID.localID = localID;
-
-
-
 }
 
 // Update method to update the entity's state

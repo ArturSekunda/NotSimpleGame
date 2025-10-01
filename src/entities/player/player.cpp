@@ -35,13 +35,6 @@ void player::setPlayerStats() {
     this->maxMana = 50.f;
     this->isAlive = true;
 
-    // Attributes/Stats
-    this->strength = 2;
-    this->dexterity = 2;
-    this->intelligence = 2;
-    this->endurance = 2;
-    this->luck = 2;
-    this->charisma = 2;
     this->defense = 0.f;
 }
 

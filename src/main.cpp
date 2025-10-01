@@ -1,4 +1,5 @@
 #include "core/game.h"
+#include "managers/UIManager.h"
 #include <TGUI/TGUI.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
 
@@ -15,6 +16,10 @@ int main() {
     // Create a Window and render it
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Test", sf::Style::Default, settings);
     tgui::Gui gui{window};
+
+    game::getInstance().renderUI(gui);
+
+    UIManager::getInstance().UpdateTextSizes(window.getSize().x, window.getSize().y);
 
 
     window.setFramerateLimit(60);
@@ -39,6 +44,7 @@ int main() {
             if (event.type == sf::Event::Resized){
                 CameraView.setSize(event.size.width, event.size.height);
                 window.setView(CameraView);
+                UIManager::getInstance().UpdateTextSizes(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
             }
 
             if (event.type == sf::Event::KeyPressed && DeveloperMode) {
@@ -56,13 +62,13 @@ int main() {
         window.clear();
 
         game::getInstance().render(window, CameraView);
-        game::getInstance().renderUI(gui);
 
         gui.draw();
 
 
         window.display();
     }
+    UIManager::getInstance().CleanAllUI();
     return 0;
 }
 

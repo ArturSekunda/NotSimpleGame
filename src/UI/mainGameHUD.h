@@ -4,13 +4,32 @@
 
 #ifndef NOTSIMPLEGAME_MAINGAMEHUD_H
 #define NOTSIMPLEGAME_MAINGAMEHUD_H
-
 #include <TGUI/Widgets/Panel.hpp>
+
+#include "TGUI/Widgets/Label.hpp"
+#include "TGUI/Widgets/ProgressBar.hpp"
+#include "TGUI/Widgets/VerticalLayout.hpp"
+
+
+class player;
 
 class mainGameHUD {
      // Panels
-     tgui::Panel::Ptr SidePanel = tgui::Panel::create();
-     tgui::Panel::Ptr TopPanel = tgui::Panel::create();
+     tgui::Panel::Ptr SidePanel = nullptr;
+     tgui::Panel::Ptr TopPanel = nullptr;
+     // Bars
+     tgui::ProgressBar::Ptr HealthBar = nullptr;
+     tgui::ProgressBar::Ptr ManaBar = nullptr;
+     tgui::ProgressBar::Ptr XPBar = nullptr;
+     // Layouts
+     tgui::VerticalLayout::Ptr PlayerNameEXPLayout = nullptr;
+     tgui::VerticalLayout::Ptr StatsLayout = nullptr;
+     // Labels
+     tgui::Label::Ptr PlayerNameLabel = nullptr;
+     tgui::Label::Ptr XPLabel = nullptr;
+private:
+    float windowWidth = 0.f;
+    float windowHeight = 0.f;
 public:
 
     static mainGameHUD& getInstance() {
@@ -21,19 +40,24 @@ public:
     mainGameHUD() = default;
     ~mainGameHUD() = default;
 
-    void initializePanels(tgui::Gui& gui) {
-        // Side Panel
-        SidePanel->setSize("20%", "100%");
-        SidePanel->setPosition("0%", "0%");
-        SidePanel->getRenderer()->setBackgroundColor(tgui::Color(50, 50, 50, 200));
-        gui.add(SidePanel);
-
-        // Top Panel
-        TopPanel->setSize("100%", "10%");
-        TopPanel->setPosition("0%", "0%");
-        TopPanel->getRenderer()->setBackgroundColor(tgui::Color(50, 50, 50, 200));
-        gui.add(TopPanel);
+    void CleanUp() {
+        SidePanel = nullptr;
+        TopPanel = nullptr;
+        HealthBar = nullptr;
+        ManaBar = nullptr;
+        XPBar = nullptr;
+        StatsLayout = nullptr;
+        PlayerNameEXPLayout = nullptr;
+        PlayerNameLabel = nullptr;
+        XPLabel = nullptr;
     }
+
+    void initializePanels(tgui::Gui& gui);
+    void initializeBars(player p);
+    void DisplayPlayerNameAndLevel(player p);
+
+    void UpdateTextSizes(float width, float height);
+
 };
 
 

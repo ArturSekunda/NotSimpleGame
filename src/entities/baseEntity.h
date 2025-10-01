@@ -51,15 +51,6 @@ class baseEntity {
     std::shared_ptr<sf::Shape> entityShape; // Pointer to a SFML shape representing the entity
     std::shared_ptr<sf::RectangleShape> collisionBox; // Pointer to a SFML rectangle shape for collision detection
 
-protected: //  Section for stats
-
-    int strength;
-    int dexterity;
-    int intelligence;
-    int endurance;
-    int luck;
-    int charisma;
-
 
 public: // Section for constructor and destructor
      explicit baseEntity(int localID);
@@ -81,8 +72,8 @@ public: // Section for getters
     float getHealth() const { return health; }
     float getMaxHealth() const { return maxHealth; }
     float getSpeed() const { return speed; }
-    int getMana() const { return mana; }
-    int getMaxMana() const { return maxMana; }
+    float getMana() const { return mana; }
+    float getMaxMana() const { return maxMana; }
     bool getIsAlive() const { return isAlive; }
     sf::Vector2f getPosition() const { return getEntityShape()->getPosition(); }
     std::shared_ptr<sf::Shape> getEntityShape() const { return entityShape; }
@@ -94,12 +85,6 @@ public: // Section for getters
     }
 
     // Getters for stats
-    int getStrength() const { return strength; }
-    int getDexterity() const { return dexterity; }
-    int getIntelligence() const { return intelligence; }
-    int getEndurance() const { return endurance; }
-    int getLuck() const { return luck; }
-    int getCharisma() const { return charisma; }
     float getDefense() const { return defense; }
     EntityID getEntityID() const { return entityID; }
 
@@ -121,12 +106,6 @@ public: // Section for setters
     void setCollisionBox(std::shared_ptr<sf::RectangleShape> box) { collisionBox = box; }
 
     // Setters for stats
-    void setStrength(int s) { strength = s; }
-    void setDexterity(int d) { dexterity = d; }
-    void setIntelligence(int i) { intelligence = i; }
-    void setEndurance(int e) { endurance = e; }
-    void setLuck(int l) { luck = l; }
-    void setCharisma(int c) { charisma = c; }
     void setDefense(float d) { defense = d; }
 
 public: // Combat
