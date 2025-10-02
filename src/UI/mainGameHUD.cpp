@@ -25,7 +25,7 @@ void mainGameHUD::initializePanels(tgui::Gui &gui) {
     gui.add(TopPanel);
 }
 
-void mainGameHUD::initializeBars(player p) {
+void mainGameHUD::initializeBars(const player &p) {
     // Create Bars
     HealthBar = tgui::ProgressBar::create();
     ManaBar = tgui::ProgressBar::create();
@@ -39,12 +39,10 @@ void mainGameHUD::initializeBars(player p) {
     if (!StatsLayout) {
         throw std::runtime_error("Failed to create stats layout");
     }
+
     // Health Bar
     HealthBar->setSize("20%", "20%");
     HealthBar->setMinimum(0);
-    HealthBar->setMaximum(p.getMaxHealth());
-    HealthBar->setValue(p.getHealth());
-    HealthBar->setText("Health: " + std::to_string(static_cast<int>(p.getHealth())) + " / " + std::to_string(static_cast<int>(p.getMaxHealth())));
     HealthBar->getRenderer()->setBorderColor(tgui::Color(0, 0, 0, 200));
     HealthBar->getRenderer()->setBorders(2);
     HealthBar->getRenderer()->setFillColor(tgui::Color(255, 50, 50, 200));
@@ -54,9 +52,6 @@ void mainGameHUD::initializeBars(player p) {
     // Mana Bar
     ManaBar->setSize("20%", "20%");
     ManaBar->setMinimum(0);
-    ManaBar->setMaximum(p.getMaxMana());
-    ManaBar->setValue(p.getMana());
-    ManaBar->setText("Mana: " + std::to_string(static_cast<int>(p.getMana())) + " / " + std::to_string(static_cast<int>(p.getMaxMana())));
     ManaBar->getRenderer()->setBorderColor(tgui::Color(0, 0, 0, 200));
     ManaBar->getRenderer()->setBorders(2);
     ManaBar->getRenderer()->setFillColor(tgui::Color(50, 50, 255, 200));
@@ -66,9 +61,6 @@ void mainGameHUD::initializeBars(player p) {
     // XP Bar
     XPBar->setSize("20%", "20%");
     XPBar->setMinimum(0);
-    XPBar->setMaximum(p.getEXP_MAX());
-    XPBar->setValue(p.getEXP());
-    XPBar->setText("XP: " + std::to_string(static_cast<int>(p.getEXP())) + " / " + std::to_string(static_cast<int>(p.getEXP_MAX())));
     XPBar->getRenderer()->setBorderColor(tgui::Color(0, 0, 0, 200));
     XPBar->getRenderer()->setBorders(2);
     XPBar->getRenderer()->setFillColor(tgui::Color(0, 160, 16, 200));
@@ -81,12 +73,10 @@ void mainGameHUD::initializeBars(player p) {
     StatsLayout->getRenderer()->setSpaceBetweenWidgets(3);
     StatsLayout->getRenderer()->setPadding(5);
     TopPanel->add(StatsLayout);
-
-    // Display Player Name and Level
-    DisplayPlayerNameAndLevel(p);
+    
 }
 
-void mainGameHUD::DisplayPlayerNameAndLevel(player p) {
+void mainGameHUD::DisplayPlayerNameAndLevel(const player &p) {
 
     // Create Labels
     PlayerNameLabel = tgui::Label::create();
@@ -103,7 +93,6 @@ void mainGameHUD::DisplayPlayerNameAndLevel(player p) {
     PlayerNameEXPLayout->add(PlayerNameLabel);
 
     // XP Label
-    XPLabel->setText("Level: " + std::to_string(p.getLevel()));
     XPLabel->getRenderer()->setTextColor(tgui::Color::White);
     PlayerNameEXPLayout->add(XPLabel);
 
@@ -113,6 +102,27 @@ void mainGameHUD::DisplayPlayerNameAndLevel(player p) {
     PlayerNameEXPLayout->getRenderer()->setSpaceBetweenWidgets(3);
     PlayerNameEXPLayout->getRenderer()->setPadding(5);
     TopPanel->add(PlayerNameEXPLayout);
+}
+
+void mainGameHUD::UpdateUI(const player &p) {
+    // Update XP Label
+    XPLabel->setText("Level: " + std::to_string(p.getLevel()));
+
+    // Update Health Bar
+    HealthBar->setMaximum(p.getMaxHealth());
+    HealthBar->setValue(p.getHealth());
+    HealthBar->setText("Health: " + std::to_string(static_cast<int>(p.getHealth())) + " / " + std::to_string(static_cast<int>(p.getMaxHealth())));
+
+    // Update Mana Bar
+    ManaBar->setMaximum(p.getMaxMana());
+    ManaBar->setValue(p.getMana());
+    ManaBar->setText("Mana: " + std::to_string(static_cast<int>(p.getMana())) + " / " + std::to_string(static_cast<int>(p.getMaxMana())));
+
+    // Update XP Bar
+    XPBar->setMaximum(p.getEXP_MAX());
+    XPBar->setValue(p.getEXP());
+    XPBar->setText("XP: " + std::to_string(static_cast<int>(p.getEXP())) + " / " + std::to_string(static_cast<int>(p.getEXP_MAX())));
+
 }
 
 void mainGameHUD::UpdateTextSizes(float width, float height) {

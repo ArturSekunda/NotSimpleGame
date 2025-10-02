@@ -28,7 +28,11 @@ public: // Initialization and Getters
 
     void initializeEntities();
 
-    std::shared_ptr<player> getPlayerPtr();
+    // Const version to only read player
+    const player* getPlayerPtr() const;
+
+    // Non-const version to modify player
+    player* getPlayerPtr();
 
 
     sf::Shape &getPlayerShape();
@@ -49,12 +53,12 @@ public: // Enemy Management
         entityIDList.push_back(entity->getEntityID());
     }
 
-    void addEntity(const std::shared_ptr<baseEntity>& entity) {
-        entityList.push_back(entity);
+    void addEntity(std::unique_ptr<baseEntity> entity) {
+        entityList.push_back(std::move(entity));
     }
 
     template<typename T>
-    void addEntityToList(const std::shared_ptr<T>& entity) {
+void addEntityToList(std::unique_ptr<T> entity) {
         static_assert(std::is_base_of_v<baseEntity, T>, "T must inherit from baseEntity");
 
         if constexpr (std::is_same_v<T, player>) {
@@ -65,7 +69,7 @@ public: // Enemy Management
             entity->setEntityID(EntityType::BASIC_ENEMY, enemyID++);
         }
 
-        addEntity(entity);
+        addEntity(std::move(entity));
     }
 
     void decreaseEnemyFromList(size_t index);
@@ -73,7 +77,7 @@ public: // Enemy Management
     size_t getEntityIDListSize() const { return entityIDList.size(); }
 
 public: // Rendering
-    void render(sf::RenderWindow &window, sf::View view);
+    void render(sf::RenderWindow &window, sf::View &view);
     void renderUI(tgui::SFML_GRAPHICS::Gui& gui);
 
 protected: // Render Helpers
@@ -91,9 +95,9 @@ protected: // Debug and instantiates
 
     std::vector<EntityID> entityIDList;
 
-    std::vector<std::shared_ptr<baseEntity>> entityList;
+    std::vector<std::unique_ptr<baseEntity>> entityList;
 
-    std::shared_ptr<player> playerInstance;
+    std::unique_ptr<player> playerInstance;
 
 };
 

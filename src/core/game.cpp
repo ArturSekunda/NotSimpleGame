@@ -16,13 +16,26 @@
 // Initialize player and enemy instances
 void game::initializeEntities() {
 
-    playerInstance = std::make_shared<player>(0);
+    playerInstance = std::make_unique<player>(0);
 
-   // for (int i = 0; i <= 3; i++) {
-   //     addEntityToList(std::make_shared<basicEnemy>(i));
-   // }
+    if (!playerInstance) {
+        throw std::runtime_error("Failed to create player instance.");
+    }
+
+    // for (int i = 0; i <= 3; i++) {
+    //     addEntityToList(std::make_unique<basicEnemy>(i));
+    // }
 
 
+}
+// Only to read
+const player * game::getPlayerPtr() const {
+    return playerInstance.get();
+}
+
+// To modify player
+player* game::getPlayerPtr() {
+    return playerInstance.get();
 }
 
 // Update game logic, player and enemy states
@@ -39,9 +52,8 @@ void game::Updater() {
     for (auto& entity : entityList) {
         if (entity) {
             entity->Update(DeltaTime);
-            if (auto enemy = std::dynamic_pointer_cast<basicEnemy>(entity)) {
-
-                enemy->chasePlayer(getPlayerShape(),DeltaTime);
+            if (auto* enemy = dynamic_cast<basicEnemy*>(entity.get())) {
+                enemy->chasePlayer(getPlayerShape(), DeltaTime);
             }
         }
     }
@@ -55,11 +67,8 @@ void game::Updater() {
         //std::cout << "Collision with enemy " << enemyIndex << "!\n";
 
     }
-}
-
-// Return a shared pointer to a player instance
-std::shared_ptr<player> game::getPlayerPtr() {
-    return playerInstance;
+    // Update UI
+    UIManager::getInstance().UpdateAllUI(*playerInstance);
 }
 
 // Remove an enemy from the list by index
@@ -83,7 +92,7 @@ sf::Shape& game::getPlayerShape() {
     return *shape;
 }
 
-void game::render(sf::RenderWindow &window, sf::View view) {
+void game::render(sf::RenderWindow &window,sf::View& view) {
 
 
     // Camera Follow Player
@@ -102,14 +111,16 @@ void game::renderDebug(sf::RenderWindow &window) {
 
 }
 
-void game::renderPlayerAndEnemies(sf::RenderWindow &window) const {
+void game::renderPlayerAndEnemies(sf::RenderWindow& window) const {
+    // Render player
     if (playerInstance && playerInstance->getEntityShape()) {
         window.draw(*playerInstance->getEntityShape());
     }
 
-    for (const auto& enemy : entityList) {
-        if (enemy && enemy->getEntityShape()) {
-            window.draw(*enemy->getEntityShape());
+    // Render enemies
+    for (const auto& entity : entityList) {
+        if (entity && entity->getEntityShape()) {
+            window.draw(*entity->getEntityShape());
         }
     }
 }

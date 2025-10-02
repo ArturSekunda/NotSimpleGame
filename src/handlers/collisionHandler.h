@@ -31,7 +31,7 @@ public:
 
     bool isColliding(const sf::Shape& player, const sf::Shape& enemy);
 
-    std::vector<std::string> checkAllCollisions(const sf::Shape &player, std::vector<std::shared_ptr<baseEntity>> entitylist);
+    std::vector<std::string> checkAllCollisions(const sf::Shape &player, const std::vector<std::unique_ptr<baseEntity>>& entitylist);
 
 
 };

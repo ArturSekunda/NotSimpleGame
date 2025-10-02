@@ -32,11 +32,6 @@ private:
     float windowHeight = 0.f;
 public:
 
-    static mainGameHUD& getInstance() {
-        static mainGameHUD instance;
-        return instance;
-    }
-
     mainGameHUD() = default;
     ~mainGameHUD() = default;
 
@@ -53,8 +48,10 @@ public:
     }
 
     void initializePanels(tgui::Gui& gui);
-    void initializeBars(player p);
-    void DisplayPlayerNameAndLevel(player p);
+    void initializeBars(const player& p);
+    void DisplayPlayerNameAndLevel(const player& p);
+
+    void UpdateUI(const player& p);
 
     void UpdateTextSizes(float width, float height);
 
