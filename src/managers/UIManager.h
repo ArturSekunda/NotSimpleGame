@@ -33,7 +33,7 @@ public:
 
     void UpdateTextSizes(float width, float height);
 
-    void UpdateAllUI(const player& p);
+    void UpdateAllUI(player& p);
 
     void CleanAllUI();
 };

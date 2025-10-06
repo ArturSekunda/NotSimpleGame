@@ -5,12 +5,17 @@
 #include "entities/player/player.h"
 #include "entities/enemies/basicEnemy.h"
 #include "TGUI/Backend/SFML-Graphics.hpp"
+#include "managers/UIManager.h"
+#include "handlers/debugHandler.h"
 
 
 namespace sf {
     class View;
     class RenderWindow;
 }
+
+class debugHandler;
+class UIManager;
 
 class game {
 public:
@@ -24,6 +29,7 @@ public:
         static game instance;
         return instance;
     }
+
 public: // Initialization and Getters
 
     void initializeEntities();
@@ -34,11 +40,17 @@ public: // Initialization and Getters
     // Non-const version to modify player
     player* getPlayerPtr();
 
-    bool getDeveloperMode() const { return DeveloperMode; }
-    void setDeveloperMode(bool mode) { DeveloperMode = mode; }
-
-
     sf::Shape &getPlayerShape();
+
+    UIManager* getUIManager() {
+        return UIManagerInstance.get();
+    }
+
+    debugHandler* getDebugHandler() {
+        return debugInstance.get();
+    }
+
+
 
     // Getters for collision boxes
     sf::RectangleShape& getPlayerCollisionBox() {
@@ -102,7 +114,9 @@ protected: // Debug and instantiates
 
     std::unique_ptr<player> playerInstance;
 
-    bool DeveloperMode = true;
+    std::unique_ptr<debugHandler> debugInstance;
+
+    std::unique_ptr<UIManager> UIManagerInstance;
 
 };
 

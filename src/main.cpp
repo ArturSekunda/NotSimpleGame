@@ -6,7 +6,7 @@
 int main() {
     sf::Clock DeltaTimeClock;
 
-    game::getInstance().setDeveloperMode(true);
+
 
     game::getInstance().initializeEntities();
 
@@ -19,7 +19,7 @@ int main() {
 
     game::getInstance().renderUI(gui);
 
-    UIManager::getInstance().UpdateTextSizes(window.getSize().x, window.getSize().y);
+    game::getInstance().getUIManager()->UpdateTextSizes(window.getSize().x, window.getSize().y);
 
 
     window.setFramerateLimit(60);
@@ -44,7 +44,7 @@ int main() {
             if (event.type == sf::Event::Resized){
                 CameraView.setSize(event.size.width, event.size.height);
                 window.setView(CameraView);
-                UIManager::getInstance().UpdateTextSizes(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
+                game::getInstance().getUIManager()->UpdateTextSizes(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
             }
         }
 
@@ -64,7 +64,7 @@ int main() {
 
         window.display();
     }
-    UIManager::getInstance().CleanAllUI();
+    game::getInstance().getUIManager()->CleanAllUI();
     return 0;
 }
 

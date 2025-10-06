@@ -6,6 +6,7 @@
 #define NOTSIMPLEGAME_MAINGAMEHUD_H
 #include <TGUI/Widgets/Panel.hpp>
 
+#include "TGUI/Backend/SFML-Graphics.hpp"
 #include "TGUI/Widgets/Button.hpp"
 #include "TGUI/Widgets/Label.hpp"
 #include "TGUI/Widgets/ProgressBar.hpp"

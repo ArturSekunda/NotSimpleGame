@@ -1,5 +1,3 @@
-#include "TGUI/Backend/SFML-Graphics.hpp"
-
 #include "mainGameHUD.h"
 
 #include "debugWindow.h"

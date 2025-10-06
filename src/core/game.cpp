@@ -17,16 +17,20 @@
 void game::initializeEntities() {
 
     playerInstance = std::make_unique<player>(0);
+    debugInstance = std::make_unique<debugHandler>();
+    UIManagerInstance = std::make_unique<UIManager>();
 
     if (!playerInstance) {
         throw std::runtime_error("Failed to create player instance.");
     }
 
-    debugHandler::getInstance().CurrentPlayer(*playerInstance);
+    debugInstance->CurrentPlayer(*getPlayerPtr());
 
     // for (int i = 0; i <= 3; i++) {
     //     addEntityToList(std::make_unique<basicEnemy>(i));
     // }
+
+    debugInstance->setDeveloperMode(true);
 
 
 }
@@ -70,7 +74,7 @@ void game::Updater() {
 
     }
     // Update UI
-    UIManager::getInstance().UpdateAllUI(*playerInstance);
+    UIManagerInstance->UpdateAllUI(*getPlayerPtr());
 }
 
 // Remove an enemy from the list by index
@@ -128,12 +132,12 @@ void game::renderPlayerAndEnemies(sf::RenderWindow& window) const {
 }
 
 void game::renderUI(tgui::Gui &gui) {
-    UIManager::getInstance().RenderMainGameHUD(gui, *getPlayerPtr(), DeveloperMode);
+    UIManagerInstance->RenderMainGameHUD(gui, *getPlayerPtr(), debugInstance->getDeveloperMode());
 
 }
 
 void game::DebugBoxes(sf::RenderWindow& window) {
-    if (debugHandler::getInstance().getWantToShowCollisionBoxes()) {
+    if (debugInstance->getWantToShowCollisionBoxes()) {
 
         // Collision box for player
         auto playerBox = getPlayerCollisionBox();

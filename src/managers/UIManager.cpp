@@ -22,7 +22,7 @@ void UIManager::UpdateTextSizes(float width, float height){
     MainGameHUD->UpdateTextSizes(width, height);
 }
 
-void UIManager::UpdateAllUI(const player &p) {
+void UIManager::UpdateAllUI(player &p) {
     MainGameHUD->UpdateUI(p);
 }
 
