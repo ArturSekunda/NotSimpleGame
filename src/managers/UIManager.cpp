@@ -4,18 +4,32 @@
 #include "UI/mainGameHUD.h"
 
 
-void UIManager::RenderMainGameHUD(tgui::Gui &gui, const player& p, bool DeveloperMode) {
+void UIManager::CreateDebugWindow(tgui::Gui &gui, player &player) {
+    if (!DebuggingWindow) {
+        DebuggingWindow = std::make_unique<debugWindow>();
+    }
+
+    if (DebuggingWindow->getDebugWindow() == nullptr) {
+        DebuggingWindow->initializeDebugWindow(gui, player);
+    }
+}
+
+void UIManager::DestroyDebugWindow() {
+    if (DebuggingWindow) {
+        DebuggingWindow->CleanUp();
+        DebuggingWindow = nullptr;
+    }
+}
+
+void UIManager::RenderMainGameHUD(tgui::Gui &gui, player& p, bool developermode) {
 
     MainGameHUD->initializePanels(gui);
     MainGameHUD->initializeBars();
     MainGameHUD->DisplayPlayerNameAndLevel(p);
 
-    // Initialize debug buttons only if in developer mode
-    if (DeveloperMode) {
-        MainGameHUD->initializeDebugButtons(gui, *DebuggingWindow);
+    if (developermode) {
+        MainGameHUD->initializeDebugButtons(gui, getUIManagerPtr(), p);
     }
-
-
 }
 
 void UIManager::UpdateTextSizes(float width, float height){
@@ -24,6 +38,7 @@ void UIManager::UpdateTextSizes(float width, float height){
 
 void UIManager::UpdateAllUI(player &p) {
     MainGameHUD->UpdateUI(p);
+
 }
 
 void UIManager::CleanAllUI() {

@@ -15,12 +15,12 @@ class optionWidgetsDebugWindow {
     std::vector<tgui::String> ListBoxNames;
 public:
     void initializeListBox(tgui::VerticalLayout &Layout);
-    void listBoxHandler(tgui::VerticalLayout &PlayerInfo_Normal,
-                        tgui::VerticalLayout &PlayerInfo_SkillStats,
-                        tgui::VerticalLayout &PlayerInfo_SkillStats_2,
-                        tgui::Grid &GridPlayerStatChange_Normal,
-                        tgui::Grid &GridPlayerStatChange_SkillStats,
-                        debugHandler &debugHandlerInstance);
+    void listBoxHandler(tgui::VerticalLayout::Ptr Collision,
+                        tgui::VerticalLayout::Ptr PlayerInfo_Normal,
+                        tgui::VerticalLayout::Ptr PlayerInfo_SkillStats,
+                        tgui::VerticalLayout::Ptr PlayerInfo_SkillStats_2,
+                        tgui::Grid::Ptr GridPlayerStatChange_Normal,
+                        tgui::Grid::Ptr GridPlayerStatChange_SkillStats);
     tgui::ListBox::Ptr& getListBox() { return ListBox; }
 
     void CleanUp();

@@ -8,6 +8,8 @@
 #include <memory>
 #include <vector>
 
+#include "SFML/Graphics/RenderWindow.hpp"
+
 
 class baseEntity;
 
@@ -32,6 +34,8 @@ public:
     bool isColliding(const sf::Shape& player, const sf::Shape& enemy);
 
     std::vector<std::string> checkAllCollisions(const sf::Shape &player, const std::vector<std::unique_ptr<baseEntity>>& entitylist);
+    auto render(sf::RenderWindow &window, sf::RectangleShape &playerCollisionBox,
+                const std::vector<std::unique_ptr<baseEntity> > &entitylist, const sf::Shape &playerShape) -> void;
 
 
 };

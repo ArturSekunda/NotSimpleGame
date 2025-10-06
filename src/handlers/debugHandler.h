@@ -4,27 +4,19 @@
 #include <string>
 
 #include "managers/statsManager.h"
+#include "SFML/System/Vector2.hpp"
 
 
 class player;
 
 class debugHandler {
 private:
-
-
-private:
-    player* CurrentPlayerDebug = nullptr;
+    player& CurrentPlayerDebug;
 
     bool wantToShowCollisionBoxes = false;
-
-    bool DeveloperMode = false;
 public:
-    static debugHandler& getInstance() {
-        static debugHandler instance;
-        return instance;
-    }
 
-    debugHandler() = default;
+    explicit debugHandler(player& player) : CurrentPlayerDebug(player) {};
     ~debugHandler() = default;
 
     void ShowCollisionBoxes();
@@ -33,7 +25,6 @@ public:
 
     //Getters
     bool getWantToShowCollisionBoxes() const { return wantToShowCollisionBoxes; }
-    bool getDeveloperMode() const { return DeveloperMode; }
     void CurrentPlayer(player &player);
     bool getIsPlayerAlive();
     float getPlayerHealth();
@@ -45,13 +36,13 @@ public:
     float getPlayerSpeed();
     float getPlayerDefense();
     int getPlayerLevel();
+    sf::Vector2f getPlayerLocation();
     std::string getPlayerName();
     baseStats getPlayerBaseStats();
 
 
 
     // Setters
-    void setDeveloperMode(bool mode) { DeveloperMode = mode; }
     void setWantToShowCollisionBoxes(bool show) { wantToShowCollisionBoxes = show; }
     void setIsPlayerAlive(bool alive);
     void setPlayerHealth(float health);

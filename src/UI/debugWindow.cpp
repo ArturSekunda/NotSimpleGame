@@ -2,11 +2,11 @@
 #include "debugWindow.h"
 
 #include "entities/player/player.h"
-#include "handlers/debugHandler.h"
-#include "PlayerWidgets/optionWidgetsDebugWindow.h"
+#include "DebugWidgets/optionWidgetsDebugWindow.h"
 
-void debugWindow::initializeDebugWindow(tgui::Gui &gui) {
+void debugWindow::initializeDebugWindow(tgui::Gui &gui, player& player) {
     DebugWindow = tgui::ChildWindow::create("Debug Menu");
+    debugHandlerInstance = std::make_unique<debugHandler>(player);
     debugPanel = std::make_unique<panelInsideDebugWindow>();
     optionList = std::make_unique<optionWidgetsDebugWindow>();
 
@@ -24,7 +24,7 @@ void debugWindow::initializeDebugWindow(tgui::Gui &gui) {
     // Initialize other parts of the debug window
     debugPanel->initinitializePanel(*DebugWindow);
     optionList->initializeListBox(*debugPanel->getVerticalLayoutListBox());
-
+    optionList->listBoxHandler(debugPanel->getVerticalLayoutCollisionButton(),debugPanel->getVerticalLayoutPlayerInfo_Normal(),debugPanel->getVerticalLayoutPlayerInfo_SkillStats(),debugPanel->getVerticalLayoutPlayerInfo_SkillStats_2(), debugPanel->getGridPlayerStatChange_Normal(),debugPanel->getGridPlayerStatChange_SkillStats());
 
 
     gui.add(DebugWindow);
@@ -36,7 +36,6 @@ void debugWindow::initializeDebugWindow(tgui::Gui &gui) {
 void debugWindow::CleanUp() {
     debugPanel->CleanUp();
     optionList->CleanUp();
-    currentPlayer = nullptr;
     WindowWidth = 0.f;
     WindowHeight = 0.f;
     DebugWindow = nullptr;

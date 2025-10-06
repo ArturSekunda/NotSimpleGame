@@ -6,7 +6,6 @@
 #include "entities/enemies/basicEnemy.h"
 #include "TGUI/Backend/SFML-Graphics.hpp"
 #include "managers/UIManager.h"
-#include "handlers/debugHandler.h"
 
 
 namespace sf {
@@ -14,7 +13,6 @@ namespace sf {
     class RenderWindow;
 }
 
-class debugHandler;
 class UIManager;
 
 class game {
@@ -46,10 +44,8 @@ public: // Initialization and Getters
         return UIManagerInstance.get();
     }
 
-    debugHandler* getDebugHandler() {
-        return debugInstance.get();
-    }
 
+    bool DeveloperMode = true;
 
 
     // Getters for collision boxes
@@ -104,8 +100,6 @@ protected: // Render Helpers
 
 protected: // Debug and instantiates
 
-    void DebugBoxes(sf::RenderWindow& window);
-
     float DeltaTime;
 
     std::vector<EntityID> entityIDList;
@@ -113,8 +107,6 @@ protected: // Debug and instantiates
     std::vector<std::unique_ptr<baseEntity>> entityList;
 
     std::unique_ptr<player> playerInstance;
-
-    std::unique_ptr<debugHandler> debugInstance;
 
     std::unique_ptr<UIManager> UIManagerInstance;
 

@@ -17,6 +17,7 @@ void panelInsideDebugWindow::initinitializePanel(tgui::ChildWindow &DebugWindow)
 
     initializeLayoutListBox();
     initializePlayerInfo_Normal();
+    initializeCollisionButton();
 
     DebugWindow.add(InsidePanel);
 
@@ -48,4 +49,15 @@ void panelInsideDebugWindow::initializePlayerInfo_SkillStats() {
 }
 
 void panelInsideDebugWindow::initializePlayerInfo_SkillStats_2() {
+}
+
+void panelInsideDebugWindow::initializeCollisionButton() {
+    VerticalLayoutCollisionButton = tgui::VerticalLayout::create();
+    if (!VerticalLayoutCollisionButton) {
+        throw std::runtime_error("Failed to create vertical layout for collision button");
+    }
+    VerticalLayoutCollisionButton->setSize("68%","98%");
+    VerticalLayoutCollisionButton->setPosition("31%","1%");
+    VerticalLayoutCollisionButton->getRenderer()->setPadding(5);
+    InsidePanel->add(VerticalLayoutCollisionButton);
 }

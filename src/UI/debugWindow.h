@@ -2,8 +2,10 @@
 
 #ifndef NOTSIMPLEGAME_DEBUGWINDOWMANAGER_H
 #define NOTSIMPLEGAME_DEBUGWINDOWMANAGER_H
-#include "UI/PlayerWidgets/panelInsideDebugWindow.h"
-#include "UI/PlayerWidgets/optionWidgetsDebugWindow.h"
+#include "UI/DebugWidgets/panelInsideDebugWindow.h"
+#include "UI/DebugWidgets/optionWidgetsDebugWindow.h"
+#include <memory>
+#include "handlers/debugHandler.h"
 #include <TGUI/Backend/SFML-Graphics.hpp>
 #include "TGUI/Widgets/ChildWindow.hpp"
 #include "TGUI/Widgets/Label.hpp"
@@ -17,11 +19,10 @@ class debugHandler;
 
 class debugWindow {
 
+    std::unique_ptr<debugHandler> debugHandlerInstance;
+
     std::unique_ptr<panelInsideDebugWindow> debugPanel;
     std::unique_ptr<optionWidgetsDebugWindow> optionList;
-
-
-    player* currentPlayer = nullptr;
 
     float WindowWidth = 0.f;
     float WindowHeight = 0.f;
@@ -30,13 +31,8 @@ class debugWindow {
 
 
 public:
-    tgui::Widget::Ptr getDebugWindow() { return DebugWindow; }
-
-    // Singleton Pattern
-    static debugWindow& getInstance() {
-        static debugWindow instance;
-        return instance;
-    }
+    tgui::ChildWindow::Ptr getDebugWindow() { return DebugWindow; }
+    debugHandler getDebugHandlerInstance() { return *debugHandlerInstance; }
 
     // Constructor and Destructor
     debugWindow() = default;
@@ -46,7 +42,9 @@ public:
     void CleanUp();
 
     // Initialize the debug window
-    void initializeDebugWindow(tgui::Gui &gui);
+    void initializeDebugWindow(tgui::Gui &gui, player& player);
+
+    void update();
 
     void earnMainWindowSize(float width, float height) {
         WindowWidth = width;

@@ -17,8 +17,12 @@ class debugWindow;
 class UIManager {
 private:
     std::unique_ptr<mainGameHUD> MainGameHUD = std::make_unique<mainGameHUD>();
-    std::unique_ptr<debugWindow> DebuggingWindow = std::make_unique<debugWindow>();
+    std::unique_ptr<debugWindow> DebuggingWindow = nullptr;
 public:
+
+    debugWindow *getDebugWindowPtr() {
+        return DebuggingWindow.get();
+    }
 
     static UIManager& getInstance() {
         static UIManager instance;
@@ -27,15 +31,25 @@ public:
     UIManager() = default;
     ~UIManager() = default;
 
+    UIManager* getUIManagerPtr() {
+        return this;
+    }
+
+    void CreateDebugWindow(tgui::Gui& gui, player& player);
+
+    void DestroyDebugWindow();
 
 
-    void RenderMainGameHUD(tgui::Gui &gui, const player &p, bool DeveloperMode);
-
+    void RenderMainGameHUD(tgui::Gui &gui, player &p, bool developermode);
     void UpdateTextSizes(float width, float height);
 
     void UpdateAllUI(player& p);
 
     void CleanAllUI();
+
+    bool IsDebugWindowVisible() const {
+        return DebuggingWindow && DebuggingWindow->getDebugWindow() != nullptr;
+    }
 };
 
 

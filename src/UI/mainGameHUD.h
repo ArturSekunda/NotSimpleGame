@@ -13,6 +13,7 @@
 #include "TGUI/Widgets/VerticalLayout.hpp"
 
 
+class UIManager;
 class debugWindow;
 class player;
 
@@ -55,7 +56,7 @@ public:
 
     void initializePanels(tgui::Gui& gui);
     void initializeBars();
-    void initializeDebugButtons(tgui::Gui& gui, debugWindow& debugWindow);
+    void initializeDebugButtons(tgui::Gui& gui, UIManager* uiManager, player& player);
     void DisplayPlayerNameAndLevel(const player& p);
 
     void UpdateUI(const player& p);

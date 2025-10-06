@@ -2,6 +2,7 @@
 
 #include "debugWindow.h"
 #include "entities/player/player.h"
+#include "managers/UIManager.h"
 
 void mainGameHUD::initializePanels(tgui::Gui &gui) {
     // Create Panels
@@ -76,7 +77,7 @@ void mainGameHUD::initializeBars() {
 
 }
 
-void mainGameHUD::initializeDebugButtons(tgui::Gui &gui, debugWindow& debugWindow) {
+void mainGameHUD::initializeDebugButtons(tgui::Gui &gui, UIManager* uiManager, player& player) {
     // Create Debug Button
     DebugButtonForWindow = tgui::Button::create("Debug");
     if (!DebugButtonForWindow) {
@@ -88,10 +89,8 @@ void mainGameHUD::initializeDebugButtons(tgui::Gui &gui, debugWindow& debugWindo
     DebugButtonForWindow->getRenderer()->setBackgroundColor(tgui::Color(100, 100, 100, 200));
     DebugButtonForWindow->getRenderer()->setTextColor(tgui::Color::White);
 
-    DebugButtonForWindow->onPress([&gui, &debugWindow]() {
-        if (debugWindow.getDebugWindow() == nullptr) {
-            debugWindow.initializeDebugWindow(gui);
-        }
+    DebugButtonForWindow->onPress([&gui, uiManager, &player]() {
+        uiManager->CreateDebugWindow(gui, player);
     });
     gui.add(DebugButtonForWindow);
 

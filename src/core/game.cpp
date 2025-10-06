@@ -17,20 +17,15 @@
 void game::initializeEntities() {
 
     playerInstance = std::make_unique<player>(0);
-    debugInstance = std::make_unique<debugHandler>();
     UIManagerInstance = std::make_unique<UIManager>();
 
     if (!playerInstance) {
         throw std::runtime_error("Failed to create player instance.");
     }
 
-    debugInstance->CurrentPlayer(*getPlayerPtr());
-
-    // for (int i = 0; i <= 3; i++) {
-    //     addEntityToList(std::make_unique<basicEnemy>(i));
-    // }
-
-    debugInstance->setDeveloperMode(true);
+     for (int i = 0; i <= 3; i++) {
+         addEntityToList(std::make_unique<basicEnemy>(i));
+    }
 
 
 }
@@ -106,14 +101,21 @@ void game::render(sf::RenderWindow &window,sf::View& view) {
     window.setView(view);
 
     renderPlayerAndEnemies(window);
-    renderDebug(window);
+    if (DeveloperMode) {
+        renderDebug(window);
+    }
 
 
 }
 
 void game::renderDebug(sf::RenderWindow &window) {
 
-    DebugBoxes(window);
+    if (UIManagerInstance->getDebugWindowPtr() != nullptr){
+        if (UIManagerInstance->getDebugWindowPtr()->getDebugHandlerInstance().getWantToShowCollisionBoxes()) {
+             collisionHandler::getInstance().render(window, getPlayerCollisionBox(), entityList, getPlayerShape());
+        }
+    }
+
 
 }
 
@@ -132,26 +134,7 @@ void game::renderPlayerAndEnemies(sf::RenderWindow& window) const {
 }
 
 void game::renderUI(tgui::Gui &gui) {
-    UIManagerInstance->RenderMainGameHUD(gui, *getPlayerPtr(), debugInstance->getDeveloperMode());
+    UIManagerInstance->RenderMainGameHUD(gui, *getPlayerPtr(), DeveloperMode);
 
-}
-
-void game::DebugBoxes(sf::RenderWindow& window) {
-    if (debugInstance->getWantToShowCollisionBoxes()) {
-
-        // Collision box for player
-        auto playerBox = getPlayerCollisionBox();
-        playerBox.setPosition(getPlayerShape().getPosition());
-        window.draw(playerBox);
-
-        // Collision boxes for enemies
-        for (const auto& enemy : entityList) {
-            if (enemy && enemy->getCollisionBox()) {
-                auto& enemyBox = *enemy->getCollisionBox();
-                enemyBox.setPosition(enemy->getEntityShape()->getPosition());
-                window.draw(enemyBox);
-            }
-        }
-    }
 }
 
