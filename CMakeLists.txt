@@ -54,6 +54,12 @@ add_executable(main src/main.cpp
         src/UI/mainGameHUD.h
         src/managers/UIManager.cpp
         src/managers/UIManager.h
+        src/UI/debugWindow.cpp
+        src/UI/debugWindow.h
+        src/UI/PlayerWidgets/panelInsideDebugWindow.cpp
+        src/UI/PlayerWidgets/panelInsideDebugWindow.h
+        src/UI/PlayerWidgets/optionWidgetsDebugWindow.cpp
+        src/UI/PlayerWidgets/optionWidgetsDebugWindow.h
 )
 
 # Link SFML libraries

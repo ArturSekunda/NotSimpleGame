@@ -3,11 +3,19 @@
 #define NOTSIMPLEGAME_DEBUGHANDLER_H
 
 
+class player;
+
 class debugHandler {
 
     debugHandler() = default;
+    ~debugHandler() = default;
 
-    bool isEnabled = false;
+private:
+
+
+private:
+    player* CurrentPlayerDebug = nullptr;
+
     bool wantToShowCollisionBoxes = false;
 public:
     static debugHandler& getInstance() {
@@ -15,12 +23,17 @@ public:
         return instance;
     }
 
-    void ToggleDebug();
     void ShowCollisionBoxes();
+    void ShowPlayerInfo();
+    void ShowPlayerSkillStatsInfo();
+    void ChangePlayerStat();
+    void ChangePlayerSkillStat();
+
+
 
     //Getters
-    bool getIsEnabled() const { return isEnabled; }
     bool getWantToShowCollisionBoxes() const { return wantToShowCollisionBoxes; }
+    void CurrentPlayer(player &player);
 };
 
 

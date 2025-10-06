@@ -6,7 +6,7 @@
 int main() {
     sf::Clock DeltaTimeClock;
 
-    bool DeveloperMode = true;
+    game::getInstance().setDeveloperMode(true);
 
     game::getInstance().initializeEntities();
 
@@ -45,10 +45,6 @@ int main() {
                 CameraView.setSize(event.size.width, event.size.height);
                 window.setView(CameraView);
                 UIManager::getInstance().UpdateTextSizes(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
-            }
-
-            if (event.type == sf::Event::KeyPressed && DeveloperMode) {
-                inputManager::getInstance().debugInput(event);
             }
         }
 

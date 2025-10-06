@@ -22,6 +22,8 @@ void game::initializeEntities() {
         throw std::runtime_error("Failed to create player instance.");
     }
 
+    debugHandler::getInstance().CurrentPlayer(*playerInstance);
+
     // for (int i = 0; i <= 3; i++) {
     //     addEntityToList(std::make_unique<basicEnemy>(i));
     // }
@@ -126,7 +128,8 @@ void game::renderPlayerAndEnemies(sf::RenderWindow& window) const {
 }
 
 void game::renderUI(tgui::Gui &gui) {
-    UIManager::getInstance().RenderMainGameHUD(gui, *getPlayerPtr());
+    UIManager::getInstance().RenderMainGameHUD(gui, *getPlayerPtr(), DeveloperMode);
+
 }
 
 void game::DebugBoxes(sf::RenderWindow& window) {

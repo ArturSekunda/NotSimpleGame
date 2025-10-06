@@ -2,6 +2,7 @@
 
 #include "mainGameHUD.h"
 
+#include "debugWindow.h"
 #include "entities/player/player.h"
 
 void mainGameHUD::initializePanels(tgui::Gui &gui) {
@@ -12,6 +13,7 @@ void mainGameHUD::initializePanels(tgui::Gui &gui) {
     if (!SidePanel || !TopPanel) {
         throw std::runtime_error("Failed to create panels");
     }
+
     // Side Panel
     SidePanel->setSize("20%", "100%");
     SidePanel->setPosition("80%", "15%");
@@ -25,7 +27,7 @@ void mainGameHUD::initializePanels(tgui::Gui &gui) {
     gui.add(TopPanel);
 }
 
-void mainGameHUD::initializeBars(const player &p) {
+void mainGameHUD::initializeBars() {
     // Create Bars
     HealthBar = tgui::ProgressBar::create();
     ManaBar = tgui::ProgressBar::create();
@@ -73,7 +75,28 @@ void mainGameHUD::initializeBars(const player &p) {
     StatsLayout->getRenderer()->setSpaceBetweenWidgets(3);
     StatsLayout->getRenderer()->setPadding(5);
     TopPanel->add(StatsLayout);
-    
+
+}
+
+void mainGameHUD::initializeDebugButtons(tgui::Gui &gui, debugWindow& debugWindow) {
+    // Create Debug Button
+    DebugButtonForWindow = tgui::Button::create("Debug");
+    if (!DebugButtonForWindow) {
+        throw std::runtime_error("Failed to create debug button");
+    }
+
+    DebugButtonForWindow->setSize("10%", "10%");
+    DebugButtonForWindow->setPosition("5%", "85%");
+    DebugButtonForWindow->getRenderer()->setBackgroundColor(tgui::Color(100, 100, 100, 200));
+    DebugButtonForWindow->getRenderer()->setTextColor(tgui::Color::White);
+
+    DebugButtonForWindow->onPress([&gui, &debugWindow]() {
+        if (debugWindow.getDebugWindow() == nullptr) {
+            debugWindow.initializeDebugWindow(gui);
+        }
+    });
+    gui.add(DebugButtonForWindow);
+
 }
 
 void mainGameHUD::DisplayPlayerNameAndLevel(const player &p) {

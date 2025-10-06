@@ -1,13 +1,14 @@
 #pragma once
-
-#include <TGUI/Backend/SFML-Graphics.hpp>
-
+#include <memory>
+#include "UI/debugWindow.h"
 #include "UI/mainGameHUD.h"
+#include <TGUI/Backend/SFML-Graphics.hpp>
 
 
 class mainGameHUD;
 class gameMenu;
 class player;
+class debugWindow;
 
 #ifndef NOTSIMPLEGAME_UIMANAGER_H
 #define NOTSIMPLEGAME_UIMANAGER_H
@@ -16,6 +17,7 @@ class player;
 class UIManager {
 private:
     std::unique_ptr<mainGameHUD> MainGameHUD = std::make_unique<mainGameHUD>();
+    std::unique_ptr<debugWindow> DebuggingWindow = std::make_unique<debugWindow>();
 public:
 
     static UIManager& getInstance() {
@@ -27,7 +29,7 @@ public:
 
 
 
-    void RenderMainGameHUD(tgui::Gui &gui, const player &p);
+    void RenderMainGameHUD(tgui::Gui &gui, const player &p, bool DeveloperMode);
 
     void UpdateTextSizes(float width, float height);
 

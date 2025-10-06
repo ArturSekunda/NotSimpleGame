@@ -34,6 +34,9 @@ public: // Initialization and Getters
     // Non-const version to modify player
     player* getPlayerPtr();
 
+    bool getDeveloperMode() const { return DeveloperMode; }
+    void setDeveloperMode(bool mode) { DeveloperMode = mode; }
+
 
     sf::Shape &getPlayerShape();
 
@@ -98,6 +101,8 @@ protected: // Debug and instantiates
     std::vector<std::unique_ptr<baseEntity>> entityList;
 
     std::unique_ptr<player> playerInstance;
+
+    bool DeveloperMode = true;
 
 };
 

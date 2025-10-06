@@ -6,11 +6,13 @@
 #define NOTSIMPLEGAME_MAINGAMEHUD_H
 #include <TGUI/Widgets/Panel.hpp>
 
+#include "TGUI/Widgets/Button.hpp"
 #include "TGUI/Widgets/Label.hpp"
 #include "TGUI/Widgets/ProgressBar.hpp"
 #include "TGUI/Widgets/VerticalLayout.hpp"
 
 
+class debugWindow;
 class player;
 
 class mainGameHUD {
@@ -27,6 +29,8 @@ class mainGameHUD {
      // Labels
      tgui::Label::Ptr PlayerNameLabel = nullptr;
      tgui::Label::Ptr XPLabel = nullptr;
+     // Button (Debug only)
+     tgui::Button::Ptr DebugButtonForWindow = nullptr;
 private:
     float windowWidth = 0.f;
     float windowHeight = 0.f;
@@ -45,10 +49,12 @@ public:
         PlayerNameEXPLayout = nullptr;
         PlayerNameLabel = nullptr;
         XPLabel = nullptr;
+        DebugButtonForWindow = nullptr;
     }
 
     void initializePanels(tgui::Gui& gui);
-    void initializeBars(const player& p);
+    void initializeBars();
+    void initializeDebugButtons(tgui::Gui& gui, debugWindow& debugWindow);
     void DisplayPlayerNameAndLevel(const player& p);
 
     void UpdateUI(const player& p);

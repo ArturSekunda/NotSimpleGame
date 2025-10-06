@@ -21,7 +21,6 @@ public:
         return instance;
     }
     sf::Vector2f pMovementDirection(float deltaTime,float speed);
-    void debugInput(const sf::Event &event);
 };
 
 
