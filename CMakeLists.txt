@@ -64,6 +64,8 @@ add_executable(main src/main.cpp
         src/UI/DebugWidgets/playerInfoLabelsDebugWindow.h
         src/UI/DebugWidgets/collisionButtonDebugWindow.cpp
         src/UI/DebugWidgets/collisionButtonDebugWindow.h
+        src/UI/DebugWidgets/playerChangeStatsDebugWindow.cpp
+        src/UI/DebugWidgets/playerChangeStatsDebugWindow.h
 )
 
 # Link SFML libraries

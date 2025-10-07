@@ -17,7 +17,7 @@ void UIManager::CreateDebugWindow(tgui::Gui &gui, player &player) {
 void UIManager::DestroyDebugWindow() {
     if (DebuggingWindow) {
         DebuggingWindow->CleanUp();
-        DebuggingWindow = nullptr;
+        DebuggingWindow.reset();
     }
 }
 
@@ -37,12 +37,36 @@ void UIManager::UpdateTextSizes(float width, float height){
 }
 
 void UIManager::UpdateAllUI(player &p) {
+    if (DebuggingWindow) {
+
+        if (DebuggingWindow->isPendingDestruction() == true) {
+            DestroyDebugWindow();
+            return;
+        }
+
+        if (DebuggingWindow->getDebugWindow() && DebuggingWindow->getDebugWindow()->isVisible()) {
+            DebuggingWindow->update(p);
+        }
+
+    }
+
     MainGameHUD->UpdateUI(p);
 
 }
 
 void UIManager::CleanAllUI() {
 
-    DebuggingWindow->CleanUp();
-    MainGameHUD->CleanUp();
+    std::cout << "DEBUG: UIManager::CleanAllUI() START\n";
+
+    if (DebuggingWindow) {
+        std::cout << "DEBUG: Cleaning DebuggingWindow\n";
+        DebuggingWindow->CleanUp();
+    }
+
+    if (MainGameHUD) {
+        std::cout << "DEBUG: Cleaning MainGameHUD\n";
+        MainGameHUD->CleanUp();
+    }
+
+    std::cout << "DEBUG: UIManager::CleanAllUI() END\n";
 }

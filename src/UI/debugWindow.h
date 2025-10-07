@@ -29,14 +29,18 @@ class debugWindow {
 
     tgui::ChildWindow::Ptr DebugWindow = nullptr;
 
+    bool pendingDestruction = false;
+
 
 public:
     tgui::ChildWindow::Ptr getDebugWindow() { return DebugWindow; }
-    debugHandler getDebugHandlerInstance() { return *debugHandlerInstance; }
+    const debugHandler& getDebugHandlerInstance()  const { return *debugHandlerInstance; }
 
     // Constructor and Destructor
     debugWindow() = default;
     ~debugWindow() = default;
+
+    bool isPendingDestruction() const { return pendingDestruction; }
 
     // Clean up resources
     void CleanUp();
@@ -44,9 +48,9 @@ public:
     // Initialize the debug window
     void initializeDebugWindow(tgui::Gui &gui, player& player);
 
-    void update();
+    void update(player &p);
 
-    void earnMainWindowSize(float width, float height) {
+    void UpdateTextSizes(float width, float height) {
         WindowWidth = width;
         WindowHeight = height;
     }

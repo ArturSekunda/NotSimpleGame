@@ -14,7 +14,7 @@ int main() {
     settings.antialiasingLevel = 4;
 
     // Create a Window and render it
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Test", sf::Style::Default, settings);
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Test", sf::Style::Default, settings);
     tgui::Gui gui{window};
 
     game::getInstance().renderUI(gui);
@@ -64,6 +64,7 @@ int main() {
 
         window.display();
     }
+    std::cout << "DEBUG: Cleaning UI before main() ends\n";
     game::getInstance().getUIManager()->CleanAllUI();
     return 0;
 }

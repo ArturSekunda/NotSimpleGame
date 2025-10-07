@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 #include "UI/debugWindow.h"
 #include "UI/mainGameHUD.h"
 #include <TGUI/Backend/SFML-Graphics.hpp>
@@ -20,19 +19,21 @@ private:
     std::unique_ptr<debugWindow> DebuggingWindow = nullptr;
 public:
 
-    debugWindow *getDebugWindowPtr() {
+    debugWindow* getDebugWindow() {
         return DebuggingWindow.get();
-    }
-
-    static UIManager& getInstance() {
-        static UIManager instance;
-        return instance;
     }
     UIManager() = default;
     ~UIManager() = default;
 
     UIManager* getUIManagerPtr() {
         return this;
+    }
+
+    bool getWantToShowCollisionBoxes() const {
+        if (!DebuggingWindow) {
+            return false;
+        }
+        return DebuggingWindow->getDebugHandlerInstance().getWantToShowCollisionBoxes();
     }
 
     void CreateDebugWindow(tgui::Gui& gui, player& player);

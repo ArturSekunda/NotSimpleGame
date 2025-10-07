@@ -7,12 +7,18 @@
 #include "TGUI/Widgets/ListBox.hpp"
 #include "TGUI/Widgets/VerticalLayout.hpp"
 #include "TGUI/Widgets/Grid.hpp"
+#include "collisionButtonDebugWindow.h"
+#include "playerInfoLabelsDebugWindow.h"
 
+class collisionButtonDebugWindow;
 class debugHandler;
 
 class optionWidgetsDebugWindow {
     tgui::ListBox::Ptr ListBox = nullptr;
     std::vector<tgui::String> ListBoxNames;
+
+    std::unique_ptr<collisionButtonDebugWindow> CollisionButton;
+    std::unique_ptr<playerInfoLabelsDebugWindow> PlayerInfoLabels;
 public:
     void initializeListBox(tgui::VerticalLayout &Layout);
     void listBoxHandler(tgui::VerticalLayout::Ptr Collision,
@@ -21,7 +27,12 @@ public:
                         tgui::VerticalLayout::Ptr PlayerInfo_SkillStats_2,
                         tgui::Grid::Ptr GridPlayerStatChange_Normal,
                         tgui::Grid::Ptr GridPlayerStatChange_SkillStats);
+    void widgetsHandler(debugHandler &debugHandlerInstance);
     tgui::ListBox::Ptr& getListBox() { return ListBox; }
+
+    playerInfoLabelsDebugWindow* getPlayerInfoLabelsDebugWindow() {
+        return PlayerInfoLabels.get();
+    }
 
     void CleanUp();
 

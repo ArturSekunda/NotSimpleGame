@@ -1,6 +1,3 @@
-//
-// Created by Artur on 5.10.2025.
-//
 
 #include "optionWidgetsDebugWindow.h"
 
@@ -9,6 +6,8 @@
 
 void optionWidgetsDebugWindow::initializeListBox(tgui::VerticalLayout &Layout) {
     ListBox = tgui::ListBox::create();
+    CollisionButton = std::make_unique<collisionButtonDebugWindow>();
+    PlayerInfoLabels = std::make_unique<playerInfoLabelsDebugWindow>();
     ListBoxNames = {"Collision","Player Info","Player Skill Stats Info","Player Stat Change","Player Skill Stat Change"};
     if (!ListBox) {
         throw std::runtime_error("Failed to create list box");
@@ -20,13 +19,17 @@ void optionWidgetsDebugWindow::initializeListBox(tgui::VerticalLayout &Layout) {
     ListBox->getRenderer()->setBorderColor(tgui::Color(0, 0, 0, 200));
     ListBox->getRenderer()->setBorders(2);
     ListBox->addMultipleItems(ListBoxNames);
-    ListBox->setSelectedItem("Player Info");
+    ListBox->setSelectedItem("Collision");
     Layout.add(ListBox);
 
 }
 
 void optionWidgetsDebugWindow::listBoxHandler(tgui::VerticalLayout::Ptr Collision, tgui::VerticalLayout::Ptr PlayerInfo_Normal,tgui::VerticalLayout::Ptr PlayerInfo_SkillStats, tgui::VerticalLayout::Ptr PlayerInfo_SkillStats_2,
     tgui::Grid::Ptr GridPlayerStatChange_Normal, tgui::Grid::Ptr GridPlayerStatChange_SkillStats) {
+    CollisionButton->initializeCollisionButton(Collision);
+    PlayerInfoLabels->initializePlayerInfo_Normal(*PlayerInfo_Normal);
+    PlayerInfoLabels->initializePlayerInfo_SkillStats(*PlayerInfo_SkillStats);
+    PlayerInfoLabels->initializePlayerInfo_SkillStats_2(*PlayerInfo_SkillStats_2);
 
     ListBox->onItemSelect([Collision, PlayerInfo_Normal,PlayerInfo_SkillStats,PlayerInfo_SkillStats_2,GridPlayerStatChange_Normal,GridPlayerStatChange_SkillStats](const tgui::String& item) {
         if (item == "Collision") {
@@ -51,6 +54,7 @@ void optionWidgetsDebugWindow::listBoxHandler(tgui::VerticalLayout::Ptr Collisio
             }
         }
         else if (item == "Player Info") {
+            std::printf("Player Info\n");
             if (Collision) {
                 Collision->setVisible(false);
             }
@@ -134,8 +138,20 @@ void optionWidgetsDebugWindow::listBoxHandler(tgui::VerticalLayout::Ptr Collisio
 
 }
 
+void optionWidgetsDebugWindow::widgetsHandler(debugHandler &debugHandlerInstance) {
+
+    CollisionButton->getCollisionButton()->onClick([&debugHandlerInstance] {
+        debugHandlerInstance.ShowCollisionBoxes();
+
+    });
+}
+
+
 void optionWidgetsDebugWindow::CleanUp() {
     ListBox = nullptr;
+
+    CollisionButton->CleanUp();
+    PlayerInfoLabels->CleanUp();
 }
 
 

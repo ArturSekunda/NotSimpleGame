@@ -110,8 +110,8 @@ void game::render(sf::RenderWindow &window,sf::View& view) {
 
 void game::renderDebug(sf::RenderWindow &window) {
 
-    if (UIManagerInstance->getDebugWindowPtr() != nullptr){
-        if (UIManagerInstance->getDebugWindowPtr()->getDebugHandlerInstance().getWantToShowCollisionBoxes()) {
+    if (UIManagerInstance->getDebugWindow() != nullptr){
+        if (UIManagerInstance->getWantToShowCollisionBoxes()) {
              collisionHandler::getInstance().render(window, getPlayerCollisionBox(), entityList, getPlayerShape());
         }
     }
