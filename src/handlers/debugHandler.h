@@ -25,7 +25,6 @@ public:
 
     //Getters
     bool getWantToShowCollisionBoxes() const { return wantToShowCollisionBoxes; }
-    void CurrentPlayer(player &player);
     bool getIsPlayerAlive();
     float getPlayerHealth();
     float getPlayerMaxHealth();
@@ -38,7 +37,8 @@ public:
     int getPlayerLevel();
     sf::Vector2f getPlayerLocation();
     std::string getPlayerName();
-    baseStats getPlayerBaseStats();
+
+    baseStats& getPlayerBaseStats();
 
 
 
@@ -55,7 +55,7 @@ public:
     void setPlayerDefense(float defense);
     void setPlayerLevel(int level);
     void setPlayerName(const std::string& name);
-    void setPlayerBaseStats(const baseStats& stats);
+    void setPlayerBaseStats(baseStats& stats);
 };
 
 

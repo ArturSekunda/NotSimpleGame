@@ -17,6 +17,10 @@ class UIManager {
 private:
     std::unique_ptr<mainGameHUD> MainGameHUD = std::make_unique<mainGameHUD>();
     std::unique_ptr<debugWindow> DebuggingWindow = nullptr;
+
+    // Update
+    float timeSinceLastFrame = 0;
+    const float timeBetweenFrames = 0.033f;
 public:
 
     debugWindow* getDebugWindow() {
@@ -44,7 +48,7 @@ public:
     void RenderMainGameHUD(tgui::Gui &gui, player &p, bool developermode);
     void UpdateTextSizes(float width, float height);
 
-    void UpdateAllUI(player& p);
+    void UpdateAllUI(player& p, float deltaTime);
 
     void CleanAllUI();
 

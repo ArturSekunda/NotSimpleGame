@@ -5,6 +5,8 @@
 
 int main() {
     sf::Clock DeltaTimeClock;
+    int frameCount = 0;
+    sf::Clock FPSClock;
 
 
 
@@ -48,6 +50,14 @@ int main() {
             }
         }
 
+        // FPS Calculation
+        frameCount++;
+        if (FPSClock.getElapsedTime().asSeconds() >= 1.0f) {
+            window.setTitle("SFML Test - FPS: " + std::to_string(frameCount));
+            frameCount = 0;
+            FPSClock.restart();
+        }
+
 
         // Delta Time Calculation
         game::getInstance().setDeltaTime(DeltaTimeClock.restart().asSeconds());
@@ -68,4 +78,3 @@ int main() {
     game::getInstance().getUIManager()->CleanAllUI();
     return 0;
 }
-

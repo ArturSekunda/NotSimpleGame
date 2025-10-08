@@ -69,7 +69,7 @@ void game::Updater() {
 
     }
     // Update UI
-    UIManagerInstance->UpdateAllUI(*getPlayerPtr());
+    UIManagerInstance->UpdateAllUI(*getPlayerPtr(), DeltaTime);
 }
 
 // Remove an enemy from the list by index

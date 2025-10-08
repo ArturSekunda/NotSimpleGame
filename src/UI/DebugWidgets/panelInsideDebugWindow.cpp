@@ -20,6 +20,8 @@ void panelInsideDebugWindow::initinitializePanel(tgui::ChildWindow &DebugWindow)
     initializePlayerInfo_SkillStats();
     initializePlayerInfo_SkillStats_2();
     initializeCollisionButton();
+    initializePlayerStatChange_Normal();
+    initializePlayerStatChange_SkillStats();
 
     DebugWindow.add(InsidePanel);
 
@@ -82,4 +84,27 @@ void panelInsideDebugWindow::initializeCollisionButton() {
     VerticalLayoutCollisionButton->getRenderer()->setPadding(5);
     VerticalLayoutCollisionButton->setVisible(true);
     InsidePanel->add(VerticalLayoutCollisionButton);
+}
+
+void panelInsideDebugWindow::initializePlayerStatChange_Normal() {
+    GridPlayerStatChange_Normal = tgui::Grid::create();
+    if (!GridPlayerStatChange_Normal) {
+        throw std::runtime_error("Failed to create grid for player stat change normal");
+    }
+    GridPlayerStatChange_Normal->setSize("68%","98%");
+    GridPlayerStatChange_Normal->setPosition("31%","1%");
+    GridPlayerStatChange_Normal->setVisible(false);
+    InsidePanel->add(GridPlayerStatChange_Normal);
+
+}
+
+void panelInsideDebugWindow::initializePlayerStatChange_SkillStats() {
+    GridPlayerStatChange_SkillStats = tgui::Grid::create();
+    if (!GridPlayerStatChange_SkillStats) {
+        throw std::runtime_error("Failed to create grid for player stat change skillstats");
+    }
+    GridPlayerStatChange_SkillStats->setSize("68%","98%");
+    GridPlayerStatChange_SkillStats->setPosition("31%","1%");
+    GridPlayerStatChange_SkillStats->setVisible(false);
+    InsidePanel->add(GridPlayerStatChange_SkillStats);
 }

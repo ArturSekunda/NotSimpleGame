@@ -40,16 +40,18 @@ void debugWindow::initializeDebugWindow(tgui::Gui &gui, player& player) {
     });
 }
 
-void debugWindow::update(player &p) {
-    if (!debugHandlerInstance) {
+void debugWindow::update() {
+    if (!DebugWindow || !debugHandlerInstance || !optionList) {
         return;
     }
-
     tgui::Vector2f debugWindowSize = DebugWindow->getSize();
     WindowWidth = debugWindowSize.x;
     WindowHeight = debugWindowSize.y;
 
-
+    const float SIZE_THRESHOLD = 2.0f;
+    float widthDiff = std::abs(WindowWidth - PreviousWindowWidth);
+    float heightDiff = std::abs(WindowHeight - PreviousWindowHeight);
+    bool sizeChanged = (widthDiff >= SIZE_THRESHOLD || heightDiff >= SIZE_THRESHOLD);
 
     std::string PlayerName = debugHandlerInstance->getPlayerName();
     auto IsAlive = debugHandlerInstance->getIsPlayerAlive();
@@ -75,32 +77,30 @@ void debugWindow::update(player &p) {
         return;
     }
     optionList->getPlayerInfoLabelsDebugWindow()->updatePlayerInfo_Normal(
-        PlayerName,
-        IsAlive,
-        static_cast<int>(Health),
-        static_cast<int>(Defense),
-        static_cast<int>(Speed),
-        static_cast<int>(Mana),
-        Level,
-        EXP,
-        EXP_MAX
-    );
+        PlayerName, IsAlive, static_cast<int>(Health),
+        static_cast<int>(Defense), static_cast<int>(Speed),
+        static_cast<int>(Mana), Level, EXP, EXP_MAX
+        );
 
     optionList->getPlayerInfoLabelsDebugWindow()->updatePlayerInfo_SkillStats(
-        Strength,
-        Dexterity,
-        Intelligence,
-        Endurance
-    );
+        Strength, Dexterity, Intelligence, Endurance
+        );
 
     optionList->getPlayerInfoLabelsDebugWindow()->updatePlayerInfo_SkillStats_2(
-        Luck,
-        Charisma,
-        Vitality,
-        Points
-    );
+        Luck, Charisma, Vitality, Points
+        );
 
-    optionList->getPlayerInfoLabelsDebugWindow()->UpdateTextSizes(WindowWidth, WindowHeight);
+    optionList->getPlayerChangeStatsDebugWindow()->UpdateTextInfo(
+        Strength, Dexterity, Intelligence, Endurance, Luck, Charisma, Vitality, Points
+        );
+
+    if (sizeChanged) {
+        optionList->getPlayerInfoLabelsDebugWindow()->UpdateTextSizes(WindowWidth, WindowHeight);
+        optionList->getPlayerChangeStatsDebugWindow()->UpdateSizes(WindowWidth, WindowHeight);
+
+        PreviousWindowWidth = WindowWidth;
+        PreviousWindowHeight = WindowHeight;
+    }
 }
 
 void debugWindow::CleanUp() {

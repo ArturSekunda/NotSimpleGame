@@ -22,6 +22,16 @@ struct baseStats {
     int points = 0;
 
     void addPoints(int p) { points += p; }
+    void subtractPoints(int p) { points -= p; }
+
+    void setStrength(int s) { strength = s;}
+    void setDexterity(int d) { dexterity = d; }
+    void setIntelligence(int i) { intelligence = i; }
+    void setEndurance(int e) { endurance = e; }
+    void setLuck(int l) { luck = l; }
+    void setCharisma(int c) { charisma = c; }
+    void setVitality(int v) { vitality = v; }
+
 
 };
 

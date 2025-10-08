@@ -29,6 +29,8 @@ public:
     void initializePlayerInfo_SkillStats();
     void initializePlayerInfo_SkillStats_2();
     void initializeCollisionButton();
+    void initializePlayerStatChange_Normal();
+    void initializePlayerStatChange_SkillStats();
 
     void CleanUp() {
         InsidePanel = nullptr;

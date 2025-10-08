@@ -27,6 +27,9 @@ class debugWindow {
     float WindowWidth = 0.f;
     float WindowHeight = 0.f;
 
+    float PreviousWindowWidth = 0.f;
+    float PreviousWindowHeight = 0.f;
+
     tgui::ChildWindow::Ptr DebugWindow = nullptr;
 
     bool pendingDestruction = false;
@@ -48,7 +51,7 @@ public:
     // Initialize the debug window
     void initializeDebugWindow(tgui::Gui &gui, player& player);
 
-    void update(player &p);
+    void update();
 
     void UpdateTextSizes(float width, float height) {
         WindowWidth = width;

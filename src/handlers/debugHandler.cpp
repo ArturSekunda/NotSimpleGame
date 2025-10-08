@@ -14,10 +14,6 @@ void debugHandler::ShowCollisionBoxes(){
     std::cout << "Collision boxes toggled to: " << wantToShowCollisionBoxes << std::endl;
 }
 
-void debugHandler::CurrentPlayer(player &player) {
-    CurrentPlayerDebug = player;
-}
-
 bool debugHandler::getIsPlayerAlive() {
     return CurrentPlayerDebug.getIsAlive();
 }
@@ -66,7 +62,7 @@ std::string debugHandler::getPlayerName() {
         return CurrentPlayerDebug.getPlayerName();
 }
 
-baseStats debugHandler::getPlayerBaseStats() {
+baseStats& debugHandler::getPlayerBaseStats() {
     return CurrentPlayerDebug.getStats();
 }
 
@@ -114,6 +110,6 @@ void debugHandler::setPlayerName(const std::string &name) {
     CurrentPlayerDebug.setPlayerName(name);
 }
 
-void debugHandler::setPlayerBaseStats(const baseStats &stats) {
+void debugHandler::setPlayerBaseStats(baseStats &stats) {
     CurrentPlayerDebug.setStats(stats);
 }

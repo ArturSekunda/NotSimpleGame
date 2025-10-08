@@ -8,6 +8,7 @@ void optionWidgetsDebugWindow::initializeListBox(tgui::VerticalLayout &Layout) {
     ListBox = tgui::ListBox::create();
     CollisionButton = std::make_unique<collisionButtonDebugWindow>();
     PlayerInfoLabels = std::make_unique<playerInfoLabelsDebugWindow>();
+    PlayerStatChange_SkillStats = std::make_unique<playerChangeStatsDebugWindow>();
     ListBoxNames = {"Collision","Player Info","Player Skill Stats Info","Player Stat Change","Player Skill Stat Change"};
     if (!ListBox) {
         throw std::runtime_error("Failed to create list box");
@@ -30,6 +31,8 @@ void optionWidgetsDebugWindow::listBoxHandler(tgui::VerticalLayout::Ptr Collisio
     PlayerInfoLabels->initializePlayerInfo_Normal(*PlayerInfo_Normal);
     PlayerInfoLabels->initializePlayerInfo_SkillStats(*PlayerInfo_SkillStats);
     PlayerInfoLabels->initializePlayerInfo_SkillStats_2(*PlayerInfo_SkillStats_2);
+    PlayerInfoLabels->combineAllVectors();
+    PlayerStatChange_SkillStats->initializePlayerChangeStats(*GridPlayerStatChange_SkillStats);
 
     ListBox->onItemSelect([Collision, PlayerInfo_Normal,PlayerInfo_SkillStats,PlayerInfo_SkillStats_2,GridPlayerStatChange_Normal,GridPlayerStatChange_SkillStats](const tgui::String& item) {
         if (item == "Collision") {
@@ -142,8 +145,8 @@ void optionWidgetsDebugWindow::widgetsHandler(debugHandler &debugHandlerInstance
 
     CollisionButton->getCollisionButton()->onClick([&debugHandlerInstance] {
         debugHandlerInstance.ShowCollisionBoxes();
-
     });
+     PlayerStatChange_SkillStats->HandleButtonClicks(debugHandlerInstance.getPlayerBaseStats());
 }
 
 
@@ -152,6 +155,7 @@ void optionWidgetsDebugWindow::CleanUp() {
 
     CollisionButton->CleanUp();
     PlayerInfoLabels->CleanUp();
+    PlayerStatChange_SkillStats->CleanUp();
 }
 
 

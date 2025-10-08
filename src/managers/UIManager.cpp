@@ -36,22 +36,26 @@ void UIManager::UpdateTextSizes(float width, float height){
     MainGameHUD->UpdateTextSizes(width, height);
 }
 
-void UIManager::UpdateAllUI(player &p) {
-    if (DebuggingWindow) {
+void UIManager::UpdateAllUI(player &p, float deltaTime) {
+    timeSinceLastFrame += deltaTime;
 
-        if (DebuggingWindow->isPendingDestruction() == true) {
-            DestroyDebugWindow();
-            return;
+    if (timeSinceLastFrame >= timeSinceLastFrame) {
+        if (DebuggingWindow) {
+
+            if (DebuggingWindow->isPendingDestruction() == true) {
+                DestroyDebugWindow();
+                return;
+            }
+
+            if (DebuggingWindow->getDebugWindow() && DebuggingWindow->getDebugWindow()->isVisible()) {
+                DebuggingWindow->update();
+            }
+
         }
 
-        if (DebuggingWindow->getDebugWindow() && DebuggingWindow->getDebugWindow()->isVisible()) {
-            DebuggingWindow->update(p);
-        }
-
+        MainGameHUD->UpdateUI(p);
+        timeSinceLastFrame = 0.f;
     }
-
-    MainGameHUD->UpdateUI(p);
-
 }
 
 void UIManager::CleanAllUI() {

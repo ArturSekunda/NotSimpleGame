@@ -52,7 +52,7 @@ public: // Setters
     void setEXP_MAX(float exp_max) {
         EXP_MAX = exp_max;
     }
-    void setStats(baseStats stats) {
+    void setStats(baseStats& stats) {
         PlayerStats = stats;
     }
 
@@ -74,7 +74,8 @@ public: // Getters
     float getEXP_MAX() const {
         return EXP_MAX;
     }
-    baseStats getStats() const {
+
+    baseStats &getStats() {
         return PlayerStats;
     }
     std::string getPlayerName() const {
