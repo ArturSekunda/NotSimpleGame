@@ -50,6 +50,10 @@ NotSimpleGame/
 
 Using **CodeScene** for code quality analysis and project insights.
 
+[![CodeScene Average Code Health](https://codescene.io/projects/72111/status-badges/average-code-health)](https://codescene.io/projects/72111)
+[![CodeScene Hotspot Code Health](https://codescene.io/projects/72111/status-badges/hotspot-code-health)](https://codescene.io/projects/72111)
+[![CodeScene System Mastery](https://codescene.io/projects/72111/status-badges/system-mastery)](https://codescene.io/projects/72111)
+
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
