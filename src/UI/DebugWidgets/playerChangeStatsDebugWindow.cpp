@@ -120,7 +120,7 @@ void playerChangeStatsDebugWindow::initializeButtons(tgui::Grid::Ptr Grid) {
 
 
     for (auto& newclmap: Buttons) {
-        newclmap->setText("+");
+        newclmap->setText("Set");
         newclmap->getRenderer()->setTextColor(tgui::Color::White);
         newclmap->getRenderer()->setBackgroundColor(tgui::Color(50, 50, 50, 200));
         Grid->add(newclmap);
@@ -151,39 +151,38 @@ void playerChangeStatsDebugWindow::UpdateSizes(float width, float height) {
     cachedWidgetHeight = newWidgetHeight;
 }
 
-void playerChangeStatsDebugWindow::UpdateTextInfo(const int strength, const int dexterity, const int intelligence,
-    const int endurance, const int luck, const int charisma, const int vitality, const int points) {
+void playerChangeStatsDebugWindow::UpdateTextInfo(const baseStats& stats) {
 
-    if (Label_Strength && strength != Strength) {
-        Strength = strength;
+    if (Label_Strength && stats.strength != Strength) {
+        Strength = stats.strength;
         Label_Strength->setText("Strength: " + std::to_string(Strength));
     }
-    if (Label_Dexterity && dexterity != Dexterity) {
-        Dexterity = dexterity;
+    if (Label_Dexterity && stats.dexterity != Dexterity) {
+        Dexterity = stats.dexterity;
         Label_Dexterity->setText("Dexterity: " + std::to_string(Dexterity));
     }
-    if (Label_Intelligence && intelligence != Intelligence) {
-        Intelligence = intelligence;
+    if (Label_Intelligence && stats.intelligence != Intelligence) {
+        Intelligence = stats.intelligence;
         Label_Intelligence->setText("Intelligence: " + std::to_string(Intelligence));
     }
-    if (Label_Endurance && endurance != Endurance) {
-        Endurance = endurance;
+    if (Label_Endurance && stats.endurance != Endurance) {
+        Endurance = stats.endurance;
         Label_Endurance->setText("Endurance: " + std::to_string(Endurance));
     }
-    if (Label_Luck && luck != Luck) {
-        Luck = luck;
+    if (Label_Luck && stats.luck != Luck) {
+        Luck = stats.luck;
         Label_Luck->setText("Luck: " + std::to_string(Luck));
     }
-    if (Label_Charisma && charisma != Charisma) {
-        Charisma = charisma;
+    if (Label_Charisma && stats.charisma != Charisma) {
+        Charisma = stats.charisma;
         Label_Charisma->setText("Charisma: " + std::to_string(Charisma));
     }
-    if (Label_Vitality && vitality != Vitality) {
-        Vitality = vitality;
+    if (Label_Vitality && stats.vitality != Vitality) {
+        Vitality = stats.vitality;
         Label_Vitality->setText("Vitality: " + std::to_string(Vitality));
     }
-    if (Label_Points && points != Points) {
-        Points = points;
+    if (Label_Points && stats.points != Points) {
+        Points = stats.points;
         Label_Points->setText("Points: " + std::to_string(Points));
     }
 }

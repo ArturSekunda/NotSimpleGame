@@ -6,8 +6,8 @@
 #define NOTSIMPLEGAME_OPTIONWIDGETSDEBUGWINDOW_H
 #include "TGUI/Widgets/ListBox.hpp"
 #include "TGUI/Widgets/VerticalLayout.hpp"
-#include "TGUI/Widgets/Grid.hpp"
 #include "collisionButtonDebugWindow.h"
+#include "playerChangeNormalStatsDebugWindow.h"
 #include "playerChangeStatsDebugWindow.h"
 #include "playerInfoLabelsDebugWindow.h"
 
@@ -30,6 +30,9 @@ class optionWidgetsDebugWindow {
     std::unique_ptr<collisionButtonDebugWindow> CollisionButton;
     std::unique_ptr<playerInfoLabelsDebugWindow> PlayerInfoLabels;
     std::unique_ptr<playerChangeStatsDebugWindow> PlayerStatChange_SkillStats;
+    std::unique_ptr<playerChangeNormalStatsDebugWindow> PlayerChangeNormalStats;
+
+
 
     std::map<ActivePanel, tgui::Widget::Ptr> PanelWidgets;
     std::map<tgui::String, ActivePanel> ItemToPanel;
@@ -47,6 +50,9 @@ public:
     }
     playerChangeStatsDebugWindow* getPlayerChangeStatsDebugWindow() {
         return PlayerStatChange_SkillStats.get();
+    }
+    playerChangeNormalStatsDebugWindow* getPlayerChangeNormalStatsDebugWindow() {
+        return PlayerChangeNormalStats.get();
     }
 
 

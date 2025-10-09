@@ -31,8 +31,8 @@ void player::setPlayerStats() {
     this->speed = 200.f;
     this->health = 100.f;
     this->maxHealth = 100.f;
-    this->mana = 50.f;
-    this->maxMana = 50.f;
+    this->mana = 50;
+    this->maxMana = 50;
     this->isAlive = true;
 
     this->defense = 0.f;

@@ -34,8 +34,6 @@ class debugWindow {
 
     bool pendingDestruction = false;
 
-    std::map<std::string, int> SkillStats;
-
 
 public:
     tgui::ChildWindow::Ptr getDebugWindow() { return DebugWindow; }
@@ -59,7 +57,7 @@ public:
 
     bool changeSize() const;
 
-    void updateLayoutsAndSizes(std::string PlayerName, bool IsAlive, float Health, float Defense, float Speed, float Mana, int Level, float EXP, float EXP_MAX);
+    void updateLayoutsAndSizes(std::string PlayerName, bool IsAlive, float Health, float Defense, float Speed, int Mana, int Level, float EXP, float EXP_MAX, baseStats& SkillStats);
 
 };
 

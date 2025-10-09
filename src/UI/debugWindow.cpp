@@ -56,16 +56,8 @@ void debugWindow::update() {
 
 
     baseStats skillStats = debugHandlerInstance->getPlayerBaseStats();
-    SkillStats["Strength"] = skillStats.strength;
-    SkillStats["Dexterity"] = skillStats.dexterity;
-    SkillStats["Intelligence"] = skillStats.intelligence;
-    SkillStats["Endurance"] = skillStats.endurance;
-    SkillStats["Luck"] = skillStats.luck;
-    SkillStats["Charisma"] = skillStats.charisma;
-    SkillStats["Vitality"] = skillStats.vitality;
-    SkillStats["Points"] = skillStats.points;
 
-    updateLayoutsAndSizes(PlayerName, IsAlive, Health, Defense, Speed, Mana, Level, EXP, EXP_MAX);
+    updateLayoutsAndSizes(PlayerName, IsAlive, Health, Defense, Speed, Mana, Level, EXP, EXP_MAX, skillStats);
 
     if (changeSize()) {
         PreviousWindowWidth = WindowWidth;
@@ -87,7 +79,7 @@ bool debugWindow::changeSize() const {
     return widthDiff >= SIZE_THRESHOLD || heightDiff >= SIZE_THRESHOLD;
 }
 
-void debugWindow::updateLayoutsAndSizes(std::string PlayerName, bool IsAlive, float Health, float Defense, float Speed, float Mana, int Level, float EXP, float EXP_MAX) {
+void debugWindow::updateLayoutsAndSizes(std::string PlayerName, bool IsAlive, float Health, float Defense, float Speed, int Mana, int Level, float EXP, float EXP_MAX, baseStats& Stats) {
     switch (optionList->getCurrentPanel()) {
         case ActivePanel::Collision:
 
@@ -96,7 +88,7 @@ void debugWindow::updateLayoutsAndSizes(std::string PlayerName, bool IsAlive, fl
             optionList->getPlayerInfoLabelsDebugWindow()->updatePlayerInfo_Normal(
                 PlayerName, IsAlive, static_cast<int>(Health),
                 static_cast<int>(Defense), static_cast<int>(Speed),
-                static_cast<int>(Mana), Level, EXP, EXP_MAX
+                Mana, Level, EXP, EXP_MAX
             );
 
             if (changeSize()) {
@@ -107,8 +99,7 @@ void debugWindow::updateLayoutsAndSizes(std::string PlayerName, bool IsAlive, fl
         }
         case ActivePanel::PlayerSkillStatsInfo: {
             optionList->getPlayerInfoLabelsDebugWindow()->updatePlayerInfo_SkillStats(
-                SkillStats.at("Strength"), SkillStats.at("Dexterity"), SkillStats.at("Intelligence"), SkillStats.at("Endurance"), SkillStats.at("Luck"), SkillStats.at("Charisma"), SkillStats.at("Vitality"), SkillStats.at("Points")
-            );
+                Stats.strength, Stats.dexterity, Stats.intelligence, Stats.endurance, Stats.luck, Stats.charisma, Stats.vitality, Stats.points);
 
             if (changeSize()) {
                 optionList->getPlayerInfoLabelsDebugWindow()->UpdateTextSizes_SkillStats(WindowWidth, WindowHeight);
@@ -117,13 +108,16 @@ void debugWindow::updateLayoutsAndSizes(std::string PlayerName, bool IsAlive, fl
             break;
         }
         case ActivePanel::PlayerStatChange:
+            optionList->getPlayerChangeNormalStatsDebugWindow()->UpdateTextInfo(
+                IsAlive, Health, Defense, Speed, Mana, Level, EXP
+                );
 
+            if (changeSize()) {
+                optionList->getPlayerChangeNormalStatsDebugWindow()->UpdateSizes(WindowWidth, WindowHeight);
+            }
             break;
         case ActivePanel::PlayerSkillStatChange: {
-            optionList->getPlayerChangeStatsDebugWindow()->UpdateTextInfo(
-                SkillStats.at("Strength"), SkillStats.at("Dexterity"), SkillStats.at("Intelligence"), SkillStats.at("Endurance"),
-                SkillStats.at("Luck"), SkillStats.at("Charisma"), SkillStats.at("Vitality"), SkillStats.at("Points")
-            );
+            optionList->getPlayerChangeStatsDebugWindow()->UpdateTextInfo(Stats);
 
             if (changeSize()) {
                 optionList->getPlayerChangeStatsDebugWindow()->UpdateSizes(WindowWidth, WindowHeight);
@@ -155,7 +149,6 @@ void debugWindow::CleanUp() {
 
     debugHandlerInstance.reset();
 
-    SkillStats.clear();
 
     WindowWidth = 0.f;
     WindowHeight = 0.f;

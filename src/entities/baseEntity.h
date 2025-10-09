@@ -72,8 +72,8 @@ public: // Section for getters
     float getHealth() const { return health; }
     float getMaxHealth() const { return maxHealth; }
     float getSpeed() const { return speed; }
-    float getMana() const { return mana; }
-    float getMaxMana() const { return maxMana; }
+    int getMana() const { return mana; }
+    int getMaxMana() const { return maxMana; }
     bool getIsAlive() const { return isAlive; }
     sf::Vector2f getPosition() const { return getEntityShape()->getPosition(); }
     std::shared_ptr<sf::Shape> getEntityShape() const { return entityShape; }

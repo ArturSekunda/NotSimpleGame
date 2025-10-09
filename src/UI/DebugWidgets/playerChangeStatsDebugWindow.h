@@ -75,7 +75,7 @@ public:
 
     void UpdateSizes(float width, float height);
 
-    void UpdateTextInfo(const int strength, const int dexterity, const int intelligence, const int endurance, const int luck, const int charisma, const int vitality, const int points);
+    void UpdateTextInfo(const baseStats& stats);
 
     void HandleButtonClicks(baseStats &playerStats);
 

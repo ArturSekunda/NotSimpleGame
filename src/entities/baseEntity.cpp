@@ -8,8 +8,8 @@
 baseEntity::baseEntity(int localID):
 health(100.0f),
 maxHealth(100.0f),
-mana(50.0f),
-maxMana(50.0f),
+mana(50),
+maxMana(50),
 defense(0.0f),
 speed(100.0f),
 isAlive(true),

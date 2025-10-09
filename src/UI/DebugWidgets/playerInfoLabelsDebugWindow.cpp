@@ -124,7 +124,7 @@ void playerInfoLabelsDebugWindow::updatePlayerInfo_Normal(const std::string &nam
     }
     if (isAlive != PlayerIsAlive) {
         PlayerIsAlive = isAlive;
-        P_IsAlive->setText("Is Alive: " + std::string(isAlive ? "Yes" : "No"));
+        P_IsAlive->setText("Is Alive: " + std::string(isAlive ? "True" : "False"));
     }
     if (health != PlayerHealth) {
         PlayerHealth = health;
