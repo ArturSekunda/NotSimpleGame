@@ -4,8 +4,10 @@
 
 #include "playerInfoLabelsDebugWindow.h"
 
+#include "TGUI/Widgets/Grid.hpp"
+
 // Initialize the labels for player information
-void playerInfoLabelsDebugWindow::initializePlayerInfo_Normal(tgui::VerticalLayout &Layout) {
+void playerInfoLabelsDebugWindow::initializePlayerInfo_Normal(tgui::VerticalLayout::Ptr Layout) {
 
     // Create labels directly
     P_Name = tgui::Label::create();
@@ -32,57 +34,50 @@ void playerInfoLabelsDebugWindow::initializePlayerInfo_Normal(tgui::VerticalLayo
     // Set common properties for all labels
     for (const auto& label: L_PInfo_Normal) {
         label->getRenderer()->setTextColor(tgui::Color::White);
-        Layout.add(label);
+        Layout->add(label);
     }
 }
 
 // Initialize the labels for player skill stats
-void playerInfoLabelsDebugWindow::initializePlayerInfo_SkillStats(tgui::VerticalLayout &Layout) {
-
+void playerInfoLabelsDebugWindow::initializePlayerInfo_SkillStats(tgui::Grid::Ptr Layout) {
     // Create labels directly
     P_Strength = tgui::Label::create();
     P_Dexterity = tgui::Label::create();
     P_Intelligence = tgui::Label::create();
     P_Endurance = tgui::Label::create();
+    P_Luck = tgui::Label::create();
+    P_Charisma = tgui::Label::create();
+    P_Vitality = tgui::Label::create();
+    P_Points = tgui::Label::create();
 
-    if (!P_Strength || !P_Dexterity || !P_Intelligence || !P_Endurance) {
+    if (!P_Strength || !P_Dexterity || !P_Intelligence || !P_Endurance || !P_Luck || !P_Charisma || !P_Vitality || !P_Points) {
         throw std::runtime_error("Failed to create player info labels skillstats");
     }
 
     L_PInfo_SkillStats = {
         P_Strength, P_Dexterity, P_Intelligence, P_Endurance
     };
-
-    // Set common properties for all labels
-    for (const auto& label: L_PInfo_SkillStats) {
-        label->getRenderer()->setTextColor(tgui::Color::White);
-        Layout.add(label);
-    }
-
-
-}
-
-void playerInfoLabelsDebugWindow::initializePlayerInfo_SkillStats_2(tgui::VerticalLayout &Layout) {
-
-    // Create labels directly
-    P_Luck = tgui::Label::create();
-    P_Charisma = tgui::Label::create();
-    P_Vitality = tgui::Label::create();
-    P_Points = tgui::Label::create();
-
-    if (!P_Luck || !P_Charisma || !P_Vitality || !P_Points) {
-        throw std::runtime_error("Failed to create player info labels skillstats 2");
-    }
-
     L_PInfo_SkillStats_2 = {
         P_Luck, P_Charisma, P_Vitality, P_Points
     };
 
-    // Set common properties for all labels
+    // Set common properties for all label
+    int i = 0;
+    int j = 0;
+    for (const auto& label: L_PInfo_SkillStats) {
+        label->getRenderer()->setTextColor(tgui::Color::White);
+        Layout->add(label);
+        Layout->setWidgetCell(label, i , 0);
+        i++;
+    }
+
     for (const auto& label: L_PInfo_SkillStats_2) {
         label->getRenderer()->setTextColor(tgui::Color::White);
-        Layout.add(label);
+        Layout->add(label);
+        Layout->setWidgetCell(label, j , 1);
+        j++;
     }
+
 
 }
 
@@ -163,7 +158,7 @@ void playerInfoLabelsDebugWindow::updatePlayerInfo_Normal(const std::string &nam
 
 // Update the labels with player skill stats
 void playerInfoLabelsDebugWindow::updatePlayerInfo_SkillStats(int strength, int dexterity, int intelligence,
-    int endurance) {
+    int endurance, int luck, int charisma, int vitality, int points) {
     if (strength != PlayerStrength) {
         PlayerStrength = strength;
         P_Strength->setText("Strength: " + std::to_string(strength));
@@ -180,9 +175,6 @@ void playerInfoLabelsDebugWindow::updatePlayerInfo_SkillStats(int strength, int 
         PlayerEndurance = endurance;
         P_Endurance->setText("Endurance: " + std::to_string(endurance));
     }
-}
-
-void playerInfoLabelsDebugWindow::updatePlayerInfo_SkillStats_2(int luck, int charisma, int vitality, int points) {
     if (luck != PlayerLuck) {
         PlayerLuck = luck;
         P_Luck->setText("Luck: " + std::to_string(luck));
@@ -199,4 +191,5 @@ void playerInfoLabelsDebugWindow::updatePlayerInfo_SkillStats_2(int luck, int ch
         PlayerPoints = points;
         P_Points->setText("Points: " + std::to_string(points));
     }
+
 }

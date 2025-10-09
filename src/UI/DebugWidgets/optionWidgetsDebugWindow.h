@@ -30,14 +30,13 @@ class optionWidgetsDebugWindow {
     std::unique_ptr<collisionButtonDebugWindow> CollisionButton;
     std::unique_ptr<playerInfoLabelsDebugWindow> PlayerInfoLabels;
     std::unique_ptr<playerChangeStatsDebugWindow> PlayerStatChange_SkillStats;
+
+    std::map<ActivePanel, tgui::Widget::Ptr> PanelWidgets;
+    std::map<tgui::String, ActivePanel> ItemToPanel;
+
 public:
     void initializeListBox(tgui::VerticalLayout &Layout);
-    void listBoxHandler(tgui::VerticalLayout::Ptr Collision,
-                        tgui::VerticalLayout::Ptr PlayerInfo_Normal,
-                        tgui::VerticalLayout::Ptr PlayerInfo_SkillStats,
-                        tgui::VerticalLayout::Ptr PlayerInfo_SkillStats_2,
-                        tgui::Grid::Ptr GridPlayerStatChange_Normal,
-                        tgui::Grid::Ptr GridPlayerStatChange_SkillStats);
+    void listBoxHandler(std::map<std::string, tgui::Widget::Ptr> AllWidgets);
     void widgetsHandler(debugHandler &debugHandlerInstance);
     tgui::ListBox::Ptr& getListBox() { return ListBox; }
 
@@ -49,6 +48,7 @@ public:
     playerChangeStatsDebugWindow* getPlayerChangeStatsDebugWindow() {
         return PlayerStatChange_SkillStats.get();
     }
+
 
     void CleanUp();
 

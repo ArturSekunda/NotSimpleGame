@@ -1,6 +1,4 @@
-//
-// Created by Artur on 5.10.2025.
-//
+
 
 #include "panelInsideDebugWindow.h"
 
@@ -18,10 +16,15 @@ void panelInsideDebugWindow::initinitializePanel(tgui::ChildWindow &DebugWindow)
     initializeLayoutListBox();
     initializePlayerInfo_Normal();
     initializePlayerInfo_SkillStats();
-    initializePlayerInfo_SkillStats_2();
     initializeCollisionButton();
     initializePlayerStatChange_Normal();
     initializePlayerStatChange_SkillStats();
+
+    getAllWidgets["PlayerInfo_Normal"] = VerticalLayoutPlayerInfo_Normal;
+    getAllWidgets["PlayerInfo_SkillStats"] = GridPlayerInfo_SkillStats;
+    getAllWidgets["CollisionButton"] = VerticalLayoutCollisionButton;
+    getAllWidgets["PlayerStatChange_Normal"] = GridPlayerStatChange_Normal;
+    getAllWidgets["PlayerStatChange_SkillStats"] = GridPlayerStatChange_SkillStats;
 
     DebugWindow.add(InsidePanel);
 
@@ -51,27 +54,14 @@ void panelInsideDebugWindow::initializePlayerInfo_Normal() {
 }
 
 void panelInsideDebugWindow::initializePlayerInfo_SkillStats() {
-    VerticalLayoutPlayerInfo_SkillStats = tgui::VerticalLayout::create();
-    if (!VerticalLayoutPlayerInfo_SkillStats) {
+    GridPlayerInfo_SkillStats = tgui::Grid::create();
+    if (!GridPlayerInfo_SkillStats) {
         throw std::runtime_error("Failed to create vertical layout for player info skillstats");
     }
-    VerticalLayoutPlayerInfo_SkillStats->setSize("34%","98%");
-    VerticalLayoutPlayerInfo_SkillStats->setPosition("31%","1%");
-    VerticalLayoutPlayerInfo_SkillStats->getRenderer()->setPadding(5);
-    VerticalLayoutPlayerInfo_Normal->setVisible(false);
-    InsidePanel->add(VerticalLayoutPlayerInfo_SkillStats);
-}
-
-void panelInsideDebugWindow::initializePlayerInfo_SkillStats_2() {
-    VerticalLayoutPlayerInfo_SkillStats_2 = tgui::VerticalLayout::create();
-    if (!VerticalLayoutPlayerInfo_SkillStats_2) {
-        throw std::runtime_error("Failed to create vertical layout for player info skillstats 2");
-    }
-    VerticalLayoutPlayerInfo_SkillStats_2->setSize("34%","98%");
-    VerticalLayoutPlayerInfo_SkillStats_2->setPosition("65%","1%");
-    VerticalLayoutPlayerInfo_SkillStats_2->getRenderer()->setPadding(5);
-    VerticalLayoutPlayerInfo_Normal->setVisible(false);
-    InsidePanel->add(VerticalLayoutPlayerInfo_SkillStats_2);
+    GridPlayerInfo_SkillStats->setSize("68%","98%");
+    GridPlayerInfo_SkillStats->setPosition("31%","1%");
+    GridPlayerInfo_SkillStats->setVisible(false);
+    InsidePanel->add(GridPlayerInfo_SkillStats);
 }
 
 void panelInsideDebugWindow::initializeCollisionButton() {
@@ -108,3 +98,4 @@ void panelInsideDebugWindow::initializePlayerStatChange_SkillStats() {
     GridPlayerStatChange_SkillStats->setVisible(false);
     InsidePanel->add(GridPlayerStatChange_SkillStats);
 }
+

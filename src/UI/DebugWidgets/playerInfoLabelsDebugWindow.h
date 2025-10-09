@@ -4,9 +4,14 @@
 
 #ifndef NOTSIMPLEGAME_PLAYERINFOLABELSDEBUGWINDOW_H
 #define NOTSIMPLEGAME_PLAYERINFOLABELSDEBUGWINDOW_H
+#include "TGUI/Widgets/Grid.hpp"
 #include "TGUI/Widgets/Label.hpp"
 #include "TGUI/Widgets/VerticalLayout.hpp"
 
+
+namespace tgui {
+    class Grid;
+}
 
 class playerInfoLabelsDebugWindow {
     // Cache
@@ -102,9 +107,8 @@ public:
         All_PInfo_SkillStats.clear();
     }
 
-    void initializePlayerInfo_Normal(tgui::VerticalLayout &Layout);
-    void initializePlayerInfo_SkillStats(tgui::VerticalLayout &Layout);
-    void initializePlayerInfo_SkillStats_2(tgui::VerticalLayout &Layout);
+    void initializePlayerInfo_Normal(tgui::VerticalLayout::Ptr Layout);
+    void initializePlayerInfo_SkillStats(tgui::Grid::Ptr Layout);
 
     void combineAllVectors() {
         All_PInfo_SkillStats.insert(All_PInfo_SkillStats.end(), L_PInfo_SkillStats.begin(), L_PInfo_SkillStats.end());
@@ -115,8 +119,7 @@ public:
     void UpdateTextSizes_Normal(float width, float height);
 
     void updatePlayerInfo_Normal(const std::string &name, bool isAlive, int health, int armor, int speed, int mana, int level, float experience, float expMax);
-    void updatePlayerInfo_SkillStats(int strength, int dexterity, int intelligence, int endurance);
-    void updatePlayerInfo_SkillStats_2(int luck, int charisma, int vitality, int points);
+    void updatePlayerInfo_SkillStats(int strength, int dexterity, int intelligence, int endurance, int luck, int charisma, int vitality, int points);
 
 };
 

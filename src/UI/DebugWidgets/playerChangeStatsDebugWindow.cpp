@@ -6,23 +6,23 @@
 
 #include "managers/statsManager.h"
 
-void playerChangeStatsDebugWindow::initializePlayerChangeStats(tgui::Grid &Grid) {
+void playerChangeStatsDebugWindow::initializePlayerChangeStats(tgui::Grid::Ptr Grid) {
     initializeLabels(Grid);
     initializeEditBoxes(Grid);
     initializeButtons(Grid);
 
     // Set up the grid layout
     int i = 0;
-    for (const auto& newclmap: Labels) {
-        Grid.setWidgetCell(newclmap, i++, 0);
+    for (auto& newclmap: Labels) {
+        Grid->setWidgetCell(newclmap, i++, 0);
     }
     i = 0;
-    for (const auto& newclmap: EditBoxes) {
-        Grid.setWidgetCell(newclmap, i++, 1);
+    for (auto& newclmap: EditBoxes) {
+        Grid->setWidgetCell(newclmap, i++, 1);
     }
     i = 0;
-    for (const auto& newclmap: Buttons) {
-        Grid.setWidgetCell(newclmap, i++, 2);
+    for (auto& newclmap: Buttons) {
+        Grid->setWidgetCell(newclmap, i++, 2);
     }
 
     AllWidgets.insert(AllWidgets.end(), Labels.begin(), Labels.end());
@@ -31,7 +31,7 @@ void playerChangeStatsDebugWindow::initializePlayerChangeStats(tgui::Grid &Grid)
 
 }
 
-void playerChangeStatsDebugWindow::initializeLabels(tgui::Grid &Grid) {
+void playerChangeStatsDebugWindow::initializeLabels(tgui::Grid::Ptr Grid) {
     Label_Strength = tgui::Label::create();
     Label_Dexterity = tgui::Label::create();
     Label_Intelligence = tgui::Label::create();
@@ -57,11 +57,11 @@ void playerChangeStatsDebugWindow::initializeLabels(tgui::Grid &Grid) {
 
     for (auto& newclmap: Labels) {
         newclmap->getRenderer()->setTextColor(tgui::Color::White);
-        Grid.add(newclmap);
+        Grid->add(newclmap);
     }
 }
 
-void playerChangeStatsDebugWindow::initializeEditBoxes(tgui::Grid &Grid) {
+void playerChangeStatsDebugWindow::initializeEditBoxes(tgui::Grid::Ptr Grid) {
     EditBox_Dexterity = tgui::EditBox::create();
     EditBox_Strength = tgui::EditBox::create();
     EditBox_Intelligence = tgui::EditBox::create();
@@ -88,11 +88,11 @@ void playerChangeStatsDebugWindow::initializeEditBoxes(tgui::Grid &Grid) {
         newclmap->setInputValidator(tgui::EditBox::Validator::Int);
         newclmap->getRenderer()->setTextColor(tgui::Color::White);
         newclmap->getRenderer()->setBackgroundColor(tgui::Color(50, 50, 50, 200));
-        Grid.add(newclmap);
+        Grid->add(newclmap);
     }
 }
 
-void playerChangeStatsDebugWindow::initializeButtons(tgui::Grid &Grid) {
+void playerChangeStatsDebugWindow::initializeButtons(tgui::Grid::Ptr Grid) {
 
     Button_Dexterity = tgui::Button::create();
     Button_Strength = tgui::Button::create();
@@ -123,7 +123,7 @@ void playerChangeStatsDebugWindow::initializeButtons(tgui::Grid &Grid) {
         newclmap->setText("+");
         newclmap->getRenderer()->setTextColor(tgui::Color::White);
         newclmap->getRenderer()->setBackgroundColor(tgui::Color(50, 50, 50, 200));
-        Grid.add(newclmap);
+        Grid->add(newclmap);
     }
 }
 

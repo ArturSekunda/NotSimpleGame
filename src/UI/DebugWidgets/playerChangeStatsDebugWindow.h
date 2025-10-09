@@ -65,13 +65,13 @@ class playerChangeStatsDebugWindow {
 public:
 
 
-    void initializePlayerChangeStats(tgui::Grid &Grid);
+    void initializePlayerChangeStats(tgui::Grid::Ptr Grid);
 
-    void initializeLabels(tgui::Grid &Grid);
+    void initializeLabels(tgui::Grid::Ptr Grid);
 
-    void initializeEditBoxes(tgui::Grid &Grid);
+    void initializeEditBoxes(tgui::Grid::Ptr Grid);
 
-    void initializeButtons(tgui::Grid &Grid);
+    void initializeButtons(tgui::Grid::Ptr Grid);
 
     void UpdateSizes(float width, float height);
 

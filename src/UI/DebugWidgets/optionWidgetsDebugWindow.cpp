@@ -25,113 +25,46 @@ void optionWidgetsDebugWindow::initializeListBox(tgui::VerticalLayout &Layout) {
 
 }
 
-void optionWidgetsDebugWindow::listBoxHandler(tgui::VerticalLayout::Ptr Collision, tgui::VerticalLayout::Ptr PlayerInfo_Normal,tgui::VerticalLayout::Ptr PlayerInfo_SkillStats, tgui::VerticalLayout::Ptr PlayerInfo_SkillStats_2,
-    tgui::Grid::Ptr GridPlayerStatChange_Normal, tgui::Grid::Ptr GridPlayerStatChange_SkillStats) {
-    CollisionButton->initializeCollisionButton(Collision);
-    PlayerInfoLabels->initializePlayerInfo_Normal(*PlayerInfo_Normal);
-    PlayerInfoLabels->initializePlayerInfo_SkillStats(*PlayerInfo_SkillStats);
-    PlayerInfoLabels->initializePlayerInfo_SkillStats_2(*PlayerInfo_SkillStats_2);
-    PlayerInfoLabels->combineAllVectors();
-    PlayerStatChange_SkillStats->initializePlayerChangeStats(*GridPlayerStatChange_SkillStats);
+void optionWidgetsDebugWindow::listBoxHandler(std::map<std::string, tgui::Widget::Ptr> AllWidgets) {
+    auto Collision = AllWidgets.at("CollisionButton")->cast<tgui::VerticalLayout>();
+    auto PlayerInfo_Normal = AllWidgets.at("PlayerInfo_Normal")->cast<tgui::VerticalLayout>();
+    auto PlayerInfo_SkillStats = AllWidgets.at("PlayerInfo_SkillStats")->cast<tgui::Grid>();
+    auto GridPlayerStatChange_Normal = AllWidgets.at("PlayerStatChange_Normal")->cast<tgui::Grid>();
+    auto GridPlayerStatChange_SkillStats = AllWidgets.at("PlayerStatChange_SkillStats")->cast<tgui::Grid>();
 
-    ListBox->onItemSelect([Collision, PlayerInfo_Normal,PlayerInfo_SkillStats,PlayerInfo_SkillStats_2,GridPlayerStatChange_Normal,GridPlayerStatChange_SkillStats, this](const tgui::String& item) {
-        if (item == "Collision") {
-            std::printf("Collision\n");
-            if (Collision) {
-                Collision->setVisible(true);
-                currentPanel = ActivePanel::Collision;
-            }
-            if (PlayerInfo_Normal) {
-                PlayerInfo_Normal->setVisible(false);
-            }
-            if (PlayerInfo_SkillStats && PlayerInfo_SkillStats_2) {
-                PlayerInfo_SkillStats->setVisible(false);
-                PlayerInfo_SkillStats_2->setVisible(false);
-            }
-            if (GridPlayerStatChange_Normal) {
-                GridPlayerStatChange_Normal->setVisible(false);
-            }
-            if (GridPlayerStatChange_SkillStats) {
-                GridPlayerStatChange_SkillStats->setVisible(false);
-            }
-        }
-        else if (item == "Player Info") {
-            std::printf("Player Info\n");
-            if (Collision) {
-                Collision->setVisible(false);
-            }
-            if (PlayerInfo_Normal) {
-                PlayerInfo_Normal->setVisible(true);
-                currentPanel = ActivePanel::PlayerInfo;
-            }
-            if (PlayerInfo_SkillStats && PlayerInfo_SkillStats_2) {
-                PlayerInfo_SkillStats->setVisible(false);
-                PlayerInfo_SkillStats_2->setVisible(false);
-            }
-            if (GridPlayerStatChange_Normal) {
-                GridPlayerStatChange_Normal->setVisible(false);
-            }
-            if (GridPlayerStatChange_SkillStats) {
-                GridPlayerStatChange_SkillStats->setVisible(false);
-            }
-        } else if (item == "Player Skill Stats Info") {
-            std::printf("Player Skill Stats Info\n");
-            if (Collision) {
-                Collision->setVisible(false);
-            }
-            if (PlayerInfo_Normal) {
-                PlayerInfo_Normal->setVisible(false);
-            }
-            if (PlayerInfo_SkillStats && PlayerInfo_SkillStats_2) {
-                PlayerInfo_SkillStats->setVisible(true);
-                PlayerInfo_SkillStats_2->setVisible(true);
-                currentPanel = ActivePanel::PlayerSkillStatsInfo;
-            }
-            if (GridPlayerStatChange_Normal) {
-                GridPlayerStatChange_Normal->setVisible(false);
-            }
-            if (GridPlayerStatChange_SkillStats) {
-                GridPlayerStatChange_SkillStats->setVisible(false);
-            }
-        } else if (item == "Player Stat Change") {
-            std::printf("Player Stat Change\n");
-            if (Collision) {
-                Collision->setVisible(false);
-            }
-            if (PlayerInfo_Normal) {
-                PlayerInfo_Normal->setVisible(false);
-            }
-            if (PlayerInfo_SkillStats && PlayerInfo_SkillStats_2) {
-                PlayerInfo_SkillStats->setVisible(false);
-                PlayerInfo_SkillStats_2->setVisible(false);
-            }
-            if (GridPlayerStatChange_Normal) {
-                GridPlayerStatChange_Normal->setVisible(true);
-                currentPanel = ActivePanel::PlayerStatChange;
-            }
-            if (GridPlayerStatChange_SkillStats) {
-                GridPlayerStatChange_SkillStats->setVisible(false);
-            }
-        } else if (item == "Player Skill Stat Change") {
-            std::printf("Player Skill Stat Change\n");
-            if (Collision) {
-                Collision->setVisible(false);
-            }
-            if (PlayerInfo_Normal) {
-                PlayerInfo_Normal->setVisible(false);
-            }
-            if (PlayerInfo_SkillStats && PlayerInfo_SkillStats_2) {
-                PlayerInfo_SkillStats->setVisible(false);
-                PlayerInfo_SkillStats_2->setVisible(false);
-            }
-            if (GridPlayerStatChange_Normal) {
-                GridPlayerStatChange_Normal->setVisible(false);
-            }
-            if (GridPlayerStatChange_SkillStats) {
-                GridPlayerStatChange_SkillStats->setVisible(true);
-                currentPanel = ActivePanel::PlayerSkillStatChange;
-            }
-        }
+    ItemToPanel["Collision"] = ActivePanel::Collision;
+    ItemToPanel["Player Info"] = ActivePanel::PlayerInfo;
+    ItemToPanel["Player Skill Stats Info"] = ActivePanel::PlayerSkillStatsInfo;
+    ItemToPanel["Player Stat Change"] = ActivePanel::PlayerStatChange;
+    ItemToPanel["Player Skill Stat Change"] = ActivePanel::PlayerSkillStatChange;
+
+    PanelWidgets[ActivePanel::Collision] = Collision;
+    PanelWidgets[ActivePanel::PlayerInfo] = PlayerInfo_Normal;
+    PanelWidgets[ActivePanel::PlayerSkillStatsInfo] = PlayerInfo_SkillStats;
+    PanelWidgets[ActivePanel::PlayerStatChange] = GridPlayerStatChange_Normal;
+    PanelWidgets[ActivePanel::PlayerSkillStatChange] = GridPlayerStatChange_SkillStats;
+
+    CollisionButton->initializeCollisionButton(Collision);
+    PlayerInfoLabels->initializePlayerInfo_Normal(PlayerInfo_Normal);
+    PlayerInfoLabels->initializePlayerInfo_SkillStats(PlayerInfo_SkillStats);
+    PlayerInfoLabels->combineAllVectors();
+    PlayerStatChange_SkillStats->initializePlayerChangeStats(GridPlayerStatChange_SkillStats);
+
+
+
+    ListBox->onItemSelect([this](const tgui::String& item) {
+
+    auto it = ItemToPanel.find(item.toStdString());
+    if (it == ItemToPanel.end()) return;
+
+    ActivePanel selectedPanel = it->second;
+    currentPanel = selectedPanel;
+
+    for (auto& [panel, widget] : PanelWidgets) {
+        widget->setVisible(false);
+    }
+
+    PanelWidgets[selectedPanel]->setVisible(true);
     });
 
 }
@@ -143,7 +76,6 @@ void optionWidgetsDebugWindow::widgetsHandler(debugHandler &debugHandlerInstance
     });
      PlayerStatChange_SkillStats->HandleButtonClicks(debugHandlerInstance.getPlayerBaseStats());
 }
-
 
 void optionWidgetsDebugWindow::CleanUp() {
     ListBox = nullptr;
