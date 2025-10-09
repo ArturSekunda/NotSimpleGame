@@ -137,14 +137,14 @@ void playerChangeStatsDebugWindow::UpdateSizes(float width, float height) {
     }
 
     for (auto& AllWidgetsXD: AllWidgets) {
-        if (AllWidgetsXD) {
+        //if (AllWidgetsXD) {
             AllWidgetsXD->setTextSize(static_cast<unsigned int>(height * 0.05f));
-        }
+        //}
     }
     for (auto& EditBoxesXD: EditBoxes) {
-        if (EditBoxesXD) {
+        //if (EditBoxesXD) {
             EditBoxesXD->setSize(width * 0.05f, height * 0.05f);
-        }
+        //}
     }
     cachedTextSize = newTextSize;
     cachedWidgetWidth = newWidgetWidth;
