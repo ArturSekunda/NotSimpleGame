@@ -128,6 +128,13 @@ void playerChangeStatsDebugWindow::initializeButtons(tgui::Grid &Grid) {
 }
 
 void playerChangeStatsDebugWindow::UpdateSizes(float width, float height) {
+    unsigned int newTextSize = static_cast<unsigned int>(height * 0.05f);
+    float newWidgetWidth = width * 0.05f;
+    float newWidgetHeight = height * 0.05f;
+
+    if (newTextSize == cachedTextSize && newWidgetWidth == cachedWidgetWidth && newWidgetHeight == cachedWidgetHeight) {
+        return; // No changes needed
+    }
 
     for (auto& AllWidgetsXD: AllWidgets) {
         if (AllWidgetsXD) {
@@ -139,6 +146,9 @@ void playerChangeStatsDebugWindow::UpdateSizes(float width, float height) {
             EditBoxesXD->setSize(width * 0.05f, height * 0.05f);
         }
     }
+    cachedTextSize = newTextSize;
+    cachedWidgetWidth = newWidgetWidth;
+    cachedWidgetHeight = newWidgetHeight;
 }
 
 void playerChangeStatsDebugWindow::UpdateTextInfo(const int strength, const int dexterity, const int intelligence,

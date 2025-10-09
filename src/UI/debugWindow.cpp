@@ -41,9 +41,11 @@ void debugWindow::initializeDebugWindow(tgui::Gui &gui, player& player) {
 }
 
 void debugWindow::update() {
+
     if (!DebugWindow || !debugHandlerInstance || !optionList) {
         return;
     }
+
     tgui::Vector2f debugWindowSize = DebugWindow->getSize();
     WindowWidth = debugWindowSize.x;
     WindowHeight = debugWindowSize.y;
@@ -73,31 +75,61 @@ void debugWindow::update() {
     auto Vitality = skillStats.vitality;
     auto Points = skillStats.points;
 
-    if (!optionList->getPlayerInfoLabelsDebugWindow()) {
-        return;
+    switch (optionList->getCurrentPanel()) {
+        case ActivePanel::Collision:
+
+            break;
+        case ActivePanel::PlayerInfo: {
+
+            optionList->getPlayerInfoLabelsDebugWindow()->updatePlayerInfo_Normal(
+            PlayerName, IsAlive, static_cast<int>(Health),
+            static_cast<int>(Defense), static_cast<int>(Speed),
+            static_cast<int>(Mana), Level, EXP, EXP_MAX
+            );
+
+            if (sizeChanged) {
+
+            optionList->getPlayerInfoLabelsDebugWindow()->UpdateTextSizes_Normal(WindowWidth, WindowHeight);
+            }
+
+            break;
+        }
+        case ActivePanel::PlayerSkillStatsInfo: {
+
+            optionList->getPlayerInfoLabelsDebugWindow()->updatePlayerInfo_SkillStats(
+                Strength, Dexterity, Intelligence, Endurance
+                );
+
+            optionList->getPlayerInfoLabelsDebugWindow()->updatePlayerInfo_SkillStats_2(
+                Luck, Charisma, Vitality, Points
+                );
+
+            if (sizeChanged) {
+                optionList->getPlayerInfoLabelsDebugWindow()->UpdateTextSizes_SkillStats(WindowWidth, WindowHeight);
+            }
+
+            break;
+        }
+        case ActivePanel::PlayerStatChange:
+
+            break;
+        case ActivePanel::PlayerSkillStatChange:{
+
+            optionList->getPlayerChangeStatsDebugWindow()->UpdateTextInfo(
+            Strength, Dexterity, Intelligence, Endurance, Luck, Charisma, Vitality, Points
+            );
+
+            if (sizeChanged) {
+                optionList->getPlayerChangeStatsDebugWindow()->UpdateSizes(WindowWidth, WindowHeight);
+            }
+            break;
+        }
+        default:
+            std::fprintf(stderr, "Unknown ActivePanel state\n");
+            break;
     }
-    optionList->getPlayerInfoLabelsDebugWindow()->updatePlayerInfo_Normal(
-        PlayerName, IsAlive, static_cast<int>(Health),
-        static_cast<int>(Defense), static_cast<int>(Speed),
-        static_cast<int>(Mana), Level, EXP, EXP_MAX
-        );
-
-    optionList->getPlayerInfoLabelsDebugWindow()->updatePlayerInfo_SkillStats(
-        Strength, Dexterity, Intelligence, Endurance
-        );
-
-    optionList->getPlayerInfoLabelsDebugWindow()->updatePlayerInfo_SkillStats_2(
-        Luck, Charisma, Vitality, Points
-        );
-
-    optionList->getPlayerChangeStatsDebugWindow()->UpdateTextInfo(
-        Strength, Dexterity, Intelligence, Endurance, Luck, Charisma, Vitality, Points
-        );
 
     if (sizeChanged) {
-        optionList->getPlayerInfoLabelsDebugWindow()->UpdateTextSizes(WindowWidth, WindowHeight);
-        optionList->getPlayerChangeStatsDebugWindow()->UpdateSizes(WindowWidth, WindowHeight);
-
         PreviousWindowWidth = WindowWidth;
         PreviousWindowHeight = WindowHeight;
     }

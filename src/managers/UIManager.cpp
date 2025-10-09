@@ -39,7 +39,8 @@ void UIManager::UpdateTextSizes(float width, float height){
 void UIManager::UpdateAllUI(player &p, float deltaTime) {
     timeSinceLastFrame += deltaTime;
 
-    if (timeSinceLastFrame >= timeSinceLastFrame) {
+    if (timeSinceLastFrame >= timeBetweenFrames) {
+
         if (DebuggingWindow) {
 
             if (DebuggingWindow->isPendingDestruction() == true) {

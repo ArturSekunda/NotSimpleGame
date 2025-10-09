@@ -14,6 +14,11 @@
 struct baseStats;
 
 class playerChangeStatsDebugWindow {
+
+     unsigned int cachedTextSize = 0;
+     float cachedWidgetWidth = 0.f;
+     float cachedWidgetHeight = 0.f;
+
      // Stats
      int Strength = -1;
      int Dexterity = -1;
@@ -57,7 +62,6 @@ class playerChangeStatsDebugWindow {
      std::vector<tgui::Label::Ptr> Labels;
      std::vector<tgui::EditBox::Ptr> EditBoxes;
      std::vector<tgui::Button::Ptr> Buttons;
-     std::vector<tgui::Widget::Ptr> AllWidgets;
 public:
 
 
@@ -74,6 +78,8 @@ public:
     void UpdateTextInfo(const int strength, const int dexterity, const int intelligence, const int endurance, const int luck, const int charisma, const int vitality, const int points);
 
     void HandleButtonClicks(baseStats &playerStats);
+
+    std::vector<tgui::Widget::Ptr> AllWidgets;
 
 
 
@@ -117,6 +123,9 @@ public:
          Vitality = -1;
          Points = -1;
          AllWidgets.clear();
+         cachedTextSize = 0;
+         cachedWidgetWidth = 0.f;
+         cachedWidgetHeight = 0.f;
      }
 };
 

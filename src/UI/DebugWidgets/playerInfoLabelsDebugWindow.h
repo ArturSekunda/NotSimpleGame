@@ -31,6 +31,7 @@ class playerInfoLabelsDebugWindow {
     int PlayerPoints = -1;
 
     unsigned int cachedTextSize = 0;
+    unsigned int cachedTextSize_Normal = 0;
 
     tgui::Label::Ptr P_Name = nullptr;
     tgui::Label::Ptr P_IsAlive = nullptr;
@@ -55,7 +56,7 @@ class playerInfoLabelsDebugWindow {
     std::vector<tgui::Label::Ptr> L_PInfo_Normal;
     std::vector<tgui::Label::Ptr> L_PInfo_SkillStats;
     std::vector<tgui::Label::Ptr> L_PInfo_SkillStats_2;
-    std::vector<tgui::Label::Ptr> All_PInfo_Normal;
+    std::vector<tgui::Label::Ptr> All_PInfo_SkillStats;
 public:
 
     void CleanUp() {
@@ -78,8 +79,7 @@ public:
         P_Points = nullptr;
         L_PInfo_Normal.clear();
         L_PInfo_SkillStats.clear();
-        L_PInfo_SkillStats_2.clear();
-        All_PInfo_Normal.clear();
+        L_PInfo_SkillStats_2.clear();;
         PlayerName = "Unknown";
         PlayerIsAlive = false;
         PlayerHealth = -1;
@@ -98,6 +98,8 @@ public:
         PlayerVitality = -1;
         PlayerPoints = -1;
         cachedTextSize = 0;
+        cachedTextSize_Normal = 0;
+        All_PInfo_SkillStats.clear();
     }
 
     void initializePlayerInfo_Normal(tgui::VerticalLayout &Layout);
@@ -105,12 +107,12 @@ public:
     void initializePlayerInfo_SkillStats_2(tgui::VerticalLayout &Layout);
 
     void combineAllVectors() {
-        All_PInfo_Normal.insert(All_PInfo_Normal.end(), L_PInfo_Normal.begin(), L_PInfo_Normal.end());
-        All_PInfo_Normal.insert(All_PInfo_Normal.end(), L_PInfo_SkillStats.begin(), L_PInfo_SkillStats.end());
-        All_PInfo_Normal.insert(All_PInfo_Normal.end(), L_PInfo_SkillStats_2.begin(), L_PInfo_SkillStats_2.end());
+        All_PInfo_SkillStats.insert(All_PInfo_SkillStats.end(), L_PInfo_SkillStats.begin(), L_PInfo_SkillStats.end());
+        All_PInfo_SkillStats.insert(All_PInfo_SkillStats.end(), L_PInfo_SkillStats_2.begin(), L_PInfo_SkillStats_2.end());
     }
 
-    void UpdateTextSizes(float width, float height);
+    void UpdateTextSizes_SkillStats(float width, float height);
+    void UpdateTextSizes_Normal(float width, float height);
 
     void updatePlayerInfo_Normal(const std::string &name, bool isAlive, int health, int armor, int speed, int mana, int level, float experience, float expMax);
     void updatePlayerInfo_SkillStats(int strength, int dexterity, int intelligence, int endurance);

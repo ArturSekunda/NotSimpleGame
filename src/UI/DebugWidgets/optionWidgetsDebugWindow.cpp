@@ -34,19 +34,18 @@ void optionWidgetsDebugWindow::listBoxHandler(tgui::VerticalLayout::Ptr Collisio
     PlayerInfoLabels->combineAllVectors();
     PlayerStatChange_SkillStats->initializePlayerChangeStats(*GridPlayerStatChange_SkillStats);
 
-    ListBox->onItemSelect([Collision, PlayerInfo_Normal,PlayerInfo_SkillStats,PlayerInfo_SkillStats_2,GridPlayerStatChange_Normal,GridPlayerStatChange_SkillStats](const tgui::String& item) {
+    ListBox->onItemSelect([Collision, PlayerInfo_Normal,PlayerInfo_SkillStats,PlayerInfo_SkillStats_2,GridPlayerStatChange_Normal,GridPlayerStatChange_SkillStats, this](const tgui::String& item) {
         if (item == "Collision") {
             std::printf("Collision\n");
             if (Collision) {
                 Collision->setVisible(true);
+                currentPanel = ActivePanel::Collision;
             }
             if (PlayerInfo_Normal) {
                 PlayerInfo_Normal->setVisible(false);
             }
-            if (PlayerInfo_SkillStats) {
+            if (PlayerInfo_SkillStats && PlayerInfo_SkillStats_2) {
                 PlayerInfo_SkillStats->setVisible(false);
-            }
-            if (PlayerInfo_SkillStats_2) {
                 PlayerInfo_SkillStats_2->setVisible(false);
             }
             if (GridPlayerStatChange_Normal) {
@@ -63,11 +62,10 @@ void optionWidgetsDebugWindow::listBoxHandler(tgui::VerticalLayout::Ptr Collisio
             }
             if (PlayerInfo_Normal) {
                 PlayerInfo_Normal->setVisible(true);
+                currentPanel = ActivePanel::PlayerInfo;
             }
-            if (PlayerInfo_SkillStats) {
+            if (PlayerInfo_SkillStats && PlayerInfo_SkillStats_2) {
                 PlayerInfo_SkillStats->setVisible(false);
-            }
-            if (PlayerInfo_SkillStats_2) {
                 PlayerInfo_SkillStats_2->setVisible(false);
             }
             if (GridPlayerStatChange_Normal) {
@@ -84,11 +82,10 @@ void optionWidgetsDebugWindow::listBoxHandler(tgui::VerticalLayout::Ptr Collisio
             if (PlayerInfo_Normal) {
                 PlayerInfo_Normal->setVisible(false);
             }
-            if (PlayerInfo_SkillStats) {
+            if (PlayerInfo_SkillStats && PlayerInfo_SkillStats_2) {
                 PlayerInfo_SkillStats->setVisible(true);
-            }
-            if (PlayerInfo_SkillStats_2) {
                 PlayerInfo_SkillStats_2->setVisible(true);
+                currentPanel = ActivePanel::PlayerSkillStatsInfo;
             }
             if (GridPlayerStatChange_Normal) {
                 GridPlayerStatChange_Normal->setVisible(false);
@@ -104,14 +101,13 @@ void optionWidgetsDebugWindow::listBoxHandler(tgui::VerticalLayout::Ptr Collisio
             if (PlayerInfo_Normal) {
                 PlayerInfo_Normal->setVisible(false);
             }
-            if (PlayerInfo_SkillStats) {
+            if (PlayerInfo_SkillStats && PlayerInfo_SkillStats_2) {
                 PlayerInfo_SkillStats->setVisible(false);
-            }
-            if (PlayerInfo_SkillStats_2) {
                 PlayerInfo_SkillStats_2->setVisible(false);
             }
             if (GridPlayerStatChange_Normal) {
                 GridPlayerStatChange_Normal->setVisible(true);
+                currentPanel = ActivePanel::PlayerStatChange;
             }
             if (GridPlayerStatChange_SkillStats) {
                 GridPlayerStatChange_SkillStats->setVisible(false);
@@ -124,10 +120,8 @@ void optionWidgetsDebugWindow::listBoxHandler(tgui::VerticalLayout::Ptr Collisio
             if (PlayerInfo_Normal) {
                 PlayerInfo_Normal->setVisible(false);
             }
-            if (PlayerInfo_SkillStats) {
+            if (PlayerInfo_SkillStats && PlayerInfo_SkillStats_2) {
                 PlayerInfo_SkillStats->setVisible(false);
-            }
-            if (PlayerInfo_SkillStats_2) {
                 PlayerInfo_SkillStats_2->setVisible(false);
             }
             if (GridPlayerStatChange_Normal) {
@@ -135,6 +129,7 @@ void optionWidgetsDebugWindow::listBoxHandler(tgui::VerticalLayout::Ptr Collisio
             }
             if (GridPlayerStatChange_SkillStats) {
                 GridPlayerStatChange_SkillStats->setVisible(true);
+                currentPanel = ActivePanel::PlayerSkillStatChange;
             }
         }
     });

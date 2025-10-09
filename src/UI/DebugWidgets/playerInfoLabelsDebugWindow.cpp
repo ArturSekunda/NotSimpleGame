@@ -86,20 +86,34 @@ void playerInfoLabelsDebugWindow::initializePlayerInfo_SkillStats_2(tgui::Vertic
 
 }
 
-void playerInfoLabelsDebugWindow::UpdateTextSizes(float width, float height) {
+void playerInfoLabelsDebugWindow::UpdateTextSizes_SkillStats(float width, float height) {
     unsigned int newTextSize = static_cast<unsigned int>(height * 0.05f);
 
     if (newTextSize == cachedTextSize) {
         return;
     }
 
-    for (const auto& label : All_PInfo_Normal) {
+    for (const auto& label : All_PInfo_SkillStats) {
         if (label) {
             label->setTextSize(newTextSize);
         }
     }
 
     cachedTextSize = newTextSize;
+}
+
+void playerInfoLabelsDebugWindow::UpdateTextSizes_Normal(float width, float height) {
+    unsigned int newTextSize = static_cast<unsigned int>(height * 0.05f);
+
+    if (newTextSize == cachedTextSize) {
+        return;
+    }
+    for (const auto& label : L_PInfo_Normal) {
+        if (label) {
+            label->setTextSize(newTextSize);
+        }
+    }
+    cachedTextSize_Normal = newTextSize;
 }
 
 // Update the labels with player information

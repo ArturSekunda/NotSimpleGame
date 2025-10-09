@@ -11,10 +11,19 @@
 #include "playerChangeStatsDebugWindow.h"
 #include "playerInfoLabelsDebugWindow.h"
 
+enum class ActivePanel {
+    Collision,
+    PlayerInfo,
+    PlayerSkillStatsInfo,
+    PlayerStatChange,
+    PlayerSkillStatChange
+};
+
 class collisionButtonDebugWindow;
 class debugHandler;
 
 class optionWidgetsDebugWindow {
+    ActivePanel currentPanel = ActivePanel::Collision;
     tgui::ListBox::Ptr ListBox = nullptr;
     std::vector<tgui::String> ListBoxNames;
 
@@ -31,6 +40,8 @@ public:
                         tgui::Grid::Ptr GridPlayerStatChange_SkillStats);
     void widgetsHandler(debugHandler &debugHandlerInstance);
     tgui::ListBox::Ptr& getListBox() { return ListBox; }
+
+    ActivePanel getCurrentPanel() const { return currentPanel; }
 
     playerInfoLabelsDebugWindow* getPlayerInfoLabelsDebugWindow() {
         return PlayerInfoLabels.get();
