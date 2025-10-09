@@ -34,8 +34,9 @@ NotSimpleGame/
 **Phase:** Early Development
 - ✅ Project architecture setup
 - ✅ Basic systems framework
-- 🔄 Debugging tools implementation
-- 📋 Next: Core mechanics (inventory, weapons, combat)
+- ✅ Simple Debugging tools implementation
+- 🔄 Inventory system design
+- 📋 Next: Core mechanics (weapons, combat, AI behavior)
 
 ## 🛠️ Planned Features
 
