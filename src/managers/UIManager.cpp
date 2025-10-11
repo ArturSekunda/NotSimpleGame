@@ -23,9 +23,9 @@ void UIManager::DestroyDebugWindow() {
 
 void UIManager::RenderMainGameHUD(tgui::Gui &gui, player& p, bool developermode) {
 
-    MainGameHUD->initializePanels(gui);
-    MainGameHUD->initializeBars();
-    MainGameHUD->DisplayPlayerNameAndLevel(p);
+    MainGameHUD->createHUD(gui);
+
+
 
     if (developermode) {
         MainGameHUD->initializeDebugButtons(gui, getUIManagerPtr(), p);

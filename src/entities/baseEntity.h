@@ -1,6 +1,4 @@
-//
-// Created by lukas on 21.09.2025.
-//
+
 
 #ifndef NOTSIMPLEGAME_BASEENTITY_H
 #define NOTSIMPLEGAME_BASEENTITY_H

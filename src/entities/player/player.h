@@ -78,6 +78,9 @@ public: // Getters
     baseStats &getStats() {
         return PlayerStats;
     }
+    const baseStats &getStats() const {
+        return PlayerStats;
+    }
     std::string getPlayerName() const {
         return playerName;
     }

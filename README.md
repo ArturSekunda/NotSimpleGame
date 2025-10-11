@@ -8,10 +8,10 @@ NotSimpleGame is a from-scratch 2D RPG where I'm learning advanced C++ concepts,
 
 ## ⚙️ Tech Stack
 
-- **Language:** C++ (96.9%)
+- **Language:** C++
 - **Graphics:** SFML
 - **GUI:** TGUI
-- **Build System:** CMake (3.1%)
+- **Build System:** CMake
 - **IDE:** JetBrains CLion
 
 ## 📁 Project Structure
@@ -35,8 +35,8 @@ NotSimpleGame/
 - ✅ Project architecture setup
 - ✅ Basic systems framework
 - ✅ Simple Debugging tools implementation
-- 🔄 Inventory system design
-- 📋 Next: Core mechanics (weapons, combat, AI behavior)
+- 🔄 Refactoring Main Game HUD
+- 📋 Next: Core mechanics (inventory ,weapons, combat, AI behavior)
 
 ## 🛠️ Planned Features
 

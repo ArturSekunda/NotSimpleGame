@@ -68,6 +68,14 @@ add_executable(main src/main.cpp
         src/UI/DebugWidgets/playerChangeStatsDebugWindow.h
         src/UI/DebugWidgets/playerChangeNormalStatsDebugWindow.cpp
         src/UI/DebugWidgets/playerChangeNormalStatsDebugWindow.h
+        src/UI/MainGameHUDWidgets/panelsWithLayouts.cpp
+        src/UI/MainGameHUDWidgets/panelsWithLayouts.h
+        src/UI/MainGameHUDWidgets/playerProgressBars.cpp
+        src/UI/MainGameHUDWidgets/playerProgressBars.h
+        src/UI/MainGameHUDWidgets/playerNameAndLevel.cpp
+        src/UI/MainGameHUDWidgets/playerNameAndLevel.h
+        src/UI/MainGameHUDWidgets/playerStats.cpp
+        src/UI/MainGameHUDWidgets/playerStats.h
 )
 
 # Link SFML libraries

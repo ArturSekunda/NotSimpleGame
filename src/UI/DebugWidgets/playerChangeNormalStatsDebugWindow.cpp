@@ -1,6 +1,4 @@
-//
-// Created by Artur on 9.10.2025.
-//
+
 
 #include "playerChangeNormalStatsDebugWindow.h"
 
