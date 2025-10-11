@@ -28,15 +28,6 @@ public:
 
     void initializeStatsGridPanel();
 
-    void CleanUp() {
-        Side_PlayerPanel = nullptr;
-        Top_InfoPanel = nullptr;
-        StatsLayout = nullptr;
-        PlayerNameEXPLayout = nullptr;
-        MainPanel = nullptr;
-        StatsGrid = nullptr;
-        Layouts.clear();
-    }
 
     std::map<std::string, tgui::Widget::Ptr> Layouts;
 };

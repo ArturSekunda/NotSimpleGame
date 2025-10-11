@@ -38,21 +38,6 @@ public:
 
     void UpdateTextSize(float windowWidth, float windowHeight);
 
-    void CleanUp() {
-        HealthBar = nullptr;
-        ManaBar = nullptr;
-        XPBar = nullptr;
-        PlayerHealth = 0.f;
-        PlayerMaxHealth = 0.f;
-        PlayerMana = 0;
-        PlayerMaxMana = 0;
-        PlayerEXP = 0.f;
-        PlayerEXP_MAX = 0.f;
-        cachedTextSize = 0;
-        cachedWidgetWidth = 0.f;
-        cachedWidgetHeight = 0.f;
-        BarsVec.clear();
-    }
 
     void setBarStyle(tgui::ProgressBar::Ptr& bar, const tgui::Color& fillColor, const tgui::Color& backgroundColor) {
         bar->setSize("20%", "20%");

@@ -28,18 +28,6 @@ public:
     void UpdateTextSizes(float width, float height);
 
 
-    void CleanUp() {
-        PlayerNameLabel = nullptr;
-        LevelLabel = nullptr;
-        windowWidth = 0.f;
-        windowHeight = 0.f;
-        PlayerLevel = -1;
-        PlayerName = "NONE";
-        cachedTextSize = 0;
-        cachedWidgetWidth = 0.f;
-        cachedWidgetHeight = 0.f;
-    }
-
 
 };
 

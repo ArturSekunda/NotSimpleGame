@@ -21,6 +21,7 @@ NotSimpleGame/
 ├── src/
 │   ├── core/          # Core game engine components
 │   ├── entities/      # Game entities (Player, NPCs, etc.)
+│   ├── inventory/     # Inventory system
 │   ├── items/         # Item system
 │   ├── handlers/      # Event and input handlers
 │   ├── managers/      # Game state and resource managers
@@ -35,7 +36,8 @@ NotSimpleGame/
 - ✅ Project architecture setup
 - ✅ Basic systems framework
 - ✅ Simple Debugging tools implementation
-- 🔄 Refactoring Main Game HUD
+- ✅ Refactoring Main Game HUD
+- 🔄 Inventory System
 - 📋 Next: Core mechanics (inventory ,weapons, combat, AI behavior)
 
 ## 🛠️ Planned Features

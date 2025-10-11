@@ -6,12 +6,6 @@
 
 void mainGameHUD::CleanUp() {
     {
-        PlayerNameLevel->CleanUp();
-        ProgressBars->CleanUp();
-        PlayerStats->CleanUp();
-        PanelsLayouts->CleanUp();
-
-
         ProgressBars.reset();
         PanelsLayouts.reset();
         PlayerNameLevel.reset();
@@ -20,6 +14,7 @@ void mainGameHUD::CleanUp() {
         DebugButtonForWindow = nullptr;
     }
 }
+
 
 void mainGameHUD::createHUD(tgui::Gui &gui) {
     ProgressBars = std::make_unique<playerProgressBars>();
@@ -35,6 +30,7 @@ void mainGameHUD::createHUD(tgui::Gui &gui) {
     PlayerStats->initializeLabels(PanelsLayouts->Layouts["GridStats"]->cast<tgui::Grid>());
 
 }
+
 
 void mainGameHUD::initializeDebugButtons(tgui::Gui &gui, UIManager* uiManager, player& player) {
     // Create Debug Button
@@ -63,6 +59,7 @@ void mainGameHUD::UpdateUI(const player &p) {
 
 
 }
+
 
 void mainGameHUD::UpdateTextSizes(float width, float height) {
     PlayerNameLevel->UpdateTextSizes(width, height);

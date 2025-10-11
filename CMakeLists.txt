@@ -76,6 +76,8 @@ add_executable(main src/main.cpp
         src/UI/MainGameHUDWidgets/playerNameAndLevel.h
         src/UI/MainGameHUDWidgets/playerStats.cpp
         src/UI/MainGameHUDWidgets/playerStats.h
+        src/inventory/inventorySystem.cpp
+        src/inventory/inventorySystem.h
 )
 
 # Link SFML libraries

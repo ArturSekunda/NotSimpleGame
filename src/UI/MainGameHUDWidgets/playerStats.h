@@ -44,29 +44,6 @@ public:
 
     void UpdateTextSizes(float width, float height);
 
-    void CleanUp() {
-        P_Strength = nullptr;
-        P_Dexterity = nullptr;
-        P_Intelligence = nullptr;
-        P_Endurance = nullptr;
-        P_Luck = nullptr;
-        P_Charisma = nullptr;
-        P_Vitality = nullptr;
-        P_PointsToSpend = nullptr;
-
-        PlayerStrength = -1;
-        PlayerDexterity = -1;
-        PlayerIntelligence = -1;
-        PlayerEndurance = -1;
-        PlayerLuck = -1;
-        PlayerCharisma = -1;
-        PlayerVitality = -1;
-        PlayerPointsToSpend = -1;
-
-        cachedTextSize = 0;
-        cachedWidgetWidth = 0.f;
-        cachedWidgetHeight = 0.f;
-    }
 
 };
 
