@@ -42,8 +42,6 @@ add_executable(main src/main.cpp
         src/entities/enemies/basicEnemy.h
         src/core/game.cpp
         src/core/game.h
-        src/items/itemAttributes.cpp
-        src/items/itemAttributes.h
         src/managers/statsManager.cpp
         src/managers/statsManager.h
         src/UI/menuHUD.cpp
@@ -78,6 +76,12 @@ add_executable(main src/main.cpp
         src/UI/MainGameHUDWidgets/playerStats.h
         src/inventory/inventorySystem.cpp
         src/inventory/inventorySystem.h
+        src/items/itemBase.cpp
+        src/items/itemBase.h
+        src/items/itemStructs.h
+        src/items/itemEnums.h
+        src/items/weapon.cpp
+        src/items/weapon.h
 )
 
 # Link SFML libraries
