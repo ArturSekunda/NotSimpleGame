@@ -27,8 +27,14 @@ public:
     float calculateDistance(const sf::Vector2f& pointA, const sf::Vector2f& pointB);
     sf::Vector2f goTowards(float deltaTime, float speed, sf::Vector2f direction, float distance);
     sf::Vector2f vectorDirection(const sf::Vector2f& to, const sf::Vector2f& from);
+
     auto generateIntNumber(int min, int max) -> int;
+
     auto generateFloatNumber(float min, float max) -> float;
+
+    auto generateDistanceDistribution(const std::vector<int>& weights) -> int;
+
+    auto UniformIntDistribution(int min, int max) -> int;
 
 };
 

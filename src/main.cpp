@@ -9,7 +9,6 @@ int main() {
     sf::Clock FPSClock;
 
 
-
     game::getInstance().initializeEntities();
 
     sf::ContextSettings settings;

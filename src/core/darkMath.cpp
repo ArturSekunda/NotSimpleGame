@@ -35,3 +35,13 @@ float darkMath::generateFloatNumber(float min, float max) {
     std::uniform_real_distribution<float> distr(min, max);
     return distr(gen);
 }
+
+auto darkMath::generateDistanceDistribution(const std::vector<int> &weights) -> int {
+    std::discrete_distribution<> distr(weights.begin(), weights.end());
+    return distr(gen);
+}
+
+auto darkMath::UniformIntDistribution(int min, int max) -> int {
+    std::uniform_int_distribution<int> distr(min, max);
+    return distr(gen);
+}

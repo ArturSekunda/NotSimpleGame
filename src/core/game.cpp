@@ -16,15 +16,18 @@ void game::initializeEntities() {
 
     playerInstance = std::make_unique<player>(0);
     UIManagerInstance = std::make_unique<UIManager>();
+    itemManagerInstance = std::make_unique<itemManager>();
 
     if (!playerInstance) {
         throw std::runtime_error("Failed to create player instance.");
     }
 
+    itemManagerInstance->GetPlayerRef(getPlayerPtr());
+    itemManagerInstance->DisplayItemInfo();
+
      for (int i = 0; i <= 3; i++) {
          addEntityToList(std::make_unique<basicEnemy>(i));
     }
-
 
 }
 // Only to read

@@ -82,6 +82,8 @@ add_executable(main src/main.cpp
         src/items/itemEnums.h
         src/items/weapon.cpp
         src/items/weapon.h
+        src/managers/itemManager.cpp
+        src/managers/itemManager.h
 )
 
 # Link SFML libraries

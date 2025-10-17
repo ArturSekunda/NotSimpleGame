@@ -4,6 +4,7 @@
 
 #include "entities/player/player.h"
 #include "entities/enemies/basicEnemy.h"
+#include "managers/itemManager.h"
 #include "TGUI/Backend/SFML-Graphics.hpp"
 #include "managers/UIManager.h"
 
@@ -14,6 +15,7 @@ namespace sf {
 }
 
 class UIManager;
+class itemManager;
 
 class game {
 public:
@@ -109,6 +111,8 @@ protected: // Debug and instantiates
     std::unique_ptr<player> playerInstance;
 
     std::unique_ptr<UIManager> UIManagerInstance;
+
+    std::unique_ptr<itemManager> itemManagerInstance;
 
 };
 
