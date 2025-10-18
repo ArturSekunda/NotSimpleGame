@@ -6,7 +6,6 @@
 #include "vector"
 
 class darkMath;
-class player;
 
 class weapon : public itemBase {
 protected:
@@ -40,9 +39,11 @@ public:
 
     void GenerateEnchantStruct(float EValues, EnchantType EType);
 
-    void GenerateWeaponBonusStats();
+    void GenerateWeaponBonusStats(Rarity RR);
 
     void GenerateWeaponDescription(WeaponPrefix WPrefix,Rarity RRT, WeaponType WType, DamageType DT);
+
+    void GenerateBonusStats(int MaxGeneratedStat);
 
     void DisplayWeaponInfo() const;
 

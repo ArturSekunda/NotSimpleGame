@@ -1,8 +1,8 @@
 #include "weapon.h"
-#include "entities/player/player.h"
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <utility>
 
 #include "core/darkMath.h"
 
@@ -20,6 +20,7 @@ weapon weapon::CreateNewWeapon(int playerLevel,
     const std::vector<WeaponType>& VWType,
     const std::vector<DamageType>& VDType,
     std::map<EnchantType,float> EValues) {
+
     weapon newWeapon;
     // Randomly select Rarity, Prefix, Type, and Modifier
     int HowMuchRare = darkMath::getInstance().generateDistanceDistribution({0,55,20,15,10,5});
@@ -33,7 +34,9 @@ weapon weapon::CreateNewWeapon(int playerLevel,
 
     newWeapon.GenerateWeaponName(static_cast<WeaponPrefix>(Prefix),static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
 
-    newWeapon.GenerateWeaponEnchants(static_cast<Rarity>(HowMuchRare), EValues);
+    newWeapon.GenerateWeaponEnchants(static_cast<Rarity>(HowMuchRare), std::move(EValues));
+
+    newWeapon.GenerateWeaponBonusStats(static_cast<Rarity>(HowMuchRare));
 
     return newWeapon;
 }
@@ -68,41 +71,57 @@ void weapon::GenerateWeaponEnchants(Rarity RR, std::map<EnchantType,float> EValu
     switch (RR) {
         case Rarity::COMMON: {
 
-            auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({45,25,15,10,5}));
-            auto EnchantValue = EValues[Enchant];
+            for (int i = 0; i < 1; i++) {
+                auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({45,25,15,10,5}));
+                auto EnchantValue = EValues[Enchant];
 
-            GenerateEnchantStruct(EnchantValue, Enchant);
+                GenerateEnchantStruct(EnchantValue, Enchant);
+            }
 
         }break;
         case Rarity::UNCOMMON: {
 
-            auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({35,30,20,10,5}));
-            auto EnchantValue = EValues[Enchant];
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 2);
+            for (int i = 0; i < enchantCount; i++) {
+                auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({35,30,20,10,5}));
+                auto EnchantValue = EValues[Enchant];
 
-            GenerateEnchantStruct(EnchantValue, Enchant);
+                GenerateEnchantStruct(EnchantValue, Enchant);
+            }
 
         }break;
         case Rarity::RARE: {
 
-            auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({25,30,20,15,10}));
-            auto EnchantValue = EValues[Enchant];
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 3);
+            for (int i = 0; i < enchantCount; i++) {
+                auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({25,30,20,15,10}));
+                auto EnchantValue = EValues[Enchant];
 
-            GenerateEnchantStruct(EnchantValue, Enchant);
+                GenerateEnchantStruct(EnchantValue, Enchant);
+            }
 
         }break;
         case Rarity::EPIC: {
 
-            auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({10,20,30,25,15}));
-            auto EnchantValue = EValues[Enchant];
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 4);
+            for (int i = 0; i < enchantCount; i++) {
+                auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({10,20,30,25,15}));
+                auto EnchantValue = EValues[Enchant];
 
-            GenerateEnchantStruct(EnchantValue, Enchant);
+                GenerateEnchantStruct(EnchantValue, Enchant);
+            }
+
         }break;
         case Rarity::LEGENDARY: {
 
-            auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({5,15,20,25,35}));
-            auto EnchantValue = EValues[Enchant];
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 5);
+            for (int i = 0; i < enchantCount; i++) {
+                auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({5,15,20,25,35}));
+                auto EnchantValue = EValues[Enchant];
 
-            GenerateEnchantStruct(EnchantValue, Enchant);
+                GenerateEnchantStruct(EnchantValue, Enchant);
+            }
+
         }break;
         default:
             std::cout << "No enchants for this rarity" << "\n";
@@ -111,14 +130,15 @@ void weapon::GenerateWeaponEnchants(Rarity RR, std::map<EnchantType,float> EValu
 }
 
 void weapon::GenerateEnchantStruct(float EValues, EnchantType EType) {
+
+    if (EType == EnchantType::NONE) {
+        return;
+    }
+
     Enchantment newEnchant;
     newEnchant.name = EnchantTypeToString(EType);
     newEnchant.type = EType;
-    if (EType != EnchantType::NONE) {
-        newEnchant.power = darkMath::getInstance().generateIntNumber(1, (1+getLevel()/2));
-    }else {
-        newEnchant.power = 0;
-    }
+    newEnchant.power = darkMath::getInstance().generateIntNumber(1, (1+getLevel()/2));
     newEnchant.description = "NULL";
 
     int oldDamage = getDamage();
@@ -126,12 +146,50 @@ void weapon::GenerateEnchantStruct(float EValues, EnchantType EType) {
 
     setDamage(newDamage);
     enchants.push_back(newEnchant);
+
 }
 
-void weapon::GenerateWeaponBonusStats() {
+void weapon::GenerateWeaponBonusStats(Rarity RR) {
+    switch (RR) {
+        case Rarity::COMMON: {
+
+            GenerateBonusStats(1);
+
+        }break;
+        case Rarity::UNCOMMON: {
+
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 2);
+            GenerateBonusStats(enchantCount);
+
+        }break;
+        case Rarity::RARE: {
+
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 3);
+            GenerateBonusStats(enchantCount);
+
+        }break;
+        case Rarity::EPIC: {
+
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 4);
+            GenerateBonusStats(enchantCount);
+
+        }break;
+        case Rarity::LEGENDARY: {
+
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 5);
+            GenerateBonusStats(enchantCount);
+
+        }break;
+        default:
+            std::cout << "No bonusStats (XD)" << "\n";
+            break;
+    }
 }
 
 void weapon::GenerateWeaponDescription(WeaponPrefix WPrefix, Rarity RRT, WeaponType WType, DamageType DT) {
+}
+
+void weapon::GenerateBonusStats(int MaxGeneratedStat) {
 }
 
 void weapon::DisplayWeaponInfo() const {
