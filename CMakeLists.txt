@@ -20,7 +20,13 @@ FetchContent_Declare(TGUI
         GIT_SHALLOW ON
 )
 
-FetchContent_MakeAvailable(SFML TGUI)
+FetchContent_Declare(
+        json
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG v3.12.0
+)
+
+FetchContent_MakeAvailable(SFML TGUI json)
 
 # Create your executable
 add_executable(main src/main.cpp
@@ -86,10 +92,13 @@ add_executable(main src/main.cpp
         src/managers/itemManager.h
         src/items/helpers/enumsToVectorList.cpp
         src/items/helpers/enumsToVectorList.h
+        src/managers/LanguageManager.cpp
+        src/managers/LanguageManager.h
 )
 
 # Link SFML libraries
 target_link_libraries(main PRIVATE
+        nlohmann_json::nlohmann_json
         tgui
         sfml-graphics
         sfml-audio

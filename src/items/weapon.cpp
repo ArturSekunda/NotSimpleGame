@@ -1,6 +1,8 @@
 #include "weapon.h"
 #include "entities/player/player.h"
 #include <iostream>
+#include <fstream>
+#include <string>
 
 #include "core/darkMath.h"
 
@@ -33,8 +35,8 @@ weapon weapon::CreateNewWeapon(int playerLevel,
 
 void weapon::GenerateWeaponName(WeaponPrefix prefix,Rarity rarity, WeaponType type, DamageType damageType) {
 
-    ItemName = RarityToString(rarity) + " " + WeaponPrefixToString(prefix) + " " + WeaponTypeToString(type) + " (" +DamageTypeToString(damageType) + ")";
-
+    // Fallback to hardcoded composition
+    ItemName = RarityToString(rarity) + " " + WeaponPrefixToString(prefix) + " " + WeaponTypeToString(type) + " (" + DamageTypeToString(damageType) + ")";
 }
 
 void weapon::GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type, DamageType damageType) {

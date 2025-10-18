@@ -64,3 +64,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Third-party libraries:
 - **SFML** - [zlib/png license](https://www.sfml-dev.org/license.php)
 - **TGUI** - [zlib license](https://tgui.eu/license/)
+- **nlohmann/json** - JSON for Modern C++ - [MIT license](https://github.com/nlohmann/json)
