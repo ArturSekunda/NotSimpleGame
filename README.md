@@ -11,6 +11,8 @@ NotSimpleGame is a from-scratch 2D RPG where I'm learning advanced C++ concepts,
 - **Language:** C++
 - **Graphics:** SFML
 - **GUI:** TGUI
+- **Language:** JSON
+- **Database:** SQLite (In the future)
 - **Build System:** CMake
 - **IDE:** JetBrains CLion
 
@@ -37,8 +39,8 @@ NotSimpleGame/
 - ✅ Basic systems framework
 - ✅ Simple Debugging tools implementation
 - ✅ Refactoring Main Game HUD
-- 🔄 Inventory System
-- 📋 Next: Core mechanics (inventory ,weapons, combat, AI behavior)
+- 🔄 Inventory System && Weapon System
+- 📋 Next: Core mechanics (combat, AI behavior)
 
 ## 🛠️ Planned Features
 
@@ -48,6 +50,8 @@ NotSimpleGame/
 - **UI System** - Menus, HUD, and interactive elements
 - **Handler Systems** - Input and event management
 - **Manager Systems** - Game state, resource, and scene management
+- **Language System** - Localization and translation
+- **Database System** - Save and load game data
 
 ## 📊 Code Analysis
 
@@ -65,3 +69,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **SFML** - [zlib/png license](https://www.sfml-dev.org/license.php)
 - **TGUI** - [zlib license](https://tgui.eu/license/)
 - **nlohmann/json** - JSON for Modern C++ - [MIT license](https://github.com/nlohmann/json)
+- **SQLite** - SQL database engine - [Public Domain](https://www.sqlite.org/copyright.html)
