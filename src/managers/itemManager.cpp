@@ -9,7 +9,8 @@ void itemManager::CreateWeapon(int playerLevel) {
     weapons->CreateNewWeapon(playerLevel,
         EConversion->GetPrefix(),
         EConversion->GetType(),
-        EConversion->GetModifier());
+        EConversion->GetModifier(),
+        EConversion->GetEValues());
 }
 
 void itemManager::DisplayItemInfo() const {

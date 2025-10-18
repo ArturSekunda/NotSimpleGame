@@ -114,6 +114,23 @@ std::string itemBase::DamageTypeToString(DamageType type) const {
     }
 }
 
+std::string itemBase::EnchantTypeToString(EnchantType type) const {
+    switch (type) {
+        case EnchantType::NONE:
+            return "None";
+        case EnchantType::Fire:
+            return "Fire";
+        case EnchantType::Ice:
+            return "Ice";
+        case EnchantType::Lightning:
+            return "Lightning";
+        case EnchantType::Poison:
+            return "poison";
+        default:
+            return "Unknown";
+    }
+}
+
 float itemBase::RarityToFloatValue(Rarity rarity) const {
     switch (rarity) {
         case Rarity::COMMON:

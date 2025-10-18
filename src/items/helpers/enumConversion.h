@@ -14,7 +14,7 @@ class enumConversion {
 
     std::vector<DamageType> modifier;
 
-    std::map<DamageType, int> ModifierValues;
+    std::map<EnchantType, float> EnchantmentValues;
 public:
 
     void EnumsToVectorList();
@@ -26,6 +26,8 @@ public:
     std::vector<WeaponPrefix> GetPrefix();
     std::vector<WeaponType> GetType();
     std::vector<DamageType> GetModifier();
+
+    std::map<EnchantType,float> GetEValues();
 
 
 };

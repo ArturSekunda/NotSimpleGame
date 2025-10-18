@@ -18,10 +18,14 @@ weapon::weapon(int id, const std::string &name, const std::string &description, 
 weapon weapon::CreateNewWeapon(int playerLevel,
     const std::vector<WeaponPrefix>& VPrefix,
     const std::vector<WeaponType>& VWType,
-    const std::vector<DamageType>& VDType) {
+    const std::vector<DamageType>& VDType,
+    std::map<EnchantType,float> EValues) {
+    weapon newWeapon;
+    enchants.clear();
+    damage = 0;
 
     // Randomly select Rarity, Prefix, Type, and Modifier
-    int HowMuchRare = darkMath::getInstance().generateDistanceDistribution({0,70,15,10,5});
+    int HowMuchRare = darkMath::getInstance().generateDistanceDistribution({0,55,20,15,10,5});
     int Prefix = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(VPrefix.size() - 1));
     int Type = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(VWType.size() - 1));
     int Modifier = darkMath::getInstance().UniformIntDistribution(0,static_cast<int>(VDType.size() - 1));
@@ -32,9 +36,9 @@ weapon weapon::CreateNewWeapon(int playerLevel,
 
     GenerateWeaponName(static_cast<WeaponPrefix>(Prefix),static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
 
-    GenerateWeaponEnchants(static_cast<Rarity>(HowMuchRare));
+    GenerateWeaponEnchants(static_cast<Rarity>(HowMuchRare), EValues);
 
-    return *this;
+    return newWeapon;
 }
 
 void weapon::GenerateWeaponName(WeaponPrefix prefix,Rarity rarity, WeaponType type, DamageType damageType) {
@@ -63,10 +67,68 @@ void weapon::GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type,
 
 }
 
-void weapon::GenerateWeaponEnchants(Rarity RR) {
+void weapon::GenerateWeaponEnchants(Rarity RR, std::map<EnchantType,float> EValues) {
+    switch (RR) {
+        case Rarity::COMMON: {
 
+            auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({45,25,15,10,5}));
+            auto EnchantValue = EValues[Enchant];
 
+            GenerateEnchantStruct(EnchantValue, Enchant);
 
+        }break;
+        case Rarity::UNCOMMON: {
+
+            auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({35,30,20,10,5}));
+            auto EnchantValue = EValues[Enchant];
+
+            GenerateEnchantStruct(EnchantValue, Enchant);
+
+        }break;
+        case Rarity::RARE: {
+
+            auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({25,30,20,15,10}));
+            auto EnchantValue = EValues[Enchant];
+
+            GenerateEnchantStruct(EnchantValue, Enchant);
+
+        }break;
+        case Rarity::EPIC: {
+
+            auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({10,20,30,25,15}));
+            auto EnchantValue = EValues[Enchant];
+
+            GenerateEnchantStruct(EnchantValue, Enchant);
+        }break;
+        case Rarity::LEGENDARY: {
+
+            auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({5,15,20,25,35}));
+            auto EnchantValue = EValues[Enchant];
+
+            GenerateEnchantStruct(EnchantValue, Enchant);
+        }break;
+        default:
+            std::cout << "No enchants for this rarity" << "\n";
+            break;
+    }
+}
+
+void weapon::GenerateEnchantStruct(float EValues, EnchantType EType) {
+    Enchantment newEnchant;
+    newEnchant.name = EnchantTypeToString(EType);
+    newEnchant.type = EType;
+    if (EType != EnchantType::NONE) {
+        newEnchant.power = darkMath::getInstance().generateIntNumber(1, (1+getLevel()/2));
+    }else {
+        newEnchant.power = 0;
+    }
+    newEnchant.description = "NULL";
+
+    int oldDamage = getDamage();
+    int newDamage = static_cast<int>(oldDamage + (newEnchant.power * EValues));
+
+    setDamage(newDamage);
+    enchants.push_back(newEnchant);
 }
 
 void weapon::GenerateWeaponBonusStats() {
@@ -82,5 +144,9 @@ void weapon::DisplayWeaponInfo() const {
     std::cout << "Attack Speed: " << attackSpeed << "\n";
     std::cout << "Range: " << range << "\n";
     std::cout << "Level: " << getLevel() << "\n";
+    std::cout << "Enchantments: \n";
+    for (auto& enchant : enchants) {
+        std::cout << enchant.name << " " << enchant.power << "\n";
+    }
     std::cout << "=======================\n";
 }

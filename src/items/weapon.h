@@ -1,5 +1,7 @@
 #ifndef NOTSIMPLEGAME_WEAPON_H
 #define NOTSIMPLEGAME_WEAPON_H
+#include <map>
+
 #include "itemBase.h"
 #include "vector"
 
@@ -14,7 +16,7 @@ protected:
     float range = 0.f;
 
     ItemBonusStats bonusStats;
-    std::vector<EnchantType> enchants;
+    std::vector<Enchantment> enchants;
 
 public:
     weapon() = default;
@@ -23,7 +25,7 @@ public:
     ~weapon() override = default;
 
     // OverLoads
-    weapon CreateNewWeapon(int playerLevel, const std::vector<WeaponPrefix>&,const std::vector<WeaponType>&,const std::vector<DamageType>&);
+    weapon CreateNewWeapon(int playerLevel, const std::vector<WeaponPrefix>&,const std::vector<WeaponType>&,const std::vector<DamageType>&,std::map<EnchantType,float> EValues);
     void CreateNewWeapon(int playerLevel,WeaponType type);
     void CreateNewWeapon(int playerLevel,WeaponType type, Rarity rarity);
     void CreateNewWeapon(int playerLevel,int weaponlevel);
@@ -34,7 +36,9 @@ public:
 
     void GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type, DamageType damageType);
 
-    void GenerateWeaponEnchants(Rarity RR);
+    void GenerateWeaponEnchants(Rarity RR,std::map<EnchantType,float> EValues);
+
+    void GenerateEnchantStruct(float EValues, EnchantType EType);
 
     void GenerateWeaponBonusStats();
 
@@ -50,14 +54,14 @@ public: // Getters and Setters
     void setRange(float rng) { range = rng; }
     void setWeaponType(WeaponType type) { weapType = type; }
     void setBonusStats(const ItemBonusStats& stats) { bonusStats = stats; }
-    void addEnchant(EnchantType enchant) { enchants.push_back(enchant); }
+    void addEnchant(const Enchantment &enchant) { enchants.push_back(enchant); }
 
     int getDamage() const { return damage; }
     float getAttackSpeed() const { return attackSpeed; }
     float getRange() const { return range; }
     WeaponType getWeaponType() const { return weapType; }
     ItemBonusStats getBonusStats() const { return bonusStats; }
-    std::vector<EnchantType> getEnchants() const { return enchants; }
+    std::vector<Enchantment> getEnchants() const { return enchants; }
 };
 
 

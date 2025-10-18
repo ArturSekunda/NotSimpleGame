@@ -68,6 +68,7 @@ public: // From Enum to String
     std::string WeaponPrefixToString(WeaponPrefix prefix) const;
     std::string WeaponTypeToString(WeaponType type) const;
     std::string DamageTypeToString(DamageType type) const;
+    std::string EnchantTypeToString(EnchantType type) const;
 
 public: // From Enum to Float Value
 

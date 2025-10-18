@@ -52,14 +52,12 @@ void enumConversion::EnumsToVectorList() {
 }
 
 void enumConversion::EnumsToValues() {
-    ModifierValues = {
-        {DamageType::Physical, 0},
-        {DamageType::Fire, 2},
-        {DamageType::Ice, 3},
-        {DamageType::Electrical, 4},
-        {DamageType::Poison, 5},
-        {DamageType::Holy, 6},
-        {DamageType::Bloody, 7}
+    EnchantmentValues = {
+        {EnchantType::NONE, 0.f},
+        {EnchantType::Fire, 1.1f},
+        {EnchantType::Ice, 1.2f},
+        {EnchantType::Lightning, 1.3f},
+        {EnchantType::Poison, 1.5f}
     };
 }
 
@@ -77,4 +75,8 @@ std::vector<WeaponType> enumConversion::GetType() {
 
 std::vector<DamageType> enumConversion::GetModifier() {
     return modifier;
+}
+
+std::map<EnchantType, float> enumConversion::GetEValues() {
+    return EnchantmentValues;
 }

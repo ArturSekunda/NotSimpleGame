@@ -101,8 +101,7 @@ enum class EnchantType {
     Fire,
     Ice,
     Lightning,
-    Poison,
-    Healing
+    Poison
 };
 
 #endif //NOTSIMPLEGAME_ITEMENUMS_H
