@@ -1,7 +1,7 @@
-#include "items/helpers/enumsToVectorList.h"
+#include "items/helpers/enumConversion.h"
 
-void enumsToVectorList::EnumsToVectorList() {
-    rarityValues = {
+void enumConversion::EnumsToVectorList() {
+    rarity = {
         Rarity::COMMON,
         Rarity::UNCOMMON,
         Rarity::RARE,
@@ -9,7 +9,7 @@ void enumsToVectorList::EnumsToVectorList() {
         Rarity::LEGENDARY
     };
 
-    prefixValues = {
+    prefix = {
         WeaponPrefix::Ancient,
         WeaponPrefix::Dark,
         WeaponPrefix::Blazing,
@@ -32,7 +32,7 @@ void enumsToVectorList::EnumsToVectorList() {
         WeaponPrefix::Demon
     };
 
-    typeValues = {
+    type = {
         WeaponType::SWORD,
         WeaponType::AXE,
         WeaponType::BOW,
@@ -40,7 +40,7 @@ void enumsToVectorList::EnumsToVectorList() {
         WeaponType::SPEAR
     };
 
-    modifierValues = {
+    modifier = {
         DamageType::Physical,
         DamageType::Fire,
         DamageType::Ice,
@@ -51,18 +51,30 @@ void enumsToVectorList::EnumsToVectorList() {
     };
 }
 
-std::vector<Rarity> enumsToVectorList::GetRarityValues() {
-    return rarityValues;
+void enumConversion::EnumsToValues() {
+    ModifierValues = {
+        {DamageType::Physical, 0},
+        {DamageType::Fire, 2},
+        {DamageType::Ice, 3},
+        {DamageType::Electrical, 4},
+        {DamageType::Poison, 5},
+        {DamageType::Holy, 6},
+        {DamageType::Bloody, 7}
+    };
 }
 
-std::vector<WeaponPrefix> enumsToVectorList::GetPrefixValues() {
-    return prefixValues;
+std::vector<Rarity> enumConversion::GetRarity() {
+    return rarity;
 }
 
-std::vector<WeaponType> enumsToVectorList::GetTypeValues() {
-    return typeValues;
+std::vector<WeaponPrefix> enumConversion::GetPrefix() {
+    return prefix;
 }
 
-std::vector<DamageType> enumsToVectorList::GetModifierValues() {
-    return modifierValues;
+std::vector<WeaponType> enumConversion::GetType() {
+    return type;
+}
+
+std::vector<DamageType> enumConversion::GetModifier() {
+    return modifier;
 }

@@ -90,8 +90,8 @@ add_executable(main src/main.cpp
         src/items/weapon.h
         src/managers/itemManager.cpp
         src/managers/itemManager.h
-        src/items/helpers/enumsToVectorList.cpp
-        src/items/helpers/enumsToVectorList.h
+        src/items/helpers/enumConversion.cpp
+        src/items/helpers/enumConversion.h
         src/managers/LanguageManager.cpp
         src/managers/LanguageManager.h
 )

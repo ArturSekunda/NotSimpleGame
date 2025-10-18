@@ -2,14 +2,14 @@
 
 
 void itemManager::initialize() {
-    VectorListOfEnums->EnumsToVectorList();
+    EConversion->EnumsToVectorList();
 }
 
 void itemManager::CreateWeapon(int playerLevel) {
     weapons->CreateNewWeapon(playerLevel,
-        VectorListOfEnums->GetPrefixValues(),
-        VectorListOfEnums->GetTypeValues(),
-        VectorListOfEnums->GetModifierValues());
+        EConversion->GetPrefix(),
+        EConversion->GetType(),
+        EConversion->GetModifier());
 }
 
 void itemManager::DisplayItemInfo() const {

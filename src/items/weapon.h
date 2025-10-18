@@ -34,7 +34,7 @@ public:
 
     void GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type, DamageType damageType);
 
-    void GenerateWeaponEnchants();
+    void GenerateWeaponEnchants(Rarity RR);
 
     void GenerateWeaponBonusStats();
 

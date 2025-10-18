@@ -77,6 +77,8 @@ public: // From Enum to Float Value
 
     float WeaponTypeToBaseRange(WeaponType type) const;
 
+public: // Map of Damage Modifiers
+
 };
 
 

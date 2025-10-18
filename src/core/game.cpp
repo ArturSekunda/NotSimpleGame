@@ -23,8 +23,10 @@ void game::initializeEntities() {
     }
 
     itemManagerInstance->initialize();
-    itemManagerInstance->CreateWeapon(getPlayerPtr()->getLevel());
-    itemManagerInstance->DisplayItemInfo();
+    for (int i = 0; i <= 3; i++) {
+        itemManagerInstance->CreateWeapon(getPlayerPtr()->getLevel());
+        itemManagerInstance->DisplayItemInfo();
+    }
 
      for (int i = 0; i <= 3; i++) {
          addEntityToList(std::make_unique<basicEnemy>(i));
