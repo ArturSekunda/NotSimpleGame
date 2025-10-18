@@ -11,7 +11,7 @@ NotSimpleGame is a from-scratch 2D RPG where I'm learning advanced C++ concepts,
 - **Language:** C++
 - **Graphics:** SFML
 - **GUI:** TGUI
-- **Language:** JSON
+- **Game language and translation:** JSON
 - **Database:** SQLite (In the future)
 - **Build System:** CMake
 - **IDE:** JetBrains CLion
