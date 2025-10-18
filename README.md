@@ -63,7 +63,20 @@ Using **CodeScene** for code quality analysis and project insights.
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+**Creative Commons Attribution-NonCommercial-ShareAlike 4.0**
+
+### 🎮 What you can do:
+- ✅ Play, modify, and create mods
+- ✅ Share with others
+- ✅ Accept donations (for mods/content)
+
+### ❌ What you cannot do:
+- ❌ Sell the game or mods
+- ❌ Use commercially
+
+📖 [Full License](LICENSE) | 🔗 [Easy Summary](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ### Third-party libraries:
 - **SFML** - [zlib/png license](https://www.sfml-dev.org/license.php)
