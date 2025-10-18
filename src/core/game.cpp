@@ -25,7 +25,6 @@ void game::initializeEntities() {
     itemManagerInstance->initialize();
     for (int i = 0; i <= 3; i++) {
         itemManagerInstance->CreateWeapon(getPlayerPtr()->getLevel());
-        itemManagerInstance->DisplayItemInfo();
     }
 
      for (int i = 0; i <= 3; i++) {

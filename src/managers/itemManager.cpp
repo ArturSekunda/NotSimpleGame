@@ -6,13 +6,11 @@ void itemManager::initialize() {
 }
 
 void itemManager::CreateWeapon(int playerLevel) {
-    weapons->CreateNewWeapon(playerLevel,
+    auto w = weapon::CreateNewWeapon(playerLevel,
         EConversion->GetPrefix(),
         EConversion->GetType(),
         EConversion->GetModifier(),
         EConversion->GetEValues());
-}
+    w.DisplayWeaponInfo();
 
-void itemManager::DisplayItemInfo() const {
-    weapons->DisplayWeaponInfo();
 }

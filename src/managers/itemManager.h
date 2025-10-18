@@ -14,11 +14,9 @@ class itemManager {
 
     std::unique_ptr<enumConversion> EConversion = std::make_unique<enumConversion>();
     std::unique_ptr<itemBase> items = std::make_unique<itemBase>();
-    std::unique_ptr<weapon> weapons = std::make_unique<weapon>();
 public:
     void initialize();
     void CreateWeapon(int playerLevel);
-    void DisplayItemInfo() const;
 };
 
 

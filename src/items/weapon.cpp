@@ -21,9 +21,6 @@ weapon weapon::CreateNewWeapon(int playerLevel,
     const std::vector<DamageType>& VDType,
     std::map<EnchantType,float> EValues) {
     weapon newWeapon;
-    enchants.clear();
-    damage = 0;
-
     // Randomly select Rarity, Prefix, Type, and Modifier
     int HowMuchRare = darkMath::getInstance().generateDistanceDistribution({0,55,20,15,10,5});
     int Prefix = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(VPrefix.size() - 1));
@@ -32,11 +29,11 @@ weapon weapon::CreateNewWeapon(int playerLevel,
 
     std::cout << "Rarity: " << HowMuchRare << "\n";
 
-    GenerateWeaponStats(playerLevel,static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
+    newWeapon.GenerateWeaponStats(playerLevel,static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
 
-    GenerateWeaponName(static_cast<WeaponPrefix>(Prefix),static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
+    newWeapon.GenerateWeaponName(static_cast<WeaponPrefix>(Prefix),static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
 
-    GenerateWeaponEnchants(static_cast<Rarity>(HowMuchRare), EValues);
+    newWeapon.GenerateWeaponEnchants(static_cast<Rarity>(HowMuchRare), EValues);
 
     return newWeapon;
 }

@@ -25,7 +25,7 @@ public:
     ~weapon() override = default;
 
     // OverLoads
-    weapon CreateNewWeapon(int playerLevel, const std::vector<WeaponPrefix>&,const std::vector<WeaponType>&,const std::vector<DamageType>&,std::map<EnchantType,float> EValues);
+   static weapon CreateNewWeapon(int playerLevel, const std::vector<WeaponPrefix>&,const std::vector<WeaponType>&,const std::vector<DamageType>&,std::map<EnchantType,float> EValues);
     void CreateNewWeapon(int playerLevel,WeaponType type);
     void CreateNewWeapon(int playerLevel,WeaponType type, Rarity rarity);
     void CreateNewWeapon(int playerLevel,int weaponlevel);
