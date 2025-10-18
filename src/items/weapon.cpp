@@ -13,38 +13,44 @@ weapon::weapon(int id, const std::string &name, const std::string &description, 
 
 }
 
-weapon weapon::CreateNewWeapon() {
+weapon weapon::CreateNewWeapon(int playerLevel,
+    const std::vector<WeaponPrefix>& VPrefix,
+    const std::vector<WeaponType>& VWType,
+    const std::vector<DamageType>& VDType) {
 
-    GenerateWeaponName();
+    // Randomly select Rarity, Prefix, Type, and Modifier
+    int HowMuchRare = darkMath::getInstance().generateDistanceDistribution({0,50,30,15,5});
+    int Prefix = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(VPrefix.size() - 1));
+    int Type = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(VWType.size() - 1));
+    int Modifier = darkMath::getInstance().UniformIntDistribution(0,static_cast<int>(VDType.size() - 1));
+
+    GenerateWeaponStats(playerLevel,static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
+
+    GenerateWeaponName(static_cast<WeaponPrefix>(Prefix),static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
 
     return *this;
 }
 
-void weapon::GenerateWeaponName() {
+void weapon::GenerateWeaponName(WeaponPrefix prefix,Rarity rarity, WeaponType type, DamageType damageType) {
 
-    // Randomly select Rarity, Prefix, Type, and Modifier
-    int HowMuchRare = darkMath::getInstance().generateDistanceDistribution({0,50,30,15,5});
-    int Prefix = darkMath::getInstance().UniformIntDistribution(0, prefixValues.size() - 1);
-    int Type = darkMath::getInstance().UniformIntDistribution(0, typeValues.size() - 1);
-    int Modifier = darkMath::getInstance().UniformIntDistribution(0,modifierValues.size() - 1);
-
-    ItemName = RarityToString(static_cast<Rarity>(HowMuchRare)) + " " + WeaponPrefixToString(static_cast<WeaponPrefix>(Prefix)) + " " + WeaponTypeToString(static_cast<WeaponType>(Type)) + " (" +DamageTypeToString(static_cast<DamageType>(Modifier)) + ")";
-
-    GenerateWeaponStats(static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
+    ItemName = RarityToString(rarity) + " " + WeaponPrefixToString(prefix) + " " + WeaponTypeToString(type) + " (" +DamageTypeToString(damageType) + ")";
 
 }
 
-void weapon::GenerateWeaponStats(Rarity rarity, WeaponType type, DamageType damageType) {
+void weapon::GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type, DamageType damageType) {
 
-    auto playerLevel = playerRef ? playerRef->getLevel() : 1;
     auto WeaponLevel = darkMath::getInstance().generateIntNumber(std::clamp(playerLevel - 2, 1, playerLevel), playerLevel + 1);
+
     setLevel(WeaponLevel);
+
     float rarityMultiplier = RarityToFloatValue(rarity);
     float typeMultiplier = WeaponTypeToFloatValue(type);
     float damageTypeMultiplier = DamageTypeToFloatValue(damageType);
+
     int baseDamage = static_cast<int>((10 + (WeaponLevel * 1.7f)) * rarityMultiplier * typeMultiplier * damageTypeMultiplier);
     float baseAttackSpeed = (0.5f + (2.f / rarityMultiplier));
     float baseRange = WeaponTypeToBaseRange(type);
+
     setDamage(baseDamage);
     setAttackSpeed(baseAttackSpeed);
     setRange(baseRange);
@@ -57,11 +63,15 @@ void weapon::GenerateWeaponEnchants() {
 void weapon::GenerateWeaponBonusStats() {
 }
 
+void weapon::GenerateWeaponDescription(WeaponPrefix WPrefix, Rarity RRT, WeaponType WType, DamageType DT) {
+}
+
 void weapon::DisplayWeaponInfo() const {
     std::cout << ItemName << "\n";
     std::cout << "Description: " << ItemDescription << "\n";
     std::cout << "Damage: " << damage << "\n";
     std::cout << "Attack Speed: " << attackSpeed << "\n";
     std::cout << "Range: " << range << "\n";
+    std::cout << "Level: " << getLevel() << "\n";
     std::cout << "=======================\n";
 }

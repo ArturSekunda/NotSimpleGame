@@ -2,7 +2,6 @@
 #define NOTSIMPLEGAME_ITEMSTRUCTS_H
 #include "itemEnums.h"
 #include <string>
-#include <vector>
 
 struct ItemBonusStats {
 

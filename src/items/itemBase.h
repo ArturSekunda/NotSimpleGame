@@ -1,20 +1,18 @@
 #ifndef NOTSIMPLEGAME_ITEMBASE_H
 #define NOTSIMPLEGAME_ITEMBASE_H
 #include <string>
-#include "itemStructs.h"
+#include "helpers/itemStructs.h"
 
 class player;
 
 class itemBase {
 protected: // Attributes
+
     int ItemId = 0;
     std::string ItemName = "NULL";
     std::string ItemDescription = "NULL";
     Rarity ItemRarity = Rarity::Err_Null;
     int ItemLevel = 0;
-
-    // Temp
-    player* playerRef;
 
 public: // Constructors and Destructors
 
@@ -22,7 +20,6 @@ public: // Constructors and Destructors
     itemBase(int id, const std::string &name, const std::string &description, Rarity rarity, int level);
     virtual ~itemBase() = default;
 
-    void SetPlayerRef(player *playerPtr);
 
 public: // Getters
     int getId() const {
@@ -79,57 +76,6 @@ public: // From Enum to Float Value
     float DamageTypeToFloatValue(DamageType type) const;
 
     float WeaponTypeToBaseRange(WeaponType type) const;
-
-public: // Vectors for enums
-
-    std::vector<Rarity> rarityValues = {
-        Rarity::COMMON,
-        Rarity::UNCOMMON,
-        Rarity::RARE,
-        Rarity::EPIC,
-        Rarity::LEGENDARY
-    };
-
-    std::vector<WeaponPrefix> prefixValues = {
-        WeaponPrefix::Ancient,
-        WeaponPrefix::Dark,
-        WeaponPrefix::Blazing,
-        WeaponPrefix::Frozen,
-        WeaponPrefix::Cursed,
-        WeaponPrefix::Divine,
-        WeaponPrefix::Shadow,
-        WeaponPrefix::Crimson,
-        WeaponPrefix::Golden,
-        WeaponPrefix::Silver,
-        WeaponPrefix::Rusted,
-        WeaponPrefix::Ethereal,
-        WeaponPrefix::Vengeful,
-        WeaponPrefix::Storm,
-        WeaponPrefix::Blood,
-        WeaponPrefix::Dragon,
-        WeaponPrefix::Phantom,
-        WeaponPrefix::Royal,
-        WeaponPrefix::Mystic,
-        WeaponPrefix::Demon
-    };
-
-    std::vector<WeaponType> typeValues = {
-        WeaponType::SWORD,
-        WeaponType::AXE,
-        WeaponType::BOW,
-        WeaponType::STAFF,
-        WeaponType::SPEAR
-    };
-
-    std::vector<DamageType> modifierValues = {
-        DamageType::Physical,
-        DamageType::Fire,
-        DamageType::Ice,
-        DamageType::Electrical,
-        DamageType::Poison,
-        DamageType::Holy,
-        DamageType::Bloody
-    };
 
 };
 

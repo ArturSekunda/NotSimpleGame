@@ -1,10 +1,17 @@
 #include "itemManager.h"
 
-void itemManager::GetPlayerRef(player* player) {
-    items->SetPlayerRef(player);
+
+void itemManager::initialize() {
+    VectorListOfEnums->EnumsToVectorList();
+}
+
+void itemManager::CreateWeapon(int playerLevel) {
+    weapons->CreateNewWeapon(playerLevel,
+        VectorListOfEnums->GetPrefixValues(),
+        VectorListOfEnums->GetTypeValues(),
+        VectorListOfEnums->GetModifierValues());
 }
 
 void itemManager::DisplayItemInfo() const {
-    weapons->CreateNewWeapon();
     weapons->DisplayWeaponInfo();
 }

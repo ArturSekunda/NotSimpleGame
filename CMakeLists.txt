@@ -78,12 +78,14 @@ add_executable(main src/main.cpp
         src/inventory/inventorySystem.h
         src/items/itemBase.cpp
         src/items/itemBase.h
-        src/items/itemStructs.h
-        src/items/itemEnums.h
+        src/items/helpers/itemStructs.h
+        src/items/helpers/itemEnums.h
         src/items/weapon.cpp
         src/items/weapon.h
         src/managers/itemManager.cpp
         src/managers/itemManager.h
+        src/items/helpers/enumsToVectorList.cpp
+        src/items/helpers/enumsToVectorList.h
 )
 
 # Link SFML libraries

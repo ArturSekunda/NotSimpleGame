@@ -1,6 +1,7 @@
 #ifndef NOTSIMPLEGAME_WEAPON_H
 #define NOTSIMPLEGAME_WEAPON_H
 #include "itemBase.h"
+#include "vector"
 
 class darkMath;
 class player;
@@ -22,20 +23,22 @@ public:
     ~weapon() override = default;
 
     // OverLoads
-    weapon CreateNewWeapon();
-    void CreateNewWeapon(WeaponType type);
-    void CreateNewWeapon(WeaponType type, Rarity rarity);
-    void CreateNewWeapon(int level);
-    void CreateNewWeapon(int Damage, float AttackSpeed, float Range);
-    void CreateNewWeapon(ItemBonusStats bonusStats, std::vector<EnchantType> enchants);
+    weapon CreateNewWeapon(int playerLevel, const std::vector<WeaponPrefix>&,const std::vector<WeaponType>&,const std::vector<DamageType>&);
+    void CreateNewWeapon(int playerLevel,WeaponType type);
+    void CreateNewWeapon(int playerLevel,WeaponType type, Rarity rarity);
+    void CreateNewWeapon(int playerLevel,int weaponlevel);
+    void CreateNewWeapon(int playerLevel,int Damage, float AttackSpeed, float Range);
+    void CreateNewWeapon(int playerLevel,ItemBonusStats bonusStats, std::vector<EnchantType> enchants);
 
-    void GenerateWeaponName();
+    void GenerateWeaponName(WeaponPrefix prefix,Rarity rarity, WeaponType type, DamageType damageType);
 
-    void GenerateWeaponStats(Rarity rarity, WeaponType type, DamageType damageType);
+    void GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type, DamageType damageType);
 
     void GenerateWeaponEnchants();
 
     void GenerateWeaponBonusStats();
+
+    void GenerateWeaponDescription(WeaponPrefix WPrefix,Rarity RRT, WeaponType WType, DamageType DT);
 
     void DisplayWeaponInfo() const;
 
