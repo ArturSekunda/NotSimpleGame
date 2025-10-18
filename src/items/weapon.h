@@ -43,6 +43,8 @@ public:
 
     void GenerateWeaponDescription(WeaponPrefix WPrefix,Rarity RRT, WeaponType WType, DamageType DT);
 
+    void GenerateEnchantDescription(EnchantType EType,float EValues);
+
     void GenerateBonusStats(int MaxGeneratedStat);
 
     void DisplayWeaponInfo() const;

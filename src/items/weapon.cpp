@@ -189,7 +189,39 @@ void weapon::GenerateWeaponBonusStats(Rarity RR) {
 void weapon::GenerateWeaponDescription(WeaponPrefix WPrefix, Rarity RRT, WeaponType WType, DamageType DT) {
 }
 
+void weapon::GenerateEnchantDescription(EnchantType EType, float EValues) {
+}
+
 void weapon::GenerateBonusStats(int MaxGeneratedStat) {
+    if (MaxGeneratedStat < 1) {
+        MaxGeneratedStat = 1;   
+    }
+
+    auto& dm = darkMath::getInstance();
+
+    int chancePercent = 15 + (MaxGeneratedStat * 15);
+    
+    if (dm.generateIntNumber(1, 100) <= chancePercent) {
+        bonusStats.strength = dm.generateIntNumber(1, MaxGeneratedStat);
+    }
+    if (dm.generateIntNumber(1, 100) <= chancePercent) {
+        bonusStats.dexterity = dm.generateIntNumber(1, MaxGeneratedStat);
+    }
+    if (dm.generateIntNumber(1, 100) <= chancePercent) {
+        bonusStats.intelligence = dm.generateIntNumber(1, MaxGeneratedStat);
+    }
+    if (dm.generateIntNumber(1, 100) <= chancePercent) {
+        bonusStats.charisma = dm.generateIntNumber(1, MaxGeneratedStat);
+    }
+    if (dm.generateIntNumber(1, 100) <= chancePercent) {
+        bonusStats.endurance = dm.generateIntNumber(1, MaxGeneratedStat);
+    }
+    if (dm.generateIntNumber(1, 100) <= chancePercent) {
+        bonusStats.luck = dm.generateIntNumber(1, MaxGeneratedStat);
+    }
+    if (dm.generateIntNumber(1, 100) <= chancePercent) {
+        bonusStats.vitality = dm.generateIntNumber(1, MaxGeneratedStat);
+    }
 }
 
 void weapon::DisplayWeaponInfo() const {
@@ -203,5 +235,13 @@ void weapon::DisplayWeaponInfo() const {
     for (auto& enchant : enchants) {
         std::cout << enchant.name << " " << enchant.power << "\n";
     }
+    std::cout << "Bonus Stats: \n";
+    std::cout << "Strength: " << bonusStats.strength << "\n";
+    std::cout << "Dexterity: " << bonusStats.dexterity << "\n";
+    std::cout << "Intelligence: " << bonusStats.intelligence << "\n";
+    std::cout << "Charisma: " << bonusStats.charisma << "\n";
+    std::cout << "Endurance: " << bonusStats.endurance << "\n";
+    std::cout << "Luck: " << bonusStats.luck << "\n";
+    std::cout << "Vitality: " << bonusStats.vitality << "\n";
     std::cout << "=======================\n";
 }
