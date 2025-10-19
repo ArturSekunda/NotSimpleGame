@@ -90,7 +90,6 @@ void enumConversion::EnumsToValues() {
         {DamageType::Poison, 1.5f},
         {DamageType::Bloody, 2.0f},
         {DamageType::Holy, 1.7f},
-        {DamageType::Magical, 1.5f}
     };
     BaseRange = {
         {WeaponType::SWORD, 1.5f},

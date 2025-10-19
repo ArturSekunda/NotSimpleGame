@@ -5,6 +5,7 @@
 #include "vector"
 
 class darkMath;
+class enumConversion;
 
 class weapon : public itemBase {
 protected:
@@ -15,6 +16,8 @@ protected:
 
     ItemBonusStats bonusStats;
     std::vector<Enchantment> enchants;
+
+    enumConversion& EC = enumConversion::getInstance();
 
 public:
     weapon() = default;

@@ -34,8 +34,6 @@ weapon weapon::CreateNewWeapon(int playerLevel, int itemID) {
 
 void weapon::GenerateWeaponName(WeaponPrefix prefix,Rarity rarity, WeaponType type, DamageType damageType) {
 
-    auto& EC = enumConversion::getInstance();
-
     // Fallback to hardcoded composition
     ItemUUID.ItemName =
         EC.GetRarityNames().at(rarity) + " " +
@@ -45,8 +43,6 @@ void weapon::GenerateWeaponName(WeaponPrefix prefix,Rarity rarity, WeaponType ty
 }
 
 void weapon::GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type, DamageType damageType) {
-
-    auto& EC = enumConversion::getInstance();
 
     auto WeaponLevel = darkMath::getInstance().generateIntNumber(std::clamp(playerLevel - 2, 1, playerLevel), playerLevel + 1);
 
@@ -67,7 +63,6 @@ void weapon::GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type,
 }
 
 void weapon::GenerateWeaponEnchants(Rarity RR) {
-    auto& EC = enumConversion::getInstance();
     auto EnchantValuesMap = EC.GetEValues();
     switch (RR) {
         case Rarity::COMMON: {
@@ -136,7 +131,6 @@ void weapon::GenerateEnchantStruct(float EValues, EnchantType EType) {
         return;
     }
 
-    auto& EC = enumConversion::getInstance();
     auto EnchantMap = EC.GetEnchantmentNames();
 
     Enchantment newEnchant;
