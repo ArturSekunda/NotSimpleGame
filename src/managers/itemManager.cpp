@@ -1,16 +1,8 @@
 #include "itemManager.h"
-
-
-void itemManager::initialize() {
-    EConversion->EnumsToVectorList();
-}
+#include "items/weapon.h"
 
 void itemManager::CreateWeapon(int playerLevel) {
-    auto w = weapon::CreateNewWeapon(playerLevel,
-        EConversion->GetPrefix(),
-        EConversion->GetType(),
-        EConversion->GetModifier(),
-        EConversion->GetEValues());
+    auto w = weapon::CreateNewWeapon(playerLevel);
     w.DisplayWeaponInfo();
 
 }

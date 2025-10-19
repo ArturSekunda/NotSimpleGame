@@ -62,24 +62,6 @@ public: // Setters
         ItemLevel = level;
     }
 
-public: // From Enum to String
-
-    std::string RarityToString(Rarity rarity) const;
-    std::string WeaponPrefixToString(WeaponPrefix prefix) const;
-    std::string WeaponTypeToString(WeaponType type) const;
-    std::string DamageTypeToString(DamageType type) const;
-    std::string EnchantTypeToString(EnchantType type) const;
-
-public: // From Enum to Float Value
-
-    float RarityToFloatValue(Rarity rarity) const;
-    float WeaponTypeToFloatValue(WeaponType type) const;
-    float DamageTypeToFloatValue(DamageType type) const;
-
-    float WeaponTypeToBaseRange(WeaponType type) const;
-
-public: // Map of Damage Modifiers
-
 };
 
 

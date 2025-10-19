@@ -1,7 +1,6 @@
 #ifndef NOTSIMPLEGAME_WEAPON_H
 #define NOTSIMPLEGAME_WEAPON_H
 #include <map>
-
 #include "itemBase.h"
 #include "vector"
 
@@ -24,7 +23,7 @@ public:
     ~weapon() override = default;
 
     // OverLoads
-   static weapon CreateNewWeapon(int playerLevel, const std::vector<WeaponPrefix>&,const std::vector<WeaponType>&,const std::vector<DamageType>&,std::map<EnchantType,float> EValues);
+   static weapon CreateNewWeapon(int playerLevel);
     void CreateNewWeapon(int playerLevel,WeaponType type);
     void CreateNewWeapon(int playerLevel,WeaponType type, Rarity rarity);
     void CreateNewWeapon(int playerLevel,int weaponlevel);
@@ -35,7 +34,7 @@ public:
 
     void GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type, DamageType damageType);
 
-    void GenerateWeaponEnchants(Rarity RR,std::map<EnchantType,float> EValues);
+    void GenerateWeaponEnchants(Rarity RR);
 
     void GenerateEnchantStruct(float EValues, EnchantType EType);
 

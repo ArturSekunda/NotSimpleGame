@@ -22,7 +22,6 @@ void game::initializeEntities() {
         throw std::runtime_error("Failed to create player instance.");
     }
 
-    itemManagerInstance->initialize();
     for (int i = 0; i <= 3; i++) {
         itemManagerInstance->CreateWeapon(getPlayerPtr()->getLevel());
     }
