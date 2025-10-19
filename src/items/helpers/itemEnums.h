@@ -11,6 +11,7 @@ enum class Rarity {
 };
 
 enum class ItemType {
+    NONE,
     WEAPON,
     ARMOR,
     CONSUMABLE,

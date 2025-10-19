@@ -18,15 +18,13 @@ protected:
 
 public:
     weapon() = default;
-    weapon(int id, const std::string &name, const std::string &description, Rarity rarity, int level,
-           WeaponType weapType, int damage, float attackSpeed, float range);
     ~weapon() override = default;
 
     // OverLoads
-   static weapon CreateNewWeapon(int playerLevel);
+   static weapon CreateNewWeapon(int playerLevel,int itemID);
     void CreateNewWeapon(int playerLevel,WeaponType type);
     void CreateNewWeapon(int playerLevel,WeaponType type, Rarity rarity);
-    void CreateNewWeapon(int playerLevel,int weaponlevel);
+    void CreateNewWeapon(int playerLevel,int weaponlevel, int itemID);
     void CreateNewWeapon(int playerLevel,int Damage, float AttackSpeed, float Range);
     void CreateNewWeapon(int playerLevel,ItemBonusStats bonusStats, std::vector<EnchantType> enchants);
 

@@ -1,7 +1,23 @@
 #ifndef NOTSIMPLEGAME_ITEMSTRUCTS_H
 #define NOTSIMPLEGAME_ITEMSTRUCTS_H
+#include <iostream>
+#include <ostream>
+#include "items/helpers/enumConversion.h"
 #include "itemEnums.h"
 #include <string>
+
+struct UUID {
+    int id = 0;
+    ItemType ItemType = ItemType::NONE;
+    std::string ItemName = "None";
+    int ItemLevel = 0;
+
+    void DisplayUUID() const {
+        auto& EC = enumConversion::getInstance();
+        std::cout << "UUID: " +
+            std::to_string(id) + "_" + EC.GetItemTypeNames().at(ItemType) + "_" + ItemName + "_" + std::to_string(ItemLevel) << std::endl;
+    }
+};
 
 struct ItemBonusStats {
 

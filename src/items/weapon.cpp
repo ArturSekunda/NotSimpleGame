@@ -6,32 +6,17 @@
 
 #include "core/darkMath.h"
 
-weapon::weapon(int id, const std::string &name, const std::string &description, Rarity rarity, int level,
-    WeaponType weapType, int damage, float attackSpeed, float range) :
-    itemBase(id, name, description, rarity, level),
-    weapType(weapType), damage(damage), attackSpeed(attackSpeed), range(range) {
-
-    // Bruh
-
-}
-
-weapon weapon::CreateNewWeapon(int playerLevel) {
+weapon weapon::CreateNewWeapon(int playerLevel, int itemID) {
 
     weapon newWeapon;
+
     auto& EC = enumConversion::getInstance();
-    std::cout << "Prefix size: " << EC.GetPrefix().size() << "\n";
-    std::cout << "Type size: " << EC.GetType().size() << "\n";
-    std::cout << "Modifier size: " << EC.GetModifier().size() << "\n";
+
     // Randomly select Rarity, Prefix, Type, and Modifier
     int HowMuchRare = darkMath::getInstance().generateDistanceDistribution({55,20,15,10,5}) + 1;
     int Prefix = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(EC.GetPrefix().size() - 1));
     int Type = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(EC.GetType().size() - 1));
     int Modifier = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(EC.GetModifier().size() - 1));
-
-    std::cout << "Rarity: " << HowMuchRare << "\n";
-    std::cout << "Type: " << Type << "\n";
-    std::cout << "Modifier: " << Modifier << "\n";
-    std::cout << "Prefix: " << Prefix << "\n";
 
     newWeapon.GenerateWeaponStats(playerLevel,static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
 
@@ -41,6 +26,9 @@ weapon weapon::CreateNewWeapon(int playerLevel) {
 
     newWeapon.GenerateWeaponBonusStats(static_cast<Rarity>(HowMuchRare));
 
+    newWeapon.setGenItemType(ItemType::WEAPON);
+    newWeapon.setId(itemID);
+
     return newWeapon;
 }
 
@@ -49,7 +37,7 @@ void weapon::GenerateWeaponName(WeaponPrefix prefix,Rarity rarity, WeaponType ty
     auto& EC = enumConversion::getInstance();
 
     // Fallback to hardcoded composition
-    ItemName =
+    ItemUUID.ItemName =
         EC.GetRarityNames().at(rarity) + " " +
             EC.GetPrefixNames().at(prefix) + " " +
                 EC.GetWeaponTypeNames().at(type) + " (" +
@@ -241,7 +229,6 @@ void weapon::GenerateBonusStats(int MaxGeneratedStat) {
 }
 
 void weapon::DisplayWeaponInfo() const {
-    std::cout << ItemName << "\n";
     std::cout << "Description: " << ItemDescription << "\n";
     std::cout << "Damage: " << damage << "\n";
     std::cout << "Attack Speed: " << attackSpeed << "\n";
@@ -260,4 +247,5 @@ void weapon::DisplayWeaponInfo() const {
     std::cout << "Luck: " << bonusStats.luck << "\n";
     std::cout << "Vitality: " << bonusStats.vitality << "\n";
     std::cout << "=======================\n";
+    ItemUUID.DisplayUUID();
 }

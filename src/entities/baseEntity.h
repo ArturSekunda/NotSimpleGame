@@ -16,7 +16,7 @@ enum class EntityType {
 
 struct EntityID {
     EntityType type;  // PLAYER, BASIC_ENEMY, GOBLIN, NPC...
-    int localID;      // 0, 1, 2... dla tego konkretnego typu
+    int localID;
 
     std::string toString() const {
         return typeToString(type) + "_" + std::to_string(localID);

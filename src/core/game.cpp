@@ -23,7 +23,7 @@ void game::initializeEntities() {
     }
 
     for (int i = 0; i <= 3; i++) {
-        itemManagerInstance->CreateWeapon(getPlayerPtr()->getLevel());
+        itemManagerInstance->CreateWeapon(getPlayerPtr()->getLevel(),i);
     }
 
      for (int i = 0; i <= 3; i++) {

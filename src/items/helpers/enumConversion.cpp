@@ -50,6 +50,13 @@ void enumConversion::EnumsToVectorList() {
         DamageType::Bloody,
         DamageType::Holy
     };
+    itemTypeList ={
+        ItemType::NONE,
+        ItemType::WEAPON,
+        ItemType::ARMOR,
+        ItemType::CONSUMABLE,
+        ItemType::MISC
+    };
 }
 
 void enumConversion::EnumsToValues() {
@@ -82,7 +89,8 @@ void enumConversion::EnumsToValues() {
         {DamageType::Ice, 1.3f},
         {DamageType::Poison, 1.5f},
         {DamageType::Bloody, 2.0f},
-        {DamageType::Holy, 1.7f}
+        {DamageType::Holy, 1.7f},
+        {DamageType::Magical, 1.5f}
     };
     BaseRange = {
         {WeaponType::SWORD, 1.5f},
@@ -144,8 +152,20 @@ void enumConversion::EnumsToString() {
         {DamageType::Electrical, "Electrical"},
         {DamageType::Poison, "Poison"},
         {DamageType::Bloody, "Bloody"},
-        {DamageType::Holy, "Holy"}
+        {DamageType::Holy, "Holy"},
+        {DamageType::Magical, "Magical"}
     };
+    ItemTypeName = {
+        {ItemType::NONE, "NONE"},
+        {ItemType::WEAPON, "WEAPON"},
+        {ItemType::ARMOR, "ARMOR"},
+        {ItemType::CONSUMABLE, "CONSUMABLE"},
+        {ItemType::MISC, "MISC"}
+    };
+}
+
+const std::vector<ItemType> & enumConversion::GetItemType() {
+    return itemTypeList;
 }
 
 const std::vector<Rarity>& enumConversion::GetRarity() {
@@ -202,4 +222,8 @@ const std::map<WeaponType, std::string>& enumConversion::GetWeaponTypeNames() {
 
 const std::map<DamageType, std::string>& enumConversion::GetDamageTypeNames() {
     return ModifierName;
+}
+
+const std::map<ItemType, std::string> & enumConversion::GetItemTypeNames() {
+    return ItemTypeName;
 }

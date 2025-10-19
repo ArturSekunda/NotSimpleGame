@@ -8,26 +8,23 @@ class player;
 class itemBase {
 protected: // Attributes
 
-    int ItemId = 0;
-    std::string ItemName = "NULL";
+    UUID ItemUUID;
     std::string ItemDescription = "NULL";
     Rarity ItemRarity = Rarity::Err_Null;
-    int ItemLevel = 0;
 
 public: // Constructors and Destructors
 
     itemBase() = default;
-    itemBase(int id, const std::string &name, const std::string &description, Rarity rarity, int level);
     virtual ~itemBase() = default;
 
 
 public: // Getters
     int getId() const {
-        return ItemId;
+        return ItemUUID.id;
     }
 
     std::string getName() const {
-        return ItemName;
+        return ItemUUID.ItemName;
     }
 
     std::string getDescription() const {
@@ -39,15 +36,18 @@ public: // Getters
     }
 
     int getLevel() const {
-        return ItemLevel;
+        return ItemUUID.ItemLevel;
+    }
+    ItemType getItemType() {
+        return ItemUUID.ItemType;
     }
 public: // Setters
     void setId(int id) {
-        ItemId = id;
+        ItemUUID.id = id;
     }
 
     void setName(const std::string &name) {
-        ItemName = name;
+        ItemUUID.ItemName = name;
     }
 
     void setDescription(const std::string &description) {
@@ -59,7 +59,10 @@ public: // Setters
     }
 
     void setLevel(int level) {
-        ItemLevel = level;
+        ItemUUID.ItemLevel = level;
+    }
+    void setGenItemType(ItemType type) {
+        ItemUUID.ItemType = type;
     }
 
 };

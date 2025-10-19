@@ -15,6 +15,8 @@ class enumConversion {
 
     std::vector<DamageType> modifier;
 
+    std::vector<ItemType> itemTypeList;
+
     std::map<EnchantType,float> EnchantmentValues;
 
     std::map<Rarity,float> RarityValues;
@@ -34,6 +36,8 @@ class enumConversion {
     std::map<WeaponType, std::string> WeaponTName;
 
     std::map<DamageType, std::string> ModifierName;
+
+    std::map<ItemType, std::string> ItemTypeName;
 
 private:
     enumConversion() {
@@ -58,6 +62,9 @@ public:
     void EnumsToString();
 
     // Getters
+
+    const std::vector<ItemType>& GetItemType();
+
     const std::vector<Rarity>& GetRarity();
 
     const std::vector<WeaponPrefix>& GetPrefix();
@@ -85,6 +92,8 @@ public:
     const std::map<WeaponType, std::string>& GetWeaponTypeNames();
 
     const std::map<DamageType, std::string>& GetDamageTypeNames();
+
+    const std::map<ItemType, std::string>& GetItemTypeNames();
 
 };
 
