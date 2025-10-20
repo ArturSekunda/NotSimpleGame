@@ -26,7 +26,7 @@ enum class WeaponType {
     SPEAR
 };
 
-enum class WeaponPrefix
+enum class Prefix
 {
 
     Ancient,
@@ -37,52 +37,46 @@ enum class WeaponPrefix
     Divine,
     Shadow,
     Crimson,
-    Golden,
-    Silver,
-    Rusted,
     Ethereal,
     Vengeful,
     Storm,
-    Blood,
     Dragon,
     Phantom,
     Royal,
-    Mystic,
-    Demon
 
+};
+
+enum class MaterialTypeOfItem {
+    NONE,
+    PAPER,
+    LEATHER,
+    IRON,
+    GOLD,
+    EMERALD,
+    DIAMOND,
 };
 
 enum class ArmorType {
+    NONE,
     HELMET,
     CHESTPLATE,
     LEGGINGS,
-    BOOTS,
-    SHIELD
+    BOOTS
 };
 
 enum class ConsumableType {
+    NONE,
     HEALTH_POTION,
     MANA_POTION
 };
 
-enum class SlotType {
-    Armor,
-    Weapon,
-    Accessory
-};
-
-enum class ArmorSlotType {
-    Helmet,
-    Chestplate,
-    Leggings,
-    Boots
-};
-
 enum class AccessoryType {
+    None,
     Ring,
     Amulet,
     Belt,
 };
+
 
 // Damage Types for weapons and spells
 
@@ -97,12 +91,19 @@ enum class DamageType {
     Holy
 };
 
-enum class EnchantType {
+enum class EnchantWeaponType {
     NONE,
     Fire,
     Ice,
     Lightning,
     Poison
+};
+
+enum class EnchantArmorType {
+    NONE,
+    ADDITIONAL_DEFENSE,
+    ADDITIONAL_HEALTH,
+    ADDITIONAL_MANA
 };
 
 #endif //NOTSIMPLEGAME_ITEMENUMS_H

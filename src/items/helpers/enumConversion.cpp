@@ -10,26 +10,20 @@ void enumConversion::EnumsToVectorList() {
     };
 
     prefix = {
-        WeaponPrefix::Ancient,
-        WeaponPrefix::Dark,
-        WeaponPrefix::Blazing,
-        WeaponPrefix::Frozen,
-        WeaponPrefix::Cursed,
-        WeaponPrefix::Divine,
-        WeaponPrefix::Shadow,
-        WeaponPrefix::Crimson,
-        WeaponPrefix::Golden,
-        WeaponPrefix::Silver,
-        WeaponPrefix::Rusted,
-        WeaponPrefix::Ethereal,
-        WeaponPrefix::Vengeful,
-        WeaponPrefix::Storm,
-        WeaponPrefix::Blood,
-        WeaponPrefix::Dragon,
-        WeaponPrefix::Phantom,
-        WeaponPrefix::Royal,
-        WeaponPrefix::Mystic,
-        WeaponPrefix::Demon
+        Prefix::Ancient,
+        Prefix::Dark,
+        Prefix::Blazing,
+        Prefix::Frozen,
+        Prefix::Cursed,
+        Prefix::Divine,
+        Prefix::Shadow,
+        Prefix::Crimson,
+        Prefix::Ethereal,
+        Prefix::Vengeful,
+        Prefix::Storm,
+        Prefix::Dragon,
+        Prefix::Phantom,
+        Prefix::Royal,
     };
 
     type = {
@@ -57,15 +51,30 @@ void enumConversion::EnumsToVectorList() {
         ItemType::CONSUMABLE,
         ItemType::MISC
     };
+    armorList = {
+        ArmorType::NONE,
+        ArmorType::HELMET,
+        ArmorType::CHESTPLATE,
+        ArmorType::LEGGINGS,
+        ArmorType::BOOTS
+    };
+    materialList = {
+        MaterialTypeOfItem::PAPER,
+        MaterialTypeOfItem::LEATHER,
+        MaterialTypeOfItem::IRON,
+        MaterialTypeOfItem::GOLD,
+        MaterialTypeOfItem::EMERALD,
+        MaterialTypeOfItem::DIAMOND,
+    };
 }
 
 void enumConversion::EnumsToValues() {
     EnchantmentValues = {
-        {EnchantType::NONE, 0.f},
-        {EnchantType::Fire, 1.1f},
-        {EnchantType::Ice, 1.2f},
-        {EnchantType::Lightning, 1.3f},
-        {EnchantType::Poison, 1.5f}
+        {EnchantWeaponType::NONE, 0.f},
+        {EnchantWeaponType::Fire, 0.3f},
+        {EnchantWeaponType::Ice, 0.4f},
+        {EnchantWeaponType::Lightning, 0.5f},
+        {EnchantWeaponType::Poison, 0.6f}
     };
     RarityValues = {
         {Rarity::COMMON, 1.f},
@@ -87,26 +96,40 @@ void enumConversion::EnumsToValues() {
         {DamageType::Electrical, 1.3f},
         {DamageType::Fire, 1.4f},
         {DamageType::Ice, 1.3f},
-        {DamageType::Poison, 1.5f},
-        {DamageType::Bloody, 2.0f},
-        {DamageType::Holy, 1.7f},
+        {DamageType::Poison, 1.4f},
+        {DamageType::Bloody, 1.5f},
+        {DamageType::Holy, 1.5f},
     };
     BaseRange = {
         {WeaponType::SWORD, 1.5f},
         {WeaponType::AXE, 1.2f},
         {WeaponType::BOW, 3.0f},
-        {WeaponType::STAFF, 2.5f},
+        {WeaponType::STAFF, 3.0f},
         {WeaponType::SPEAR, 2.0f}
+    };
+    ArmorTypeValues = {
+        {ArmorType::HELMET, 0.6f},
+        {ArmorType::CHESTPLATE, 1.f},
+        {ArmorType::LEGGINGS, 0.8f},
+        {ArmorType::BOOTS, 0.6f},
+    };
+    MaterialValues = {
+        {MaterialTypeOfItem::PAPER, 0.2f},
+        {MaterialTypeOfItem::LEATHER, 0.5f},
+        {MaterialTypeOfItem::IRON, 0.8f},
+        {MaterialTypeOfItem::GOLD, 1.2f},
+        {MaterialTypeOfItem::EMERALD, 2.f},
+        {MaterialTypeOfItem::DIAMOND, 2.8f},
     };
 }
 
 void enumConversion::EnumsToString() {
     EnchantmentName = {
-        {EnchantType::NONE, "NONE"},
-        {EnchantType::Fire, "Fire"},
-        {EnchantType::Ice, "Ice"},
-        {EnchantType::Lightning, "Lightning"},
-        {EnchantType::Poison, "Poison"}
+        {EnchantWeaponType::NONE, "NONE"},
+        {EnchantWeaponType::Fire, "Fire"},
+        {EnchantWeaponType::Ice, "Ice"},
+        {EnchantWeaponType::Lightning, "Lightning"},
+        {EnchantWeaponType::Poison, "Poison"}
     };
     RarityName = {
         {Rarity::COMMON, "Common"},
@@ -116,26 +139,20 @@ void enumConversion::EnumsToString() {
         {Rarity::LEGENDARY, "Legendary"}
     };
     PrefixName = {
-        {WeaponPrefix::Ancient, "Ancient"},
-        {WeaponPrefix::Dark, "Dark"},
-        {WeaponPrefix::Blazing, "Blazing"},
-        {WeaponPrefix::Frozen, "Frozen"},
-        {WeaponPrefix::Cursed, "Cursed"},
-        {WeaponPrefix::Divine, "Divine"},
-        {WeaponPrefix::Shadow, "Shadow"},
-        {WeaponPrefix::Crimson, "Crimson"},
-        {WeaponPrefix::Golden, "Golden"},
-        {WeaponPrefix::Silver, "Silver"},
-        {WeaponPrefix::Rusted, "Rusted"},
-        {WeaponPrefix::Ethereal, "Ethereal"},
-        {WeaponPrefix::Vengeful, "Vengeful"},
-        {WeaponPrefix::Storm, "Storm"},
-        {WeaponPrefix::Blood, "Blood"},
-        {WeaponPrefix::Dragon, "Dragon"},
-        {WeaponPrefix::Phantom, "Phantom"},
-        {WeaponPrefix::Royal, "Royal"},
-        {WeaponPrefix::Mystic, "Mystic"},
-        {WeaponPrefix::Demon, "Demon"}
+        {Prefix::Ancient, "Ancient"},
+        {Prefix::Dark, "Dark"},
+        {Prefix::Blazing, "Blazing"},
+        {Prefix::Frozen, "Frozen"},
+        {Prefix::Cursed, "Cursed"},
+        {Prefix::Divine, "Divine"},
+        {Prefix::Shadow, "Shadow"},
+        {Prefix::Crimson, "Crimson"},
+        {Prefix::Ethereal, "Ethereal"},
+        {Prefix::Vengeful, "Vengeful"},
+        {Prefix::Storm, "Storm"},
+        {Prefix::Dragon, "Dragon"},
+        {Prefix::Phantom, "Phantom"},
+        {Prefix::Royal, "Royal"},
     };
     WeaponTName = {
         {WeaponType::SWORD, "Sword"},
@@ -161,6 +178,25 @@ void enumConversion::EnumsToString() {
         {ItemType::CONSUMABLE, "CONSUMABLE"},
         {ItemType::MISC, "MISC"}
     };
+    ArmorTypeName = {
+        {ArmorType::NONE, "NONE"},
+        {ArmorType::HELMET, "Helmet"},
+        {ArmorType::CHESTPLATE, "Chestplate"},
+        {ArmorType::LEGGINGS, "Leggings"},
+        {ArmorType::BOOTS, "Boots"}
+    };
+    MaterialName = {
+        {MaterialTypeOfItem::PAPER, "Paper"},
+        {MaterialTypeOfItem::LEATHER, "Leather"},
+        {MaterialTypeOfItem::IRON, "Iron"},
+        {MaterialTypeOfItem::GOLD, "Gold"},
+        {MaterialTypeOfItem::EMERALD, "Emerald"},
+        {MaterialTypeOfItem::DIAMOND, "Diamond"}
+    };
+}
+
+const std::vector<ArmorType> & enumConversion::GetArmorType() {
+    return armorList;
 }
 
 const std::vector<ItemType> & enumConversion::GetItemType() {
@@ -171,7 +207,7 @@ const std::vector<Rarity>& enumConversion::GetRarity() {
     return rarity;
 }
 
-const std::vector<WeaponPrefix>& enumConversion::GetPrefix() {
+const std::vector<Prefix>& enumConversion::GetPrefix() {
     return prefix;
 }
 
@@ -183,7 +219,11 @@ const std::vector<DamageType>& enumConversion::GetModifier() {
     return modifier;
 }
 
-const std::map<EnchantType, float>& enumConversion::GetEValues() {
+const std::vector<MaterialTypeOfItem>& enumConversion::GetMaterial() {
+    return materialList;
+}
+
+const std::map<EnchantWeaponType, float>& enumConversion::GetEValues() {
     return EnchantmentValues;
 }
 
@@ -203,7 +243,15 @@ const std::map<WeaponType, float>& enumConversion::GetBaseRange() {
     return BaseRange;
 }
 
-const std::map<EnchantType, std::string>& enumConversion::GetEnchantmentNames() {
+const std::map<ArmorType, float> & enumConversion::GetArmorTypeValues() {
+    return ArmorTypeValues;
+}
+
+const std::map<MaterialTypeOfItem, float>& enumConversion::GetMaterialValues() {
+    return MaterialValues;
+}
+
+const std::map<EnchantWeaponType, std::string>& enumConversion::GetEnchantmentNames() {
     return EnchantmentName;
 }
 
@@ -211,7 +259,7 @@ const std::map<Rarity, std::string>& enumConversion::GetRarityNames() {
     return RarityName;
 }
 
-const std::map<WeaponPrefix, std::string>& enumConversion::GetPrefixNames() {
+const std::map<Prefix, std::string>& enumConversion::GetPrefixNames() {
     return PrefixName;
 }
 
@@ -225,4 +273,11 @@ const std::map<DamageType, std::string>& enumConversion::GetDamageTypeNames() {
 
 const std::map<ItemType, std::string> & enumConversion::GetItemTypeNames() {
     return ItemTypeName;
+}
+
+const std::map<ArmorType, std::string> & enumConversion::GetArmorTypeName() {
+    return ArmorTypeName;
+}
+const std::map<MaterialTypeOfItem, std::string> & enumConversion::GetMaterialNames() {
+    return MaterialName;
 }

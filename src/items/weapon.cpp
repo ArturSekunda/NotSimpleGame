@@ -14,15 +14,18 @@ weapon weapon::CreateNewWeapon(int playerLevel, int itemID) {
 
     // Randomly select Rarity, Prefix, Type, and Modifier
     int HowMuchRare = darkMath::getInstance().generateDistanceDistribution({55,20,15,10,5}) + 1;
-    int Prefix = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(EC.GetPrefix().size() - 1));
+    int WPrefix = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(EC.GetPrefix().size() - 1));
     int Type = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(EC.GetType().size() - 1));
     int Modifier = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(EC.GetModifier().size() - 1));
+    int Material = darkMath::getInstance().generateDistanceDistribution({55,20,15,10,5,1}) + 1;
 
-    newWeapon.GenerateWeaponStats(playerLevel,static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
+    newWeapon.GenerateWeaponStats(playerLevel,static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier), static_cast<MaterialTypeOfItem>(Material));
 
-    newWeapon.GenerateWeaponName(static_cast<WeaponPrefix>(Prefix),static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier));
+    newWeapon.GenerateWeaponName(static_cast<Prefix>(WPrefix),static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier),static_cast<MaterialTypeOfItem>(Material));
 
     newWeapon.GenerateWeaponEnchants(static_cast<Rarity>(HowMuchRare));
+
+    newWeapon.ApplyEnchantmentDamage();
 
     newWeapon.GenerateWeaponBonusStats(static_cast<Rarity>(HowMuchRare));
 
@@ -32,17 +35,18 @@ weapon weapon::CreateNewWeapon(int playerLevel, int itemID) {
     return newWeapon;
 }
 
-void weapon::GenerateWeaponName(WeaponPrefix prefix,Rarity rarity, WeaponType type, DamageType damageType) {
+void weapon::GenerateWeaponName(Prefix prefix,Rarity rarity, WeaponType type, DamageType damageType, MaterialTypeOfItem material) {
 
     // Fallback to hardcoded composition
     ItemUUID.ItemName =
         EC.GetRarityNames().at(rarity) + " " +
             EC.GetPrefixNames().at(prefix) + " " +
-                EC.GetWeaponTypeNames().at(type) + " (" +
-                    EC.GetDamageTypeNames().at(damageType) + ")";
+                EC.GetMaterialNames().at(material) + " " +
+                    EC.GetWeaponTypeNames().at(type) + " (" +
+                        EC.GetDamageTypeNames().at(damageType) + ")";
 }
 
-void weapon::GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type, DamageType damageType) {
+void weapon::GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type, DamageType damageType, MaterialTypeOfItem material) {
 
     auto WeaponLevel = darkMath::getInstance().generateIntNumber(std::clamp(playerLevel - 2, 1, playerLevel), playerLevel + 1);
 
@@ -51,8 +55,16 @@ void weapon::GenerateWeaponStats(int playerLevel,Rarity rarity, WeaponType type,
     float rarityMultiplier = EC.GetRarityValues().at(rarity);
     float typeMultiplier = EC.GetWTypeValues().at(type);
     float damageTypeMultiplier = EC.GetDamageValues().at(damageType);
+    float materialMultiplier = EC.GetMaterialValues().at(material);
 
-    int baseDamage = static_cast<int>((10 + (WeaponLevel * 1.7f)) * rarityMultiplier * typeMultiplier * damageTypeMultiplier);
+    int baseDamage = static_cast<int>(
+        (5 + (WeaponLevel * 2.0f)) *
+        rarityMultiplier *
+        typeMultiplier *
+        damageTypeMultiplier *
+        materialMultiplier
+    );
+
     float baseAttackSpeed = (0.5f + (2.f / rarityMultiplier));
     float baseRange = EC.GetBaseRange().at(type);
 
@@ -68,10 +80,9 @@ void weapon::GenerateWeaponEnchants(Rarity RR) {
         case Rarity::COMMON: {
 
             for (int i = 0; i < 1; i++) {
-                auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({45,25,15,10,5}));
-                auto EnchantValue = EnchantValuesMap[Enchant];
+                auto Enchant = static_cast<EnchantWeaponType>(darkMath::getInstance().generateDistanceDistribution({45,25,15,10,5}));
 
-                GenerateEnchantStruct(EnchantValue, Enchant);
+                GenerateEnchantStruct(Enchant);
             }
 
         }break;
@@ -79,10 +90,9 @@ void weapon::GenerateWeaponEnchants(Rarity RR) {
 
             int enchantCount = darkMath::getInstance().generateIntNumber(1, 2);
             for (int i = 0; i < enchantCount; i++) {
-                auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({35,30,20,10,5}));
-                auto EnchantValue = EnchantValuesMap[Enchant];
+                auto Enchant = static_cast<EnchantWeaponType>(darkMath::getInstance().generateDistanceDistribution({35,30,20,10,5}));
 
-                GenerateEnchantStruct(EnchantValue, Enchant);
+                GenerateEnchantStruct(Enchant);
             }
 
         }break;
@@ -90,10 +100,9 @@ void weapon::GenerateWeaponEnchants(Rarity RR) {
 
             int enchantCount = darkMath::getInstance().generateIntNumber(1, 3);
             for (int i = 0; i < enchantCount; i++) {
-                auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({25,30,20,15,10}));
-                auto EnchantValue = EnchantValuesMap[Enchant];
+                auto Enchant = static_cast<EnchantWeaponType>(darkMath::getInstance().generateDistanceDistribution({25,30,20,15,10}));
 
-                GenerateEnchantStruct(EnchantValue, Enchant);
+                GenerateEnchantStruct(Enchant);
             }
 
         }break;
@@ -101,10 +110,9 @@ void weapon::GenerateWeaponEnchants(Rarity RR) {
 
             int enchantCount = darkMath::getInstance().generateIntNumber(1, 4);
             for (int i = 0; i < enchantCount; i++) {
-                auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({10,20,30,25,15}));
-                auto EnchantValue = EnchantValuesMap[Enchant];
+                auto Enchant = static_cast<EnchantWeaponType>(darkMath::getInstance().generateDistanceDistribution({10,20,30,25,15}));
 
-                GenerateEnchantStruct(EnchantValue, Enchant);
+                GenerateEnchantStruct(Enchant);
             }
 
         }break;
@@ -112,10 +120,9 @@ void weapon::GenerateWeaponEnchants(Rarity RR) {
 
             int enchantCount = darkMath::getInstance().generateIntNumber(1, 5);
             for (int i = 0; i < enchantCount; i++) {
-                auto Enchant = static_cast<EnchantType>(darkMath::getInstance().generateDistanceDistribution({5,15,20,25,35}));
-                auto EnchantValue = EnchantValuesMap[Enchant];
+                auto Enchant = static_cast<EnchantWeaponType>(darkMath::getInstance().generateDistanceDistribution({5,15,20,25,35}));
 
-                GenerateEnchantStruct(EnchantValue, Enchant);
+                GenerateEnchantStruct(Enchant);
             }
 
         }break;
@@ -125,26 +132,38 @@ void weapon::GenerateWeaponEnchants(Rarity RR) {
     }
 }
 
-void weapon::GenerateEnchantStruct(float EValues, EnchantType EType) {
+void weapon::GenerateEnchantStruct(EnchantWeaponType EType) {
 
-    if (EType == EnchantType::NONE) {
+    if (EType == EnchantWeaponType::NONE) {
         return;
     }
 
     auto EnchantMap = EC.GetEnchantmentNames();
 
-    Enchantment newEnchant;
+    EnchantmentWeapon newEnchant;
     newEnchant.name = EnchantMap[EType];
     newEnchant.type = EType;
     newEnchant.power = darkMath::getInstance().generateIntNumber(1, (1+getLevel()/2));
     newEnchant.description = "NULL";
 
-    int oldDamage = getDamage();
-    int newDamage = static_cast<int>(oldDamage + (newEnchant.power * EValues));
+    addEnchant(newEnchant);
 
-    setDamage(newDamage);
-    enchants.push_back(newEnchant);
+}
 
+void weapon::ApplyEnchantmentDamage() {
+    auto EnchantValuesMap = EC.GetEValues();
+
+    int totalEnchantDamage = 0;
+
+    for (const auto& enchant : enchants) {
+        // Calculate damage bonus from each enchant
+        int enchantBonus = static_cast<int>(enchant.power * EnchantValuesMap.at(enchant.type));
+        totalEnchantDamage += enchantBonus;
+    }
+
+    // Apply all enchantment damage at once to base damage
+    int currentDamage = getDamage();
+    setDamage(currentDamage + totalEnchantDamage);
 }
 
 void weapon::GenerateWeaponBonusStats(Rarity RR) {
@@ -184,10 +203,10 @@ void weapon::GenerateWeaponBonusStats(Rarity RR) {
     }
 }
 
-void weapon::GenerateWeaponDescription(WeaponPrefix WPrefix, Rarity RRT, WeaponType WType, DamageType DT) {
+void weapon::GenerateWeaponDescription(Prefix WPrefix, Rarity RRT, WeaponType WType, DamageType DT) {
 }
 
-void weapon::GenerateEnchantDescription(EnchantType EType, float EValues) {
+void weapon::GenerateEnchantDescription(EnchantWeaponType EType, float EValues) {
 }
 
 void weapon::GenerateBonusStats(int MaxGeneratedStat) {
@@ -223,6 +242,8 @@ void weapon::GenerateBonusStats(int MaxGeneratedStat) {
 }
 
 void weapon::DisplayWeaponInfo() const {
+    std::cout << "====================\n";
+    ItemUUID.DisplayUUID();
     std::cout << "Description: " << ItemDescription << "\n";
     std::cout << "Damage: " << damage << "\n";
     std::cout << "Attack Speed: " << attackSpeed << "\n";
@@ -241,5 +262,4 @@ void weapon::DisplayWeaponInfo() const {
     std::cout << "Luck: " << bonusStats.luck << "\n";
     std::cout << "Vitality: " << bonusStats.vitality << "\n";
     std::cout << "=======================\n";
-    ItemUUID.DisplayUUID();
 }

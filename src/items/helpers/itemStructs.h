@@ -31,11 +31,20 @@ struct ItemBonusStats {
 
 };
 
-struct Enchantment {
+struct EnchantmentWeapon {
     std::string name = "None";
     std::string description = "No enchantment";
-    EnchantType type = EnchantType::NONE;
+    EnchantWeaponType type = EnchantWeaponType::NONE;
     int power = 0;
 
+};
+
+struct EnchantmentArmor {
+    std::string name = "None";
+    std::string description = "No enchantment";
+    EnchantArmorType type = EnchantArmorType::NONE;
+    float HealthToAdd = 0.f;
+    float ManaToAdd = 0.f;
+    float ArmorToAdd = 0.f;
 };
 #endif //NOTSIMPLEGAME_ITEMSTRUCTS_H

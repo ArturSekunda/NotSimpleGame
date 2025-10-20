@@ -11,7 +11,7 @@ class itemManager {
 
     std::unique_ptr<itemBase> items = std::make_unique<itemBase>();
 public:
-    void CreateWeapon(int playerLevel, int ID);
+    void CreateItem(int playerLevel, int ID);
 };
 
 

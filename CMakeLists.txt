@@ -94,6 +94,8 @@ add_executable(main src/main.cpp
         src/items/helpers/enumConversion.h
         src/managers/LanguageManager.cpp
         src/managers/LanguageManager.h
+        src/items/armor.cpp
+        src/items/armor.h
 )
 
 # Link SFML libraries

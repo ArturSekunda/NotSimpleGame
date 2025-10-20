@@ -9,7 +9,7 @@ class enumConversion {
 
     std::vector<Rarity> rarity;
 
-    std::vector<WeaponPrefix> prefix;
+    std::vector<Prefix> prefix;
 
     std::vector<WeaponType> type;
 
@@ -17,7 +17,11 @@ class enumConversion {
 
     std::vector<ItemType> itemTypeList;
 
-    std::map<EnchantType,float> EnchantmentValues;
+    std::vector<ArmorType> armorList;
+
+    std::vector<MaterialTypeOfItem> materialList;
+
+    std::map<EnchantWeaponType,float> EnchantmentValues;
 
     std::map<Rarity,float> RarityValues;
 
@@ -27,17 +31,25 @@ class enumConversion {
 
     std::map<WeaponType,float> BaseRange;
 
-    std::map<EnchantType,std::string> EnchantmentName;
+    std::map<ArmorType,float> ArmorTypeValues;
+
+    std::map<MaterialTypeOfItem,float> MaterialValues;
+
+    std::map<EnchantWeaponType,std::string> EnchantmentName;
 
     std::map<Rarity, std::string> RarityName;
 
-    std::map<WeaponPrefix, std::string> PrefixName;
+    std::map<Prefix, std::string> PrefixName;
 
     std::map<WeaponType, std::string> WeaponTName;
 
     std::map<DamageType, std::string> ModifierName;
 
     std::map<ItemType, std::string> ItemTypeName;
+
+    std::map<ArmorType, std::string> ArmorTypeName;
+
+    std::map<MaterialTypeOfItem,std::string> MaterialName;
 
 private:
     enumConversion() {
@@ -63,17 +75,21 @@ public:
 
     // Getters
 
+    const std::vector<ArmorType>& GetArmorType();
+
     const std::vector<ItemType>& GetItemType();
 
     const std::vector<Rarity>& GetRarity();
 
-    const std::vector<WeaponPrefix>& GetPrefix();
+    const std::vector<Prefix>& GetPrefix();
 
     const std::vector<WeaponType>& GetType();
 
     const std::vector<DamageType>& GetModifier();
 
-    const std::map<EnchantType,float>& GetEValues();
+    const std::vector<MaterialTypeOfItem>& GetMaterial();
+
+    const std::map<EnchantWeaponType,float>& GetEValues();
 
     const std::map<Rarity,float>& GetRarityValues();
 
@@ -83,17 +99,25 @@ public:
 
     const std::map<WeaponType,float>& GetBaseRange();
 
-    const std::map<EnchantType, std::string>& GetEnchantmentNames();
+    const std::map<ArmorType,float>& GetArmorTypeValues();
+
+    const std::map<MaterialTypeOfItem,float>& GetMaterialValues();
+
+    const std::map<EnchantWeaponType, std::string>& GetEnchantmentNames();
 
     const std::map<Rarity, std::string>& GetRarityNames();
 
-    const std::map<WeaponPrefix, std::string>& GetPrefixNames();
+    const std::map<Prefix, std::string>& GetPrefixNames();
 
     const std::map<WeaponType, std::string>& GetWeaponTypeNames();
 
     const std::map<DamageType, std::string>& GetDamageTypeNames();
 
     const std::map<ItemType, std::string>& GetItemTypeNames();
+
+    const std::map<ArmorType,std::string>& GetArmorTypeName();
+
+    const std::map<MaterialTypeOfItem, std::string>& GetMaterialNames();
 
 };
 
