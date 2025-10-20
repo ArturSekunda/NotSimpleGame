@@ -39,7 +39,7 @@ NotSimpleGame/
 - ✅ Basic systems framework
 - ✅ Simple Debugging tools implementation
 - ✅ Refactoring Main Game HUD
-- 🔄 Inventory System && Weapon System
+- 🔄 Inventory System & Item System Generation
 - 📋 Next: Core mechanics (combat, AI behavior)
 
 ## 🛠️ Planned Features
