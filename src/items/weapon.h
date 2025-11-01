@@ -16,8 +16,6 @@ protected:
     ItemBonusStats bonusStats;
     std::vector<EnchantmentWeapon> enchants;
 
-    enumConversion& EC = enumConversion::getInstance();
-
 public:
     weapon() = default;
     ~weapon() override = default;

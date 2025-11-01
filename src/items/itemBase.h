@@ -11,6 +11,8 @@ protected: // Attributes
     UUID ItemUUID;
     std::string ItemDescription = "NULL";
     Rarity ItemRarity = Rarity::Err_Null;
+
+    enumConversion& EC = enumConversion::getInstance();
 protected: // Fuctions for child classes
 
     virtual void GenerateBonusStats(int MaxGeneratedStat, ItemBonusStats& bonusStats);

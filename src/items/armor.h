@@ -8,17 +8,17 @@ protected:
      ArmorType Armor = ArmorType::NONE;
      float ArmorDefense = 0.f;
      float ArmorHealth = 0.f;
+     float ArmorMana = 0.f;
 
      ItemBonusStats bonusStats;
      std::vector<EnchantmentArmor> enchants;
 
-     enumConversion& EC = enumConversion::getInstance();
 public:
      armor() = default;
      ~armor() override = default;
 
      //Generate
-     static armor GenerateNewArmor(int playerLevel, int itemID);
+     static armor CreateNewArmor(int playerLevel, int itemID);
 
      void GenerateArmorName(Prefix prefix,Rarity rarity, ArmorType AType, MaterialTypeOfItem material);
 
@@ -27,6 +27,8 @@ public:
      void GenerateArmorEnchants(Rarity RR);
 
      void GenerateEnchantStruct(EnchantArmorType EType);
+
+     void ApplyArmorEnchants();
 
      void GenerateArmorDescription(Prefix WPrefix,Rarity RRT, WeaponType WType, DamageType DT);
 
@@ -38,16 +40,19 @@ public:
 
 public:
      //Getters
-     ArmorType GetArmorType() const { return Armor; }
-     float GetArmorDefense() const { return ArmorDefense; }
-     float GetArmorHealth() const { return ArmorHealth; }
+     ArmorType getArmorType() const { return Armor; }
+     float getArmorDefense() const { return ArmorDefense; }
+     float getArmorHealth() const { return ArmorHealth; }
+     float getArmorMana() const { return ArmorMana; }
+     ItemBonusStats getBonusStats() const { return bonusStats; }
 
      void addEnchant(const EnchantmentArmor &enchant) { enchants.push_back(enchant); }
 
      //Setters
-     void SetArmorType(ArmorType type) { Armor = type; }
-     void SetArmorDefense(float d) { ArmorDefense = d; }
-     void SetArmorHealth(float h) { ArmorHealth = h; }
+     void setArmorType(ArmorType type) { Armor = type; }
+     void setArmorDefense(float d) { ArmorDefense = d; }
+     void setArmorHealth(float h) { ArmorHealth = h; }
+     void setArmorMana(float m) { ArmorMana = m; }
 };
 
 

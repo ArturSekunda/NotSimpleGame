@@ -157,7 +157,7 @@ void weapon::ApplyEnchantmentDamage() {
 
     for (const auto& enchant : enchants) {
         // Calculate damage bonus from each enchant
-        int enchantBonus = static_cast<int>(enchant.power * EnchantValuesMap.at(enchant.type));
+        int enchantBonus = static_cast<int>(EnchantValuesMap.at(enchant.type));
         totalEnchantDamage += enchantBonus;
     }
 
@@ -190,6 +190,9 @@ void weapon::DisplayWeaponInfo() const {
     std::cout << "Level: " << getLevel() << "\n";
     std::cout << "Enchantments: \n";
     for (auto& enchant : enchants) {
+        if (enchants.empty()) {
+            break;
+        }
         std::cout << enchant.name << " " << enchant.power << "\n";
     }
     std::cout << "Bonus Stats: \n";

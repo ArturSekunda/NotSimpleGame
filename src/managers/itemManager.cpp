@@ -6,6 +6,6 @@
 void itemManager::CreateItem(int playerLevel, int ID) {
     auto w = weapon::CreateNewWeapon(playerLevel,ID);
     w.DisplayWeaponInfo();
-    auto a = armor::GenerateNewArmor(playerLevel,ID);
+    auto a = armor::CreateNewArmor(playerLevel,ID);
     a.DisplayArmorInfo();
 }

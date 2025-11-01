@@ -1,7 +1,7 @@
 #include "armor.h"
 #include "core/darkMath.h"
 
-armor armor::GenerateNewArmor(int playerLevel, int itemID) {
+armor armor::CreateNewArmor(int playerLevel, int itemID) {
     armor newArmor;
 
     auto& EC = enumConversion::getInstance();
@@ -16,6 +16,10 @@ armor armor::GenerateNewArmor(int playerLevel, int itemID) {
     newArmor.GenerateArmorStats(playerLevel,static_cast<Rarity>(HowMuchRare),static_cast<ArmorType>(Type), static_cast<MaterialTypeOfItem>(Material));
 
     newArmor.GenerateBonusStats(static_cast<Rarity>(HowMuchRare));
+
+    newArmor.GenerateArmorEnchants(static_cast<Rarity>(HowMuchRare));
+
+    newArmor.ApplyArmorEnchants();
 
 
     newArmor.setGenItemType(ItemType::ARMOR);
@@ -54,9 +58,15 @@ void armor::GenerateArmorStats(int playerLevel, Rarity rarity, ArmorType type, M
         rarityMultiplier *
         typeMultiplier *
         materialMultiplier;
+    float baseArmorMana =
+        (5 + (ArmorLevel * 2.0f)) *
+        rarityMultiplier *
+        typeMultiplier *
+        materialMultiplier;
 
-    SetArmorDefense(baseArmorDefense);
-    SetArmorHealth(baseArmorHealth);
+    setArmorDefense(baseArmorDefense);
+    setArmorHealth(baseArmorHealth);
+    setArmorMana(baseArmorMana);
 }
 
 void armor::GenerateArmorEnchants(Rarity RR) {
@@ -132,6 +142,40 @@ void armor::GenerateEnchantStruct(EnchantArmorType EType) {
     addEnchant(newEnchant);
 }
 
+void armor::ApplyArmorEnchants() {
+    auto EnchantValuesMap = EC.GetEnchantArmorValues();
+
+    float TotalHealthToAdd = 0.f;
+    float TotalArmorToAdd = 0.f;
+    float TotalManaToAdd = 0.f;
+
+
+    for (const auto& enchant : enchants) {
+        switch (enchant.type) {
+            case EnchantArmorType::ADDITIONAL_HEALTH: {
+                TotalHealthToAdd += EnchantValuesMap.at(EnchantArmorType::ADDITIONAL_HEALTH);
+            } break;
+            case EnchantArmorType::ADDITIONAL_DEFENSE: {
+                TotalArmorToAdd += EnchantValuesMap.at(EnchantArmorType::ADDITIONAL_DEFENSE);
+            } break;
+            case EnchantArmorType::ADDITIONAL_MANA: {
+                TotalManaToAdd += EnchantValuesMap.at(EnchantArmorType::ADDITIONAL_MANA);
+            } break;
+            default:
+                break;
+        }
+    }
+
+    // Apply all enchantment
+    float currentArmor = getArmorDefense();
+    float currentHealth = getArmorHealth();
+    float currentMana = getArmorMana();
+    setArmorDefense(currentArmor + TotalArmorToAdd);
+    setArmorHealth(currentHealth + TotalHealthToAdd);
+    setArmorMana(currentMana + TotalManaToAdd);
+
+}
+
 // TODO: Write descriptions after implementing language system support
 void armor::GenerateArmorDescription(Prefix WPrefix, Rarity RRT, WeaponType WType, DamageType DT) {
 }
@@ -148,11 +192,15 @@ void armor::DisplayArmorInfo() const {
     std::cout << "====================\n";
     ItemUUID.DisplayUUID();
     std::cout << "Level: " << getLevel() << "\n";
-    std::cout << "Defense: " << GetArmorDefense() << "\n";
-    std::cout << "Health: " << GetArmorHealth() << "\n";
+    std::cout << "Defense: " << getArmorDefense() << "\n";
+    std::cout << "Health: " << getArmorHealth() << "\n";
+    std::cout << "Mana: " << getArmorMana() << "\n";
     std::cout << "====================\n";
     std::cout << "Enchantments:\n";
     for (const auto& enchant : enchants) {
+        if (enchants.empty()) {
+            break;
+        }
         std::cout << "- " << enchant.name << "\n";
     }
     std::cout << "====================\n";
