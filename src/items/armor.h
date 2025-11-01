@@ -28,13 +28,11 @@ public:
 
      void GenerateEnchantStruct(EnchantArmorType EType);
 
-     void GenerateArmorBonusStats(Rarity RR);
-
      void GenerateArmorDescription(Prefix WPrefix,Rarity RRT, WeaponType WType, DamageType DT);
 
-     void GenerateArmorDescription(EnchantArmorType EType,float EValues);
+     void GenerateEnchantDescription(EnchantArmorType EType,float EValues);
 
-     void GenerateBonusStats(int MaxGeneratedStat);
+     void GenerateBonusStats(Rarity RR);
 
      void DisplayArmorInfo() const;
 
@@ -43,6 +41,8 @@ public:
      ArmorType GetArmorType() const { return Armor; }
      float GetArmorDefense() const { return ArmorDefense; }
      float GetArmorHealth() const { return ArmorHealth; }
+
+     void addEnchant(const EnchantmentArmor &enchant) { enchants.push_back(enchant); }
 
      //Setters
      void SetArmorType(ArmorType type) { Armor = type; }

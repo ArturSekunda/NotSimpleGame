@@ -11,6 +11,11 @@ protected: // Attributes
     UUID ItemUUID;
     std::string ItemDescription = "NULL";
     Rarity ItemRarity = Rarity::Err_Null;
+protected: // Fuctions for child classes
+
+    virtual void GenerateBonusStats(int MaxGeneratedStat, ItemBonusStats& bonusStats);
+
+    virtual int GenerateBonusStatsByRarity(Rarity RR);
 
 public: // Constructors and Destructors
 

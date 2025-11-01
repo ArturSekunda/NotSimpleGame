@@ -1,5 +1,7 @@
 #include "items/helpers/enumConversion.h"
 
+#include "itemStructs.h"
+
 void enumConversion::EnumsToVectorList() {
     rarity = {
         Rarity::COMMON,
@@ -8,7 +10,6 @@ void enumConversion::EnumsToVectorList() {
         Rarity::EPIC,
         Rarity::LEGENDARY
     };
-
     prefix = {
         Prefix::Ancient,
         Prefix::Dark,
@@ -76,6 +77,12 @@ void enumConversion::EnumsToValues() {
         {EnchantWeaponType::Lightning, 0.5f},
         {EnchantWeaponType::Poison, 0.6f}
     };
+    EnchantArmorValues = {
+        {EnchantArmorType::NONE, 0.f},
+        {EnchantArmorType::ADDITIONAL_HEALTH, 2.f},
+        {EnchantArmorType::ADDITIONAL_MANA, 1.5f},
+        {EnchantArmorType::ADDITIONAL_DEFENSE, 1.8f},
+    };
     RarityValues = {
         {Rarity::COMMON, 1.f},
         {Rarity::UNCOMMON, 1.2f},
@@ -130,6 +137,12 @@ void enumConversion::EnumsToString() {
         {EnchantWeaponType::Ice, "Ice"},
         {EnchantWeaponType::Lightning, "Lightning"},
         {EnchantWeaponType::Poison, "Poison"}
+    };
+    EnchantArmorName = {
+        {EnchantArmorType::NONE, "NONE"},
+        {EnchantArmorType::ADDITIONAL_HEALTH, "Health Boost"},
+        {EnchantArmorType::ADDITIONAL_MANA, "Mana Boost"},
+        {EnchantArmorType::ADDITIONAL_DEFENSE, "Armor Boost"},
     };
     RarityName = {
         {Rarity::COMMON, "Common"},
@@ -251,8 +264,16 @@ const std::map<MaterialTypeOfItem, float>& enumConversion::GetMaterialValues() {
     return MaterialValues;
 }
 
+const std::map<EnchantArmorType, float> & enumConversion::GetEnchantArmorValues() {
+    return EnchantArmorValues;
+}
+
 const std::map<EnchantWeaponType, std::string>& enumConversion::GetEnchantmentNames() {
     return EnchantmentName;
+}
+
+const std::map<EnchantArmorType, std::string> & enumConversion::GetEnchantArmorNames() {
+    return EnchantArmorName;
 }
 
 const std::map<Rarity, std::string>& enumConversion::GetRarityNames() {

@@ -35,13 +35,11 @@ public:
 
     void ApplyEnchantmentDamage();
 
-    void GenerateWeaponBonusStats(Rarity RR);
-
     void GenerateWeaponDescription(Prefix WPrefix,Rarity RRT, WeaponType WType, DamageType DT);
 
     void GenerateEnchantDescription(EnchantWeaponType EType,float EValues);
 
-    void GenerateBonusStats(int MaxGeneratedStat);
+    void GenerateBonusStats(Rarity RR);
 
     void DisplayWeaponInfo() const;
 

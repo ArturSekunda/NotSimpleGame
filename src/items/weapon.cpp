@@ -27,7 +27,7 @@ weapon weapon::CreateNewWeapon(int playerLevel, int itemID) {
 
     newWeapon.ApplyEnchantmentDamage();
 
-    newWeapon.GenerateWeaponBonusStats(static_cast<Rarity>(HowMuchRare));
+    newWeapon.GenerateBonusStats(static_cast<Rarity>(HowMuchRare));
 
     newWeapon.setGenItemType(ItemType::WEAPON);
     newWeapon.setId(itemID);
@@ -166,79 +166,18 @@ void weapon::ApplyEnchantmentDamage() {
     setDamage(currentDamage + totalEnchantDamage);
 }
 
-void weapon::GenerateWeaponBonusStats(Rarity RR) {
-    switch (RR) {
-        case Rarity::COMMON: {
-
-            GenerateBonusStats(1);
-
-        }break;
-        case Rarity::UNCOMMON: {
-
-            int enchantCount = darkMath::getInstance().generateIntNumber(1, 2);
-            GenerateBonusStats(enchantCount);
-
-        }break;
-        case Rarity::RARE: {
-
-            int enchantCount = darkMath::getInstance().generateIntNumber(1, 3);
-            GenerateBonusStats(enchantCount);
-
-        }break;
-        case Rarity::EPIC: {
-
-            int enchantCount = darkMath::getInstance().generateIntNumber(1, 4);
-            GenerateBonusStats(enchantCount);
-
-        }break;
-        case Rarity::LEGENDARY: {
-
-            int enchantCount = darkMath::getInstance().generateIntNumber(1, 5);
-            GenerateBonusStats(enchantCount);
-
-        }break;
-        default:
-            std::cout << "No bonusStats (XD)" << "\n";
-            break;
-    }
-}
-
+// TODO: Write descriptions after implementing language system support
 void weapon::GenerateWeaponDescription(Prefix WPrefix, Rarity RRT, WeaponType WType, DamageType DT) {
+
 }
 
+// TODO: Write descriptions after implementing language system support
 void weapon::GenerateEnchantDescription(EnchantWeaponType EType, float EValues) {
+
 }
 
-void weapon::GenerateBonusStats(int MaxGeneratedStat) {
-    if (MaxGeneratedStat < 1) {
-        MaxGeneratedStat = 1;   
-    }
-
-    auto& dm = darkMath::getInstance();
-
-    int chancePercent = 15 + (MaxGeneratedStat * 15);
-    
-    if (dm.generateIntNumber(1, 100) <= chancePercent) {
-        bonusStats.strength = dm.generateIntNumber(1, MaxGeneratedStat);
-    }
-    if (dm.generateIntNumber(1, 100) <= chancePercent) {
-        bonusStats.dexterity = dm.generateIntNumber(1, MaxGeneratedStat);
-    }
-    if (dm.generateIntNumber(1, 100) <= chancePercent) {
-        bonusStats.intelligence = dm.generateIntNumber(1, MaxGeneratedStat);
-    }
-    if (dm.generateIntNumber(1, 100) <= chancePercent) {
-        bonusStats.charisma = dm.generateIntNumber(1, MaxGeneratedStat);
-    }
-    if (dm.generateIntNumber(1, 100) <= chancePercent) {
-        bonusStats.endurance = dm.generateIntNumber(1, MaxGeneratedStat);
-    }
-    if (dm.generateIntNumber(1, 100) <= chancePercent) {
-        bonusStats.luck = dm.generateIntNumber(1, MaxGeneratedStat);
-    }
-    if (dm.generateIntNumber(1, 100) <= chancePercent) {
-        bonusStats.vitality = dm.generateIntNumber(1, MaxGeneratedStat);
-    }
+void weapon::GenerateBonusStats(Rarity RR) {
+    itemBase::GenerateBonusStats(itemBase::GenerateBonusStatsByRarity(RR), bonusStats);
 }
 
 void weapon::DisplayWeaponInfo() const {

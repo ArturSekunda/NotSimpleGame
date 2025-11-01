@@ -23,6 +23,8 @@ class enumConversion {
 
     std::map<EnchantWeaponType,float> EnchantmentValues;
 
+    std::map<EnchantArmorType,float> EnchantArmorValues;
+
     std::map<Rarity,float> RarityValues;
 
     std::map<WeaponType,float> WTypeValues;
@@ -36,6 +38,8 @@ class enumConversion {
     std::map<MaterialTypeOfItem,float> MaterialValues;
 
     std::map<EnchantWeaponType,std::string> EnchantmentName;
+
+    std::map<EnchantArmorType,std::string> EnchantArmorName;
 
     std::map<Rarity, std::string> RarityName;
 
@@ -103,7 +107,11 @@ public:
 
     const std::map<MaterialTypeOfItem,float>& GetMaterialValues();
 
+    const std::map<EnchantArmorType, float>& GetEnchantArmorValues();
+
     const std::map<EnchantWeaponType, std::string>& GetEnchantmentNames();
+
+    const std::map<EnchantArmorType, std::string>& GetEnchantArmorNames();
 
     const std::map<Rarity, std::string>& GetRarityNames();
 
