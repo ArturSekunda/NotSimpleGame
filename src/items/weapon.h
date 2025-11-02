@@ -23,9 +23,9 @@ public:
     // OverLoads
    static weapon CreateNewWeapon(int playerLevel,int itemID);
 
-    void CreateEnchantFromIndex(int idx) override;
-
     std::vector<int> GetWeaponEnchantProbabilities(Rarity RR);
+
+    void GenerateEnchants(Rarity RR, std::vector<int> chanceDistance);
 
     void GenerateWeaponName(Prefix prefix,Rarity rarity, WeaponType type, DamageType damageType, MaterialTypeOfItem material);
 

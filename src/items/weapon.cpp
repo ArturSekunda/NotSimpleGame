@@ -23,7 +23,8 @@ weapon weapon::CreateNewWeapon(int playerLevel, int itemID) {
 
     newWeapon.GenerateWeaponName(static_cast<Prefix>(WPrefix),static_cast<Rarity>(HowMuchRare), static_cast<WeaponType>(Type), static_cast<DamageType>(Modifier),static_cast<MaterialTypeOfItem>(Material));
 
-    newWeapon.GenerateEnchants(static_cast<Rarity>(HowMuchRare), newWeapon.GetWeaponEnchantProbabilities(static_cast<Rarity>(HowMuchRare)));
+    auto probs = newWeapon.GetWeaponEnchantProbabilities(static_cast<Rarity>(HowMuchRare));
+    newWeapon.GenerateEnchants(static_cast<Rarity>(HowMuchRare), probs);
 
     newWeapon.ApplyEnchantmentDamage();
 
@@ -35,11 +36,6 @@ weapon weapon::CreateNewWeapon(int playerLevel, int itemID) {
     return newWeapon;
 }
 
-void weapon::CreateEnchantFromIndex(int idx) {
-    auto type = static_cast<EnchantWeaponType>(idx);
-    GenerateEnchantStruct(type);
-}
-
 std::vector<int> weapon::GetWeaponEnchantProbabilities(Rarity RR) {
     switch (RR) {
         case Rarity::COMMON: return {45,25,15,10,5};
@@ -48,6 +44,16 @@ std::vector<int> weapon::GetWeaponEnchantProbabilities(Rarity RR) {
         case Rarity::EPIC: return {10,20,30,25,15};
         case Rarity::LEGENDARY: return {5,15,20,25,35};
         default: return {};
+    }
+}
+
+void weapon::GenerateEnchants(Rarity RR, std::vector<int> chanceDistance) {
+    int enchantCount = GenerateBonusStatsByRarity(RR);
+
+    for (int i = 0; i < enchantCount; i++) {
+        int idx = darkMath::getInstance().generateDistanceDistribution(chanceDistance);
+        auto type = static_cast<EnchantWeaponType>(idx);
+        GenerateEnchantStruct(type);
     }
 }
 

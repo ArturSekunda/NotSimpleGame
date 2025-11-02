@@ -17,7 +17,8 @@ armor armor::CreateNewArmor(int playerLevel, int itemID) {
 
     newArmor.GenerateBonusStats(static_cast<Rarity>(HowMuchRare));
 
-    newArmor.GenerateEnchants(static_cast<Rarity>(HowMuchRare), newArmor.GetArmorEnchantProbabilities(static_cast<Rarity>(HowMuchRare)));
+    auto probs = newArmor.GetArmorEnchantProbabilities(static_cast<Rarity>(HowMuchRare));
+    newArmor.GenerateArmorEnchants(static_cast<Rarity>(HowMuchRare), probs);
 
     newArmor.ApplyArmorEnchants();
 
@@ -28,10 +29,6 @@ armor armor::CreateNewArmor(int playerLevel, int itemID) {
     return newArmor;
 }
 
-void armor::CreateEnchantFromIndex(int idx) {
-    auto type = static_cast<EnchantArmorType>(idx);
-    GenerateEnchantStruct(type);
-}
 
 std::vector<int> armor::GetArmorEnchantProbabilities(Rarity RR) {
     switch (RR) {
@@ -41,6 +38,16 @@ std::vector<int> armor::GetArmorEnchantProbabilities(Rarity RR) {
         case Rarity::EPIC: return {20,55,50,50};
         case Rarity::LEGENDARY: return {10,60,65,65};
         default: return {};
+    }
+}
+
+void armor::GenerateArmorEnchants(Rarity RR, std::vector<int> chanceDistance) {
+    int enchantCount = GenerateBonusStatsByRarity(RR);
+
+    for (int i = 0; i < enchantCount; i++) {
+        int idx = darkMath::getInstance().generateDistanceDistribution(chanceDistance);
+        auto type = static_cast<EnchantArmorType>(idx);
+        GenerateEnchantStruct(type);
     }
 }
 

@@ -19,10 +19,6 @@ protected: // Fuctions for child classes
 
     virtual int GenerateBonusStatsByRarity(Rarity RR);
 
-    void GenerateEnchants(Rarity RR, std::vector<int> chanceDistance);
-
-    virtual void GenerateEnchantFromIndex(int enchantIndex) = 0;
-
 public: // Constructors and Destructors
 
     itemBase() = default;
