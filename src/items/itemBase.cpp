@@ -70,3 +70,60 @@ int itemBase::GenerateBonusStatsByRarity(Rarity RR) {
             return 0;
     }
 }
+
+void itemBase::GenerateEnchants(Rarity RR, std::vector<int> chanceDistance) {
+    switch (RR) {
+        case Rarity::COMMON: {
+
+            for (int i = 0; i < 1; i++) {
+                int Enchant = darkMath::getInstance().generateDistanceDistribution(chanceDistance);
+
+                GenerateEnchantFromIndex(Enchant);
+            }
+
+        }break;
+        case Rarity::UNCOMMON: {
+
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 2);
+            for (int i = 0; i < enchantCount; i++) {
+                int Enchant = darkMath::getInstance().generateDistanceDistribution(chanceDistance);
+
+                GenerateEnchantFromIndex(Enchant);
+            }
+
+        }break;
+        case Rarity::RARE: {
+
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 3);
+            for (int i = 0; i < enchantCount; i++) {
+                int Enchant = darkMath::getInstance().generateDistanceDistribution(chanceDistance);
+
+                GenerateEnchantFromIndex(Enchant);
+            }
+
+        }break;
+        case Rarity::EPIC: {
+
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 4);
+            for (int i = 0; i < enchantCount; i++) {
+                int Enchant = darkMath::getInstance().generateDistanceDistribution(chanceDistance);
+
+                GenerateEnchantFromIndex(Enchant);
+            }
+
+        }break;
+        case Rarity::LEGENDARY: {
+
+            int enchantCount = darkMath::getInstance().generateIntNumber(1, 5);
+            for (int i = 0; i < enchantCount; i++) {
+                int Enchant = darkMath::getInstance().generateDistanceDistribution(chanceDistance);
+
+                GenerateEnchantFromIndex(Enchant);
+            }
+
+        }break;
+        default:
+            std::cout << "No enchants for this rarity" << "\n";
+            break;
+    }
+}

@@ -17,7 +17,7 @@ armor armor::CreateNewArmor(int playerLevel, int itemID) {
 
     newArmor.GenerateBonusStats(static_cast<Rarity>(HowMuchRare));
 
-    newArmor.GenerateArmorEnchants(static_cast<Rarity>(HowMuchRare));
+    newArmor.GenerateEnchants(static_cast<Rarity>(HowMuchRare), newArmor.GetArmorEnchantProbabilities(static_cast<Rarity>(HowMuchRare)));
 
     newArmor.ApplyArmorEnchants();
 
@@ -26,6 +26,22 @@ armor armor::CreateNewArmor(int playerLevel, int itemID) {
     newArmor.setId(itemID);
 
     return newArmor;
+}
+
+void armor::CreateEnchantFromIndex(int idx) {
+    auto type = static_cast<EnchantArmorType>(idx);
+    GenerateEnchantStruct(type);
+}
+
+std::vector<int> armor::GetArmorEnchantProbabilities(Rarity RR) {
+    switch (RR) {
+        case Rarity::COMMON: return {55,30,30,20};
+        case Rarity::UNCOMMON: return {50,44,35,25};
+        case Rarity::RARE: return {35,45,40,40};
+        case Rarity::EPIC: return {20,55,50,50};
+        case Rarity::LEGENDARY: return {10,60,65,65};
+        default: return {};
+    }
 }
 
 void armor::GenerateArmorName(Prefix prefix, Rarity rarity, ArmorType AType, MaterialTypeOfItem material) {
@@ -67,64 +83,6 @@ void armor::GenerateArmorStats(int playerLevel, Rarity rarity, ArmorType type, M
     setArmorDefense(baseArmorDefense);
     setArmorHealth(baseArmorHealth);
     setArmorMana(baseArmorMana);
-}
-
-void armor::GenerateArmorEnchants(Rarity RR) {
-    auto EnchantValuesMap = EC.GetEValues();
-    switch (RR) {
-        case Rarity::COMMON: {
-
-            for (int i = 0; i < 1; i++) {
-                auto Enchant = static_cast<EnchantArmorType>(darkMath::getInstance().generateDistanceDistribution({45,25,15,10,5}));
-
-                GenerateEnchantStruct(Enchant);
-            }
-
-        }break;
-        case Rarity::UNCOMMON: {
-
-            int enchantCount = darkMath::getInstance().generateIntNumber(1, 2);
-            for (int i = 0; i < enchantCount; i++) {
-                auto Enchant = static_cast<EnchantArmorType>(darkMath::getInstance().generateDistanceDistribution({35,30,20,10,5}));
-
-                GenerateEnchantStruct(Enchant);
-            }
-
-        }break;
-        case Rarity::RARE: {
-
-            int enchantCount = darkMath::getInstance().generateIntNumber(1, 3);
-            for (int i = 0; i < enchantCount; i++) {
-                auto Enchant = static_cast<EnchantArmorType>(darkMath::getInstance().generateDistanceDistribution({25,30,20,15,10}));
-
-                GenerateEnchantStruct(Enchant);
-            }
-
-        }break;
-        case Rarity::EPIC: {
-
-            int enchantCount = darkMath::getInstance().generateIntNumber(1, 4);
-            for (int i = 0; i < enchantCount; i++) {
-                auto Enchant = static_cast<EnchantArmorType>(darkMath::getInstance().generateDistanceDistribution({10,20,30,25,15}));
-
-                GenerateEnchantStruct(Enchant);
-            }
-
-        }break;
-        case Rarity::LEGENDARY: {
-
-            int enchantCount = darkMath::getInstance().generateIntNumber(1, 5);
-            for (int i = 0; i < enchantCount; i++) {
-                auto Enchant = static_cast<EnchantArmorType>(darkMath::getInstance().generateDistanceDistribution({5,15,20,25,35}));
-
-                GenerateEnchantStruct(Enchant);
-            }
-
-        }break;
-        default:
-            std::cout << "No enchants for this rarity" << "\n";
-            break;
-    }
 }
 
 void armor::GenerateEnchantStruct(EnchantArmorType EType) {
