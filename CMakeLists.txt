@@ -96,6 +96,10 @@ add_executable(main src/main.cpp
         src/managers/LanguageManager.h
         src/items/armor.cpp
         src/items/armor.h
+        src/inventory/Inventory.cpp
+        src/inventory/Inventory.h
+        src/inventory/baseEquipment.cpp
+        src/inventory/baseEquipment.h
 )
 
 # Link SFML libraries

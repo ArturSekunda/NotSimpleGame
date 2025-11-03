@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "entities/player/player.h"
+#include "items/helpers/itemStructs.h"
 
 void statsManager::levelUp(player& p) {
     while (p.getEXP() >= p.getEXP_MAX()) {
@@ -22,5 +23,16 @@ void statsManager::levelUp(player& p) {
         std::cout << "Level up!" << " New level: " << p.getLevel() << "\n";
         std::cout << "Points: " << p.getStats().points << "\n";
     }
+}
+
+bool statsManager::ApplyStatsPointsFromEquipment(baseStats &stats, const ItemBonusStats &bonusStats) {
+    stats.setStrength(stats.strength + bonusStats.strength);
+    stats.setDexterity(stats.dexterity + bonusStats.dexterity);
+    stats.setIntelligence(stats.intelligence + bonusStats.intelligence);
+    stats.setEndurance(stats.endurance + bonusStats.endurance);
+    stats.setLuck(stats.luck + bonusStats.luck);
+    stats.setCharisma(stats.charisma + bonusStats.charisma);
+    stats.setVitality(stats.vitality + bonusStats.vitality);
+    return true;
 }
 

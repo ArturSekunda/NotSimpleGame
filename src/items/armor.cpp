@@ -24,6 +24,7 @@ armor armor::CreateNewArmor(int playerLevel, int itemID) {
 
 
     newArmor.setGenItemType(ItemType::ARMOR);
+    newArmor.setArmorType(static_cast<ArmorType>(Type));
     newArmor.setId(itemID);
 
     return newArmor;

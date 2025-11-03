@@ -1,0 +1,9 @@
+#ifndef NOTSIMPLEGAME_INVENTORY_H
+#define NOTSIMPLEGAME_INVENTORY_H
+
+
+class Inventory {
+};
+
+
+#endif //NOTSIMPLEGAME_INVENTORY_H

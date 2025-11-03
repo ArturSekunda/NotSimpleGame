@@ -4,9 +4,10 @@
 #include <iostream>
 #include <ostream>
 
+struct ItemBonusStats;
 class player;
 
-struct baseStats {
+struct baseStats{
 
     int strength = 0;
     int dexterity = 0;
@@ -29,6 +30,56 @@ struct baseStats {
     void setCharisma(int c) { charisma = c; }
     void setVitality(int v) { vitality = v; }
 
+    void addStrength(int s) {
+        if (points <= 0) {
+            return;
+        }
+        strength += s;
+        points -= s;
+    }
+    void addDexterity(int d) {
+        if (points <= 0) {
+            return;
+        }
+        dexterity += d;
+        points -= d;
+    }
+    void addIntelligence(int i) {
+        if (points <= 0) {
+            return;
+        }
+        intelligence += i;
+        points -= i;
+    }
+    void addEndurance(int e) {
+        if (points <= 0) {
+            return;
+        }
+        endurance += e;
+        points -= e;
+    }
+    void addLuck(int l) {
+        if (points <= 0) {
+            return;
+        }
+        luck += l;
+        points -= l;
+    }
+    void addCharisma(int c) {
+        if (points <= 0) {
+            return;
+        }
+        charisma += c;
+        points -= c;
+    }
+    void addVitality(int v) {
+        if (points <= 0) {
+            return;
+        }
+        vitality += v;
+        points -= v;
+    }
+
 
 };
 
@@ -42,6 +93,8 @@ public:
     }
 
     void levelUp(player& p);
+
+    bool ApplyStatsPointsFromEquipment(baseStats& stats, const ItemBonusStats& bonusStats);
 
 
 
