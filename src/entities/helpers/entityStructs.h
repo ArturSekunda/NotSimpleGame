@@ -1,11 +1,7 @@
+#ifndef NOTSIMPLEGAME_ENTITYSTRUCTS_H
+#define NOTSIMPLEGAME_ENTITYSTRUCTS_H
 
-#ifndef NOTSIMPLEGAME_STATSMANAGER_H
-#define NOTSIMPLEGAME_STATSMANAGER_H
-#include <iostream>
-#include <ostream>
-
-struct ItemBonusStats;
-class player;
+#include "entityEnums.h"
 
 struct baseStats{
 
@@ -83,23 +79,24 @@ struct baseStats{
 
 };
 
-class statsManager {
-public:
-    statsManager() = default;
-    ~statsManager() = default;
-    static statsManager& getInstance() {
-        static statsManager instance;
-        return instance;
+struct EntityID {
+    EntityType type;  // PLAYER, BASIC_ENEMY, GOBLIN, NPC...
+    int localID;
+
+    std::string toString() const {
+        return typeToString(type) + "_" + std::to_string(localID);
     }
 
-    void levelUp(player& p);
+    static std::string typeToString(EntityType type) {
+        switch (type) {
+            case EntityType::PLAYER: return "player";
+            case EntityType::BASIC_ENEMY: return "basic_enemy";
+            default:
+                return "unknown";
 
-    bool ApplyStatsPointsFromEquipment(baseStats& stats, const ItemBonusStats& bonusStats);
-
-
-
-
-
+        }
+    }
 };
 
-#endif //NOTSIMPLEGAME_STATSMANAGER_H
+
+#endif //NOTSIMPLEGAME_ENTITYSTRUCTS_H

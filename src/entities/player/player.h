@@ -3,10 +3,6 @@
 #define NOTSIMPLEGAME_PLAYER_H
 #include "managers/inputManager.h"
 #include "entities/baseEntity.h"
-#include "managers/statsManager.h"
-
-
-struct baseStats;
 
 class player : public baseEntity {
 private: // Functions
@@ -28,7 +24,6 @@ private:
     float EXP = 50.f;
     float EXP_MAX = 100.f;
 
-    baseStats PlayerStats;
 
 public:
     explicit player(int localID = 0);
@@ -52,9 +47,6 @@ public: // Setters
     void setEXP_MAX(float exp_max) {
         EXP_MAX = exp_max;
     }
-    void setStats(baseStats& stats) {
-        PlayerStats = stats;
-    }
 
     void setPlayerName(std::string name) {
         playerName = name;
@@ -75,12 +67,6 @@ public: // Getters
         return EXP_MAX;
     }
 
-    baseStats &getStats() {
-        return PlayerStats;
-    }
-    const baseStats &getStats() const {
-        return PlayerStats;
-    }
     std::string getPlayerName() const {
         return playerName;
     }

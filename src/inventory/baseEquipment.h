@@ -17,11 +17,22 @@ protected:
 public:
     baseEquipment();
     ~baseEquipment() = default;
+
+    // singletone
+    static baseEquipment& getInstance() {
+        static baseEquipment instance;
+        return instance;
+    }
+
+
     bool EquipWeapon(const std::shared_ptr<weapon> &weap);
     bool EquipArmor(std::shared_ptr<armor> arm);
-    bool EquipItem(const std::shared_ptr<itemBase>& item);
+    bool EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& entity);
+
+    bool UnEquipItem(const std::shared_ptr<itemBase>& item);
 
     void AddBonusStats(const ItemBonusStats &stats,baseEntity& entity);
+    void RemoveBonusStats(const ItemBonusStats &stats,baseEntity& entity);
 
 
 

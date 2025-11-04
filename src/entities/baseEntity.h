@@ -3,38 +3,17 @@
 #ifndef NOTSIMPLEGAME_BASEENTITY_H
 #define NOTSIMPLEGAME_BASEENTITY_H
 #include <memory>
-
+#include "helpers/entityStructs.h"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Shape.hpp"
 
+struct baseStats;
 class SFML;
-
-enum class EntityType {
-    PLAYER,
-    BASIC_ENEMY
-};
-
-struct EntityID {
-    EntityType type;  // PLAYER, BASIC_ENEMY, GOBLIN, NPC...
-    int localID;
-
-    std::string toString() const {
-        return typeToString(type) + "_" + std::to_string(localID);
-    }
-
-    static std::string typeToString(EntityType type) {
-        switch (type) {
-            case EntityType::PLAYER: return "player";
-            case EntityType::BASIC_ENEMY: return "basic_enemy";
-            default:
-                return "unknown";
-
-        }
-    }
-};
 
 class baseEntity {
     protected: // Section for attributes
+
+    baseStats Stats;
 
     EntityID entityID;
 
@@ -81,6 +60,12 @@ public: // Section for getters
         entityID.localID = localID;
         return entityID;
     }
+    baseStats &getStats() {
+        return Stats;
+    }
+    const baseStats &getStats() const {
+        return Stats;
+    }
 
     // Getters for stats
     float getDefense() const { return defense; }
@@ -102,6 +87,10 @@ public: // Section for setters
         entityShape = shape;
     }
     void setCollisionBox(std::shared_ptr<sf::RectangleShape> box) { collisionBox = box; }
+
+    void setStats(baseStats& stats) {
+        Stats = stats;
+    }
 
     // Setters for stats
     void setDefense(float d) { defense = d; }

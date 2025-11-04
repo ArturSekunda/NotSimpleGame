@@ -1,7 +1,7 @@
 
 #include "playerChangeStatsDebugWindow.h"
 
-#include "managers/statsManager.h"
+#include "entities/helpers/entityStructs.h"
 
 void playerChangeStatsDebugWindow::initializePlayerChangeStats(tgui::Grid::Ptr Grid) {
     initializeLabels(Grid);

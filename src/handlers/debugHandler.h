@@ -3,10 +3,10 @@
 #define NOTSIMPLEGAME_DEBUGHANDLER_H
 #include <string>
 
-#include "managers/statsManager.h"
 #include "SFML/System/Vector2.hpp"
 
 
+struct baseStats;
 class player;
 
 class debugHandler {

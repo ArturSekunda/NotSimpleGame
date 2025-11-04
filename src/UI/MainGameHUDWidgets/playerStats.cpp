@@ -1,6 +1,7 @@
 #include "playerStats.h"
 
-#include "managers/statsManager.h"
+#include "entities/helpers/entityStructs.h"
+
 
 void playerStats::initializeLabels(tgui::Grid::Ptr StatsLayout) {
     P_Strength = tgui::Label::create();

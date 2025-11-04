@@ -25,14 +25,15 @@ bool baseEquipment::EquipArmor(std::shared_ptr<armor> arm) {
     return true;
 }
 
-bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item) {
+bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& entity) {
     ItemType itemType = item->getItemType();
     switch (itemType) {
         case ItemType::WEAPON: {
-            std::shared_ptr<weapon> weap = std::dynamic_pointer_cast<weapon>(item);
-            if (weap) {
+            if (std::shared_ptr<weapon> weap = std::dynamic_pointer_cast<weapon>(item)) {
                 if (EquipWeapon(weap)) {
-                    AddBonusStats(weap->getBonusStats());
+                    AddBonusStats(weap->getBonusStats(),entity);
+                    weap->DisplayWeaponInfo();
+                    return true;
                 }
             } else {
                 std::cout << "Failed to cast item to weapon!" << std::endl;
@@ -40,10 +41,10 @@ bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item) {
             }
         }
         case ItemType::ARMOR: {
-            std::shared_ptr<armor> arm = std::dynamic_pointer_cast<armor>(item);
-            if (arm) {
+            if (std::shared_ptr<armor> arm = std::dynamic_pointer_cast<armor>(item)) {
                  if(EquipArmor(arm)) {
-                     AddBonusStats(arm->getBonusStats());
+                     AddBonusStats(arm->getBonusStats(),entity);
+                     arm->DisplayArmorInfo();
                      return true;
                  }
             } else {
@@ -57,8 +58,24 @@ bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item) {
     }
 }
 
+bool baseEquipment::UnEquipItem(const std::shared_ptr<itemBase> &item) {
+
+}
+
 void baseEquipment::AddBonusStats(const ItemBonusStats &stats,baseEntity& entity) {
+    switch (entity.getEntityID().type) {
+        case EntityType::PLAYER: {
+            auto& p = dynamic_cast<player&>(entity);
 
+            break;
+        }
+        case EntityType::BASIC_ENEMY: {
+            auto& enemy = dynamic_cast<basicEnemy&>(entity);
 
-
+            break;
+        }
+        default:
+            std::cout << "Entity type not supported for bonus stats!" << std::endl;
+            break;
+    }
 }

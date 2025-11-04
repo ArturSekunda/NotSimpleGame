@@ -22,9 +22,8 @@ void game::initializeEntities() {
         throw std::runtime_error("Failed to create player instance.");
     }
 
-    for (int i = 0; i <= 2; i++) {
-        itemManagerInstance->CreateItem(getPlayerPtr()->getLevel(),i);
-    }
+    itemManagerInstance->CreateItem(getPlayerPtr()->getLevel(),0,*getPlayerPtr());
+
 
      for (int i = 0; i <= 3; i++) {
          addEntityToList(std::make_unique<basicEnemy>(i));
