@@ -1,8 +1,10 @@
 
 
 #include "player.h"
-
+#
 #include <SFML/Graphics/CircleShape.hpp>
+
+#include "managers/inputManager.h"
 
 
 // Create a simple circular shape for the player
@@ -36,10 +38,27 @@ void player::setPlayerStats() {
     this->defense = 0.f;
 }
 
+void player::levelUp() {
+    if (EXP >= EXP_MAX && level < levelMax) {
+        EXP -= EXP_MAX;
+        level++;
+        EXP_MAX *= 1.2f;
+
+        maxHealth += 20.f;
+        health = maxHealth;
+        maxMana += 10;
+        mana = maxMana;
+        speed += 5.f;
+        Stats.addPoints(1);
+    }
+}
+
 player::player(int localID) : baseEntity(localID) {
 
     entityID.type = EntityType::PLAYER;
     entityID.localID = localID;
+
+    Equipment = std::make_unique<playerEquipment>();
 
     createPlayerShape();
     setPlayerStats();

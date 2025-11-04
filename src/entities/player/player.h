@@ -1,11 +1,16 @@
 
 #ifndef NOTSIMPLEGAME_PLAYER_H
 #define NOTSIMPLEGAME_PLAYER_H
-#include "managers/inputManager.h"
+#include <memory>
+#include "inventory/playerEquipment.h"
 #include "entities/baseEntity.h"
+
+class playerEquipment;
 
 class player : public baseEntity {
 private: // Functions
+
+    std::unique_ptr<playerEquipment> Equipment;
 
     void createPlayerShape();
 
@@ -23,6 +28,8 @@ private:
     int levelMax = 100;
     float EXP = 50.f;
     float EXP_MAX = 100.f;
+
+    void levelUp();
 
 
 public:

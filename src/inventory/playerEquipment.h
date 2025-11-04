@@ -4,6 +4,9 @@
 
 
 class playerEquipment :  public baseEquipment {
+public:
+    playerEquipment() = default;
+    ~playerEquipment() override = default;
 
 };
 
