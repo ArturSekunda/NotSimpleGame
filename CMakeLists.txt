@@ -30,8 +30,6 @@ FetchContent_MakeAvailable(SFML TGUI json)
 
 # Create your executable
 add_executable(main src/main.cpp
-        src/managers/assetsManager.cpp
-        src/managers/assetsManager.h
         src/managers/inputManager.cpp
         src/managers/inputManager.h
         src/core/darkMath.cpp
@@ -100,6 +98,12 @@ add_executable(main src/main.cpp
         src/inventory/playerEquipment.h
         src/entities/helpers/entityEnums.h
         src/entities/helpers/entityStructs.h
+        src/UI/MainGameHUDWidgets/playerEquipmentWidget.cpp
+        src/UI/MainGameHUDWidgets/playerEquipmentWidget.h
+        src/items/helpers/enumConversionTextures.cpp
+        src/items/helpers/enumConversionTextures.h
+        src/UI/MainGameHUDWidgets/playerInventoryWidget.cpp
+        src/UI/MainGameHUDWidgets/playerInventoryWidget.h
 )
 
 # Link SFML libraries

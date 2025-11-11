@@ -17,6 +17,13 @@ void panelsWithLayouts::CombineAll(tgui::Gui &gui) {
         {"StatsLayout", StatsLayout},
         {"GridStats", StatsGrid}
     };
+    Panels = {
+        {"MainPanel", MainPanel},
+        {"Side_PlayerPanel", Side_PlayerPanel},
+        {"Top_InfoPanel", Top_InfoPanel},
+        {"S_EquipmentPanel", S_EquipmentPanel},
+        {"S_InventoryPanel", S_InventoryPanel}
+    };
 
 }
 void panelsWithLayouts::initializePanels(tgui::Gui &gui) {
@@ -45,6 +52,26 @@ void panelsWithLayouts::initializePanels(tgui::Gui &gui) {
     Top_InfoPanel->setPosition("0%", "0%");
     Top_InfoPanel->getRenderer()->setBackgroundColor(tgui::Color(50, 50, 50, 200));
     MainPanel->add(Top_InfoPanel);
+
+    // Equipment Panel
+    S_EquipmentPanel = tgui::Panel::create();
+    if (!S_EquipmentPanel) {
+        throw std::runtime_error("Failed to create equipment panel");
+    }
+    S_EquipmentPanel->setSize("90%", "45%");
+    S_EquipmentPanel->setPosition("5%", "5%");
+    S_EquipmentPanel->getRenderer()->setBackgroundColor(tgui::Color(70, 70, 70, 200));
+    Side_PlayerPanel->add(S_EquipmentPanel);
+
+    // Inventory Panel
+    S_InventoryPanel = tgui::Panel::create();
+    if (!S_InventoryPanel) {
+        throw std::runtime_error("Failed to create inventory panel");
+    }
+    S_InventoryPanel->setSize("90%", "45%");
+    S_InventoryPanel->setPosition("5%", "50%");
+    S_InventoryPanel->getRenderer()->setBackgroundColor(tgui::Color(70, 70, 70, 200));
+    Side_PlayerPanel->add(S_InventoryPanel);
 }
 
 void panelsWithLayouts::initializePlayerNameEXPLayout() {

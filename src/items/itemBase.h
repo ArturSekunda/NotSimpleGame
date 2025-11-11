@@ -1,7 +1,11 @@
 #ifndef NOTSIMPLEGAME_ITEMBASE_H
 #define NOTSIMPLEGAME_ITEMBASE_H
 #include <string>
+
+#include "helpers/enumConversionTextures.h"
+#include "TGUI/Texture.hpp"
 #include "helpers/itemStructs.h"
+#include "TGUI/Widgets/Picture.hpp"
 
 class player;
 
@@ -12,7 +16,11 @@ protected: // Attributes
     std::string ItemDescription = "NULL";
     Rarity ItemRarity = Rarity::Err_Null;
 
+    std::string itemIconPath;
+
+
     enumConversion& EC = enumConversion::getInstance();
+    enumConversionTextures& ECT = enumConversionTextures::getInstance();
 protected: // Fuctions for child classes
 
     virtual void GenerateBonusStats(int MaxGeneratedStat, ItemBonusStats& bonusStats);
@@ -23,6 +31,15 @@ public: // Constructors and Destructors
 
     itemBase() = default;
     virtual ~itemBase() = default;
+
+    void setTextureByPath(const std::string &itemTexturePath) {
+        itemIconPath = itemTexturePath;
+
+    }
+
+    std::string getTexturePath() const {
+        return itemIconPath;
+    }
 
 
 public: // Getters

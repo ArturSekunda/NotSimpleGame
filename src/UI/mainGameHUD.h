@@ -10,8 +10,9 @@
 #include "TGUI/Backend/SFML-Graphics.hpp"
 #include "TGUI/Widgets/Button.hpp"
 #include "TGUI/Widgets/Label.hpp"
+#include "MainGameHUDWidgets/playerEquipmentWidget.h"
 
-
+class playerEquipmentWidget;
 class playerStats;
 class playerNameAndLevel;
 class panelsWithLayouts;
@@ -26,6 +27,7 @@ class mainGameHUD {
     std::unique_ptr<panelsWithLayouts> PanelsLayouts = nullptr;
     std::unique_ptr<playerNameAndLevel> PlayerNameLevel = nullptr;
     std::unique_ptr<playerStats> PlayerStats = nullptr;
+    std::unique_ptr<playerEquipmentWidget> EquipmentWidget = nullptr;
 
      // Button (Debug only)
      tgui::Button::Ptr DebugButtonForWindow = nullptr;

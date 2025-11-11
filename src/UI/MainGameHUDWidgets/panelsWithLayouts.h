@@ -11,6 +11,8 @@ class panelsWithLayouts {
     tgui::Panel::Ptr MainPanel = nullptr;
     tgui::Panel::Ptr Side_PlayerPanel = nullptr;
     tgui::Panel::Ptr Top_InfoPanel = nullptr;
+    tgui::Panel::Ptr S_EquipmentPanel = nullptr;
+    tgui::Panel::Ptr S_InventoryPanel = nullptr;
 
     // Layouts
     tgui::VerticalLayout::Ptr PlayerNameEXPLayout = nullptr;
@@ -30,6 +32,8 @@ public:
 
 
     std::map<std::string, tgui::Widget::Ptr> Layouts;
+
+    std::map<std::string, tgui::Widget::Ptr> Panels;
 };
 
 

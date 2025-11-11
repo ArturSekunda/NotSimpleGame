@@ -1,8 +1,8 @@
 #include "mainGameHUD.h"
-
 #include "debugWindow.h"
 #include "entities/player/player.h"
 #include "managers/UIManager.h"
+#include "MainGameHUDWidgets/playerEquipmentWidget.h"
 
 void mainGameHUD::CleanUp() {
     {
@@ -10,6 +10,7 @@ void mainGameHUD::CleanUp() {
         PanelsLayouts.reset();
         PlayerNameLevel.reset();
         PlayerStats.reset();
+        EquipmentWidget.reset();
 
         DebugButtonForWindow = nullptr;
     }
@@ -21,13 +22,18 @@ void mainGameHUD::createHUD(tgui::Gui &gui) {
     PanelsLayouts = std::make_unique<panelsWithLayouts>();
     PlayerNameLevel = std::make_unique<playerNameAndLevel>();
     PlayerStats = std::make_unique<playerStats>();
-    if (!ProgressBars || !PanelsLayouts || !PlayerNameLevel || !PlayerStats) {
+    EquipmentWidget = std::make_unique<playerEquipmentWidget>();
+
+    if (!ProgressBars || !PanelsLayouts || !PlayerNameLevel || !PlayerStats || !EquipmentWidget) {
         throw std::runtime_error("Failed to create HUD components");
     }
+
     PanelsLayouts->CombineAll(gui);
     PlayerNameLevel->initializeLabels(PanelsLayouts->Layouts["PlayerNameEXPLayout"]->cast<tgui::VerticalLayout>());
     ProgressBars->initializeBars(PanelsLayouts->Layouts["StatsLayout"]->cast<tgui::VerticalLayout>());
     PlayerStats->initializeLabels(PanelsLayouts->Layouts["GridStats"]->cast<tgui::Grid>());
+    EquipmentWidget->initializeIcons(PanelsLayouts->Panels["S_EquipmentPanel"]->cast<tgui::Panel>());
+
 
 }
 

@@ -30,6 +30,9 @@ weapon weapon::CreateNewWeapon(int playerLevel, int itemID) {
 
     newWeapon.GenerateBonusStats(static_cast<Rarity>(HowMuchRare));
 
+    auto& ECT = enumConversionTextures::getInstance();
+    newWeapon.setTextureByPath(ECT.GetRarityTexturePaths().at(static_cast<Rarity>(HowMuchRare)));
+
     newWeapon.setGenItemType(ItemType::WEAPON);
     newWeapon.setId(itemID);
 
@@ -148,6 +151,7 @@ void weapon::DisplayWeaponInfo() const {
     std::cout << "====================\n";
     ItemUUID.DisplayUUID();
     std::cout << "Description: " << ItemDescription << "\n";
+    std::cout << "Icon Path: " << getTexturePath() << "\n";
     std::cout << "Damage: " << damage << "\n";
     std::cout << "Attack Speed: " << attackSpeed << "\n";
     std::cout << "Range: " << range << "\n";
