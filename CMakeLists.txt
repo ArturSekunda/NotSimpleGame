@@ -86,8 +86,6 @@ add_executable(main src/main.cpp
         src/managers/itemManager.h
         src/items/helpers/enumConversion.cpp
         src/items/helpers/enumConversion.h
-        src/managers/LanguageManager.cpp
-        src/managers/LanguageManager.h
         src/items/armor.cpp
         src/items/armor.h
         src/inventory/Inventory.cpp
@@ -104,6 +102,10 @@ add_executable(main src/main.cpp
         src/items/helpers/enumConversionTextures.h
         src/UI/MainGameHUDWidgets/playerInventoryWidget.cpp
         src/UI/MainGameHUDWidgets/playerInventoryWidget.h
+        src/inventory/enemyEquipment.cpp
+        src/inventory/enemyEquipment.h
+        src/handlers/entitiesHandler.cpp
+        src/handlers/entitiesHandler.h
 )
 
 # Link SFML libraries

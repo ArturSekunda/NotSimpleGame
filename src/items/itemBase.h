@@ -43,6 +43,9 @@ public: // Constructors and Destructors
 
 
 public: // Getters
+    void getUUIDString() const {
+        return ItemUUID.DisplayUUID();
+    }
     int getId() const {
         return ItemUUID.id;
     }

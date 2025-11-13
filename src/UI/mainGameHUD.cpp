@@ -24,10 +24,6 @@ void mainGameHUD::createHUD(tgui::Gui &gui) {
     PlayerStats = std::make_unique<playerStats>();
     EquipmentWidget = std::make_unique<playerEquipmentWidget>();
 
-    if (!ProgressBars || !PanelsLayouts || !PlayerNameLevel || !PlayerStats || !EquipmentWidget) {
-        throw std::runtime_error("Failed to create HUD components");
-    }
-
     PanelsLayouts->CombineAll(gui);
     PlayerNameLevel->initializeLabels(PanelsLayouts->Layouts["PlayerNameEXPLayout"]->cast<tgui::VerticalLayout>());
     ProgressBars->initializeBars(PanelsLayouts->Layouts["StatsLayout"]->cast<tgui::VerticalLayout>());

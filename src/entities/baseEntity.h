@@ -25,6 +25,8 @@ class baseEntity {
     float speed;
     bool isAlive;
 
+    int level;
+
     std::shared_ptr<sf::Shape> entityShape; // Pointer to a SFML shape representing the entity
     std::shared_ptr<sf::RectangleShape> collisionBox; // Pointer to a SFML rectangle shape for collision detection
 
@@ -46,6 +48,7 @@ public: // Section for constructor and destructor
 
 public: // Section for getters
 
+    int getLevel() const { return level; }
     float getHealth() const { return health; }
     float getMaxHealth() const { return maxHealth; }
     float getSpeed() const { return speed; }
@@ -74,6 +77,7 @@ public: // Section for getters
 
 public: // Section for setters
 
+    void setLevel(int lvl) { level = lvl; }
     void setHealth(float h) {
             health = h;
         if (health <= 0)

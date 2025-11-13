@@ -12,7 +12,8 @@ defense(0.0f),
 speed(100.0f),
 isAlive(true),
 entityShape(nullptr),
-collisionBox(nullptr)
+collisionBox(nullptr),
+level(0)
 
 {
     entityID.localID = localID;

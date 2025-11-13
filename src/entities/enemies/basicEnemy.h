@@ -3,11 +3,14 @@
 #ifndef NOTSIMPLEGAME_BASICENEMY_H
 #define NOTSIMPLEGAME_BASICENEMY_H
 #include "entities/baseEntity.h"
+#include "inventory/enemyEquipment.h"
 
+class enemyEquipment;
 class player;
 
 class basicEnemy : public baseEntity {
-private:
+
+    enemyEquipment equipment;
 
 public:
     explicit basicEnemy(int localID);
@@ -16,6 +19,10 @@ public:
     virtual void Update(float deltaTime) override;
 
     void chasePlayer(sf::Shape &player, const float &deltaTime);
+
+    enemyEquipment &getEquipment() {
+        return equipment;
+    }
 protected:
     void createRandomEnemyShape();
 

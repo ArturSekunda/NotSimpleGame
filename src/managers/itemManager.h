@@ -4,6 +4,7 @@
 
 #include "items/itemBase.h"
 
+class armor;
 class baseEntity;
 class player;
 class itemBase;
@@ -14,13 +15,21 @@ class itemManager {
     std::unique_ptr<itemBase> items = std::make_unique<itemBase>();
 
     std::vector<std::shared_ptr<itemBase>> ItemDatabase;
-    static int nextItemID;
+    static int WeaponID;
+    static int ArmorID;
 public:
+    itemManager();
+    ~itemManager() = default;
     void CreateItem(int playerLevel, int ID,baseEntity &entity);
+
+    static std::shared_ptr<weapon> CreateWeaponForEnemy(int enemyLevel);
+    static std::shared_ptr<armor> CreateArmorForEnemy(int enemyLevel);
 
     void AddItemToDatabase(const std::shared_ptr<itemBase>& item) {
         ItemDatabase.push_back(item);
     }
+
+    void PrintItemDatabase();
 
 };
 

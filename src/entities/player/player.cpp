@@ -34,6 +34,7 @@ void player::setPlayerStats() {
     this->mana = 50;
     this->maxMana = 50;
     this->isAlive = true;
+    this->level = 1;
 
     this->defense = 0.f;
 }

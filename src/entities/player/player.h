@@ -23,8 +23,6 @@ private:
 
     std::string playerName = "Hero";
 
-    int level = 1;
-
     int levelMax = 100;
     float EXP = 50.f;
     float EXP_MAX = 100.f;
@@ -45,9 +43,6 @@ public: // Setters
         this->isMoving = moving;
     }
 
-    void setLevel(int level) {
-        this->level = level;
-    }
     void setEXP(float exp) {
         EXP = exp;
     }
@@ -64,9 +59,6 @@ public: // Getters
     bool getIsMoving() const {
         return this->isMoving;
     }
-    int getLevel() const {
-        return this->level;
-    }
     float getEXP() const {
         return EXP;
     }
@@ -76,6 +68,9 @@ public: // Getters
 
     std::string getPlayerName() const {
         return playerName;
+    }
+    playerEquipment &getEquipment() const {
+        return *Equipment;
     }
 
 };
