@@ -3,6 +3,8 @@
 #include <TGUI/TGUI.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
 
+#include "managers/inputManager.h"
+
 int main() {
     sf::Clock DeltaTimeClock;
     int frameCount = 0;
@@ -41,6 +43,7 @@ int main() {
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
                 window.close();
             }
+            game::getInstance().isLMBPressed = event.type == sf::Event::MouseButtonPressed;
 
             if (event.type == sf::Event::Resized){
                 CameraView.setSize(event.size.width, event.size.height);

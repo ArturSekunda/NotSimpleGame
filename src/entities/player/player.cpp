@@ -1,7 +1,5 @@
-
-
 #include "player.h"
-#
+
 #include <SFML/Graphics/CircleShape.hpp>
 
 #include "managers/inputManager.h"

@@ -11,6 +11,8 @@
 #include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
 
+#include "managers/inputManager.h"
+
 // Initialize player and enemy instances
 void game::initializeEntities() {
 
@@ -71,6 +73,10 @@ void game::Updater() {
     }
     // Update UI
     UIManagerInstance->UpdateAllUI(*getPlayerPtr(), DeltaTime);
+
+    inputManager::getInstance().isMouseButtonPressed(isLMBPressed, getPlayerShape().getPosition());
+    inputManager::getInstance().updateProjectiles(DeltaTime);
+    inputManager::getInstance().cleanupProjectiles();
 }
 
 // Remove an enemy from the list by index
@@ -102,6 +108,9 @@ void game::render(sf::RenderWindow &window,sf::View& view) {
     window.setView(view);
 
     renderPlayerAndEnemies(window);
+
+    inputManager::getInstance().drawProjectiles(window);
+
     if (DeveloperMode) {
         renderDebug(window);
     }

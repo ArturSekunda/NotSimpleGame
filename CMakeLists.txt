@@ -104,8 +104,8 @@ add_executable(main src/main.cpp
         src/UI/MainGameHUDWidgets/playerInventoryWidget.h
         src/inventory/enemyEquipment.cpp
         src/inventory/enemyEquipment.h
-        src/handlers/entitiesHandler.cpp
-        src/handlers/entitiesHandler.h
+        src/entities/projectile/projectileEntity.cpp
+        src/entities/projectile/projectileEntity.h
 )
 
 # Link SFML libraries

@@ -49,6 +49,8 @@ public: // Initialization and Getters
 
     bool DeveloperMode = true;
 
+    bool isLMBPressed = false;
+
 
     // Getters for collision boxes
     sf::RectangleShape& getPlayerCollisionBox() {

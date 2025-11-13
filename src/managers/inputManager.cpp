@@ -1,7 +1,7 @@
 #include "inputManager.h"
 #include "../src/handlers/debugHandler.h"
-
-#include <iostream>
+#include "entities/player/player.h"
+#include "entities/projectile/projectileEntity.h"
 
 #include "SFML/Window/Event.hpp"
 #include "SFML/Window/Keyboard.hpp"
@@ -36,3 +36,32 @@ sf::Vector2f inputManager::pMovementDirection(float deltaTime, float speed) {
     return direction;
 }
 
+void inputManager::isMouseButtonPressed(bool &isLMBPressed, sf::Vector2f playerPosition) {
+    if (isLMBPressed == true) {
+        projectiles.push_back(std::make_unique<projectileEntity>(playerPosition, sf::Vector2f(0.f, -500.f), 2.0f));
+    }else {
+        isLMBPressed = false;
+    }
+}
+
+void inputManager::updateProjectiles(float deltaTime) {
+    for (auto& projectile : projectiles) {
+        projectile->update(deltaTime);
+    }
+}
+
+void inputManager::drawProjectiles(sf::RenderWindow& window) {
+    for (auto& projectile : projectiles) {
+        projectile->draw(window);
+    }
+}
+
+void inputManager::cleanupProjectiles() {
+    projectiles.erase(
+        std::remove_if(projectiles.begin(), projectiles.end(),
+            [](const auto& projectile) {
+                return projectile->isExpired();
+            }),
+        projectiles.end()
+    );
+}

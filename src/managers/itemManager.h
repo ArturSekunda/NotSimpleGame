@@ -15,10 +15,10 @@ class itemManager {
     std::unique_ptr<itemBase> items = std::make_unique<itemBase>();
 
     std::vector<std::shared_ptr<itemBase>> ItemDatabase;
-    static int WeaponID;
-    static int ArmorID;
+    inline static int WeaponID = 0;
+    inline static int ArmorID = 0;
 public:
-    itemManager();
+    itemManager() = default;
     ~itemManager() = default;
     void CreateItem(int playerLevel, int ID,baseEntity &entity);
 
