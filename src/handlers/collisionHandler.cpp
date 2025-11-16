@@ -6,6 +6,7 @@
 #include <SFML/Graphics/Shape.hpp>
 
 #include "entities/enemies/basicEnemy.h"
+#include "entities/projectile/projectileEntity.h"
 
 // Check if two shapes are colliding using their global bounds
 bool collisionHandler::isColliding(const sf::Shape &player, const sf::Shape &enemy) {
@@ -46,4 +47,14 @@ void collisionHandler::render(sf::RenderWindow &window, sf::RectangleShape& play
                }
           }
 
+}
+
+auto collisionHandler::renderProjectileCollisionBox(sf::RenderWindow &window, std::vector<std::unique_ptr<projectileEntity>>& projectiles) -> void {
+     for (const auto& projectile : projectiles) {
+          if (projectile && projectile->getCollisionBox()) {
+               auto& projectileBox = *projectile->getCollisionBox();
+               projectileBox.setPosition(projectile->getPosition());
+               window.draw(projectileBox);
+          }
+     }
 }

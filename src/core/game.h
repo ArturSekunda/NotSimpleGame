@@ -5,8 +5,10 @@
 #include "entities/player/player.h"
 #include "entities/enemies/basicEnemy.h"
 #include "managers/itemManager.h"
+#include "entities/projectile/projectileEntity.h"
 #include "TGUI/Backend/SFML-Graphics.hpp"
 #include "managers/UIManager.h"
+
 
 
 namespace sf {
@@ -115,6 +117,8 @@ protected: // Debug and instantiates
     std::unique_ptr<UIManager> UIManagerInstance;
 
     std::unique_ptr<itemManager> itemManagerInstance;
+
+    std::vector<std::unique_ptr<projectileEntity>> projectiles;
 
 };
 

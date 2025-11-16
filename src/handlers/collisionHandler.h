@@ -9,6 +9,7 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 
 
+class projectileEntity;
 class baseEntity;
 
 namespace sf {
@@ -34,6 +35,7 @@ public:
     std::vector<std::string> checkAllCollisions(const sf::Shape &player, const std::vector<std::unique_ptr<baseEntity>>& entitylist);
     auto render(sf::RenderWindow &window, sf::RectangleShape &playerCollisionBox,
                 const std::vector<std::unique_ptr<baseEntity> > &entitylist, const sf::Shape &playerShape) -> void;
+    auto renderProjectileCollisionBox(sf::RenderWindow &window, std::vector<std::unique_ptr<projectileEntity>>& projectiles) -> void;
 
 
 };

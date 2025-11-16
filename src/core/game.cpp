@@ -67,16 +67,24 @@ void game::Updater() {
         .checkAllCollisions(getPlayerShape(), entityList);
 
     // Handle Collisions
-    for (std::string_view enemyIndex : collidingEnemies) {
-        //std::cout << "Collision with enemy " << enemyIndex << "!\n";
+    for (const auto& enemyIDStr: collidingEnemies) {
+        std::cout << "Collision with Enemy ID: " << enemyIDStr << "\n";
+    }
 
+    for (const auto& bullet: projectiles) {
+        for (const auto& entity : entityList) {
+            if (entity && bullet->getEntityBounds().intersects(entity->getEntityBounds())) {
+                std::cout << "Projectile hit Enemy ID: " << entity->getEntityID().toString() << "\n";
+                entity->setHealth(entity->getHealth()-20);
+            }
+        }
     }
     // Update UI
     UIManagerInstance->UpdateAllUI(*getPlayerPtr(), DeltaTime);
 
-    inputManager::getInstance().isMouseButtonPressed(isLMBPressed, getPlayerShape().getPosition());
-    inputManager::getInstance().updateProjectiles(DeltaTime);
-    inputManager::getInstance().cleanupProjectiles();
+    inputManager::getInstance().isMouseButtonPressed(isLMBPressed, getPlayerShape().getPosition(), projectiles);
+    projectileEntity::updateProjectiles(DeltaTime, projectiles);
+    projectileEntity::cleanupProjectiles(projectiles);
 }
 
 // Remove an enemy from the list by index
@@ -109,7 +117,7 @@ void game::render(sf::RenderWindow &window,sf::View& view) {
 
     renderPlayerAndEnemies(window);
 
-    inputManager::getInstance().drawProjectiles(window);
+    projectileEntity::drawProjectiles(window, projectiles);
 
     if (DeveloperMode) {
         renderDebug(window);
@@ -123,6 +131,7 @@ void game::renderDebug(sf::RenderWindow &window) {
     if (UIManagerInstance->getDebugWindow() != nullptr){
         if (UIManagerInstance->getWantToShowCollisionBoxes()) {
              collisionHandler::getInstance().render(window, getPlayerCollisionBox(), entityList, getPlayerShape());
+                collisionHandler::getInstance().renderProjectileCollisionBox(window, projectiles);
         }
     }
 
