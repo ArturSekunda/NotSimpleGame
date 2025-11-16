@@ -1,19 +1,41 @@
 #include "itemManager.h"
 
 #include "entities/baseEntity.h"
+#include "entities/enemies/basicEnemy.h"
 #include "inventory/baseEquipment.h"
+#include "inventory/enemyEquipment.h"
 #include "items/armor.h"
 #include "items/weapon.h"
 
-void itemManager::CreateItem(int playerLevel, int ID,baseEntity &entity) {
-    std::shared_ptr<weapon> w = std::make_shared<weapon>(weapon::CreateNewWeapon(playerLevel, ID));
-    std::shared_ptr<armor> a = std::make_shared<armor>(armor::CreateNewArmor(playerLevel,ID));
+void itemManager::CreateWeaponForEnemy(basicEnemy& enemy) {
+    std::shared_ptr<weapon> w = std::make_shared<weapon>(weapon::CreateNewWeapon(enemy.getLevel(), WeaponID));
     if (w) {
-        w->DisplayWeaponInfo();
+        AddItemToDatabase(w);
+        enemy.getEquipment().EquipItem(w, enemy);
+        WeaponID++;
+    }else {
+        std::cout << "Failed to create weapon for enemy.\n";
     }
-    if (a) {
-        a->DisplayArmorInfo();
-    }
+}
+
+void itemManager::CreateArmorForEnemy(basicEnemy &enemy) {
+    std::shared_ptr<armor> Helmet = std::make_shared<armor>(armor::CreateNewArmor(ArmorType::HELMET,enemy.getLevel(), ArmorID));
+    ArmorID++;
+    std::shared_ptr<armor> Chestplate = std::make_shared<armor>(armor::CreateNewArmor(ArmorType::CHESTPLATE,enemy.getLevel(), ArmorID));
+    ArmorID++;
+    std::shared_ptr<armor> Leggings = std::make_shared<armor>(armor::CreateNewArmor(ArmorType::LEGGINGS,enemy.getLevel(), ArmorID));
+    ArmorID++;
+    std::shared_ptr<armor> Boots = std::make_shared<armor>(armor::CreateNewArmor(ArmorType::BOOTS,enemy.getLevel(), ArmorID));
+    ArmorID++;
+
+    AddItemToDatabase(Helmet);
+    AddItemToDatabase(Chestplate);
+    AddItemToDatabase(Leggings);
+    AddItemToDatabase(Boots);
+    enemy.getEquipment().EquipItem(Helmet, enemy);
+    enemy.getEquipment().EquipItem(Chestplate, enemy);
+    enemy.getEquipment().EquipItem(Leggings, enemy);
+    enemy.getEquipment().EquipItem(Boots, enemy);
 }
 
 void itemManager::PrintItemDatabase() {

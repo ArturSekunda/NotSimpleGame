@@ -11,7 +11,7 @@
 
 
 
-basicEnemy::basicEnemy(int localID) : baseEntity(localID) {
+basicEnemy::basicEnemy(int localID, int playerLevel) : baseEntity(localID) {
 
     entityID.type = EntityType::BASIC_ENEMY;
     entityID.localID = localID;
@@ -33,12 +33,12 @@ basicEnemy::basicEnemy(int localID) : baseEntity(localID) {
         position = sf::Vector2f(0.f, 0.f);
         entityShape->setPosition(position);
     }
+    this->level = darkMath::getInstance().generateIntNumber(playerLevel, playerLevel + 5);
     this->speed = darkMath::getInstance().generateFloatNumber(50.f, 150.f);
-    this->health = darkMath::getInstance().generateFloatNumber(50.f, 150.f);
+    this->health = darkMath::getInstance().generateFloatNumber(50.f*level, 50.f+50.f*level);
     this->maxHealth = this->health;
-    this->mana = darkMath::getInstance().generateIntNumber(20, 100);
-    this->maxMana = this->mana;
     this->isAlive = true;
+
 
 }
 

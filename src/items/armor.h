@@ -20,6 +20,8 @@ public:
      //Generate
      static armor CreateNewArmor(int playerLevel, int itemID);
 
+     static armor CreateNewArmor(ArmorType AType,int playerLevel, int itemID);
+
      std::vector<int> GetArmorEnchantProbabilities(Rarity RR);
 
      void GenerateArmorEnchants(Rarity RR, std::vector<int> chanceDistance);

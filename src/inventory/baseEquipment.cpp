@@ -14,6 +14,7 @@ baseEquipment::baseEquipment() {
     };
 }
 
+// Equip weapon to the weapon slot
 bool baseEquipment::EquipWeapon(const std::shared_ptr<weapon>& weap) {
     if (weaponSlot != nullptr) {
         std::cout << "Weapon slot is already occupied!" << std::endl;
@@ -23,6 +24,7 @@ bool baseEquipment::EquipWeapon(const std::shared_ptr<weapon>& weap) {
     return true;
 }
 
+// Equip armor to the appropriate slot
 bool baseEquipment::EquipArmor(std::shared_ptr<armor> arm) {
     ArmorType type = arm->getArmorType();
     if (armorSlots.at(type) == nullptr) {
@@ -34,6 +36,7 @@ bool baseEquipment::EquipArmor(std::shared_ptr<armor> arm) {
     }
 }
 
+// Equip item to the appropriate slot and add bonus stats to the entity
 bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& entity) {
     ItemType itemType = item->getItemType();
     switch (itemType) {
@@ -41,7 +44,7 @@ bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& 
             if (std::shared_ptr<weapon> weap = std::dynamic_pointer_cast<weapon>(item)) {
                 if (EquipWeapon(weap)) {
                     AddBonusStats(weap->getBonusStats(),entity);
-                    weap->DisplayWeaponInfo();
+                    //weap->DisplayWeaponInfo();
                     return true;
                 }
             } else {
@@ -53,7 +56,7 @@ bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& 
             if (std::shared_ptr<armor> arm = std::dynamic_pointer_cast<armor>(item)) {
                  if(EquipArmor(arm)) {
                      AddBonusStats(arm->getBonusStats(),entity);
-                     arm->DisplayArmorInfo();
+                     //arm->DisplayArmorInfo();
                      return true;
                  }
             } else {
@@ -67,6 +70,7 @@ bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& 
     }
 }
 
+// Add bonus stats to the entity based on its type
 void baseEquipment::AddBonusStats(const ItemBonusStats &stats,baseEntity& entity) {
     switch (entity.getEntityID().type) {
         case EntityType::PLAYER: {

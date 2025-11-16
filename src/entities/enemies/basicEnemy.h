@@ -13,7 +13,7 @@ class basicEnemy : public baseEntity {
     enemyEquipment equipment;
 
 public:
-    explicit basicEnemy(int localID);
+    explicit basicEnemy(int localID,int playerLevel);
     ~basicEnemy() override = default;
 
     virtual void Update(float deltaTime) override;

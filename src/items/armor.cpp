@@ -30,6 +30,34 @@ armor armor::CreateNewArmor(int playerLevel, int itemID) {
     return newArmor;
 }
 
+armor armor::CreateNewArmor(ArmorType AType, int playerLevel, int itemID) {
+    armor newArmor;
+
+    auto& EC = enumConversion::getInstance();
+
+    int HowMuchRare = darkMath::getInstance().generateDistanceDistribution({55,20,15,10,5}) + 1;
+    int APrefix = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(EC.GetPrefix().size() - 1));
+    int Material = darkMath::getInstance().generateDistanceDistribution({55,20,15,10,5,1}) + 1;
+
+    newArmor.GenerateArmorName(static_cast<Prefix>(APrefix),static_cast<Rarity>(HowMuchRare),AType, static_cast<MaterialTypeOfItem>(Material));
+
+    newArmor.GenerateArmorStats(playerLevel,static_cast<Rarity>(HowMuchRare),AType, static_cast<MaterialTypeOfItem>(Material));
+
+    newArmor.GenerateBonusStats(static_cast<Rarity>(HowMuchRare));
+
+    auto probs = newArmor.GetArmorEnchantProbabilities(static_cast<Rarity>(HowMuchRare));
+    newArmor.GenerateArmorEnchants(static_cast<Rarity>(HowMuchRare), probs);
+
+    newArmor.ApplyArmorEnchants();
+
+
+    newArmor.setGenItemType(ItemType::ARMOR);
+    newArmor.setArmorType(AType);
+    newArmor.setId(itemID);
+
+    return newArmor;
+}
+
 
 std::vector<int> armor::GetArmorEnchantProbabilities(Rarity RR) {
     switch (RR) {

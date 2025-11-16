@@ -22,7 +22,7 @@ public:
 
     void printInventory();
 
-    std::array<slot, 16> GetSlots() const {
+    std::array<slot, 16>& GetSlots() {
         return Slots;
     }
 };

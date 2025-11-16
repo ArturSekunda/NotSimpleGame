@@ -6,7 +6,6 @@
 #include <iostream>
 #include <memory>
 
-#include "handlers/debugHandler.h"
 #include "managers/UIManager.h"
 #include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
@@ -24,11 +23,14 @@ void game::initializeEntities() {
         throw std::runtime_error("Failed to create player instance.");
     }
 
-    itemManagerInstance->CreateItem(getPlayerPtr()->getLevel(),0,*getPlayerPtr());
 
+    for (int i = 0; i <= 1; i++) {
+        auto enemy = std::make_unique<basicEnemy>(i, getPlayerPtr()->getLevel());
 
-     for (int i = 0; i <= 3; i++) {
-         addEntityToList(std::make_unique<basicEnemy>(i));
+        itemManagerInstance->CreateWeaponForEnemy(*enemy);
+        itemManagerInstance->CreateArmorForEnemy(*enemy);
+
+        addEntityToList(std::move(enemy));
     }
 
 }
