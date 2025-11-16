@@ -3,9 +3,11 @@
 #include "baseEquipment.h"
 
 
+class Inventory;
+
 class enemyEquipment : public baseEquipment {
 public:
-    void DropEquipmentOnDeath(player& playerRef);
+    void DropEquipmentOnDeath(Inventory& playerInventory);
 };
 
 

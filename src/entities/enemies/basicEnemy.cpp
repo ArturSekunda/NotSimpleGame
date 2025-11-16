@@ -87,6 +87,16 @@ void basicEnemy::chasePlayer(sf::Shape &player, const float &deltaTime) {
     entityShape->move(sf::Vector2f(ToThePlayer.x, ToThePlayer.y));
 }
 
+bool basicEnemy::isDead(Inventory& playerInventory) {
+    if (this->health > 0.f) {
+        return false;
+    }
+
+    equipment.DropEquipmentOnDeath(playerInventory);
+
+    return true;
+}
+
 void basicEnemy::Update(float deltaTime) {
     baseEntity::Update(deltaTime);
 

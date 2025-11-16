@@ -20,6 +20,8 @@ public:
 
     void chasePlayer(sf::Shape &player, const float &deltaTime);
 
+    bool isDead(Inventory& playerInventory);
+
     enemyEquipment &getEquipment() {
         return equipment;
     }

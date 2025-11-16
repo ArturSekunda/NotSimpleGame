@@ -3,14 +3,18 @@
 #define NOTSIMPLEGAME_PLAYER_H
 #include <memory>
 #include "inventory/playerEquipment.h"
+#include "inventory/Inventory.h"
 #include "entities/baseEntity.h"
 
+class Inventory;
 class playerEquipment;
 
 class player : public baseEntity {
 private: // Functions
 
     std::unique_ptr<playerEquipment> Equipment;
+
+    std::unique_ptr<Inventory> PlayerInventory;
 
     void createPlayerShape();
 
@@ -71,6 +75,9 @@ public: // Getters
     }
     playerEquipment &getEquipment() const {
         return *Equipment;
+    }
+    Inventory &getInventory() const {
+        return *PlayerInventory;
     }
 
 };

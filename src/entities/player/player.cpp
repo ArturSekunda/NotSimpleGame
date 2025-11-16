@@ -58,6 +58,7 @@ player::player(int localID) : baseEntity(localID) {
     entityID.localID = localID;
 
     Equipment = std::make_unique<playerEquipment>();
+    PlayerInventory = std::make_unique<Inventory>();
 
     createPlayerShape();
     setPlayerStats();

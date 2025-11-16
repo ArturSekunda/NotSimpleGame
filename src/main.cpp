@@ -3,6 +3,7 @@
 #include <TGUI/TGUI.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
 
+#include "inventory/Inventory.h"
 #include "managers/inputManager.h"
 
 int main() {
@@ -43,7 +44,15 @@ int main() {
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
                 window.close();
             }
+
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::I) {
+                std::cout << "DEBUG: Inventory printed to console\n";
+                game::getInstance().getPlayerPtr()->getInventory().printInventory();
+
+            }
+
             game::getInstance().isLMBPressed = event.type == sf::Event::MouseButtonPressed;
+
 
             if (event.type == sf::Event::Resized){
                 CameraView.setSize(event.size.width, event.size.height);

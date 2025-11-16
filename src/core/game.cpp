@@ -68,14 +68,20 @@ void game::Updater() {
 
     // Handle Collisions
     for (const auto& enemyIDStr: collidingEnemies) {
-        std::cout << "Collision with Enemy ID: " << enemyIDStr << "\n";
+        //std::cout << "Collision with Enemy ID: " << enemyIDStr << "\n";
     }
 
     for (const auto& bullet: projectiles) {
         for (const auto& entity : entityList) {
-            if (entity && bullet->getEntityBounds().intersects(entity->getEntityBounds())) {
-                std::cout << "Projectile hit Enemy ID: " << entity->getEntityID().toString() << "\n";
-                entity->setHealth(entity->getHealth()-20);
+            auto enemy = dynamic_cast<basicEnemy*>(entity.get());
+            if (enemy && bullet->getEntityBounds().intersects(entity->getEntityBounds())) {
+                //std::cout << "Projectile hit Enemy ID: " << entity->getEntityID().toString() << "\n";
+                enemy->setHealth(entity->getHealth()-20);
+                if (enemy->isDead(playerInstance->getInventory())) {
+                    std::cout << "Enemy ID: " << entity->getEntityID().toString() << " is dead.\n";
+                    size_t index = &entity - &entityList[0];
+                    decreaseEnemyFromList(index);
+                }
             }
         }
     }
@@ -89,7 +95,7 @@ void game::Updater() {
 
 // Remove an enemy from the list by index
 void game::decreaseEnemyFromList(size_t index) {
-    if (index < entityList.size() && index != static_cast<size_t>(-1)) {
+    if (index <= entityList.size() && index != static_cast<size_t>(-1)) {
         entityList.erase(entityList.begin() + index);
     } else {
         std::cerr << "Invalid index for removing enemy: " << index << "\n";

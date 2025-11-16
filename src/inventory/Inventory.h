@@ -2,17 +2,29 @@
 #define NOTSIMPLEGAME_INVENTORY_H
 #include <array>
 #include <memory>
+#include <vector>
 
 class itemBase;
 class player;
 
+struct slot {
+    std::shared_ptr<itemBase> item = nullptr;
+    bool isOccupied = false;
+
+};
+
 class Inventory {
-    std::array<std::shared_ptr<itemBase>, 16> items;
+    std::array<slot, 16> Slots;
 public:
     bool AddItem(const std::shared_ptr<itemBase>& item, int index);
-    std::shared_ptr<itemBase> RemoveItem(int index);
+    std::shared_ptr<itemBase> RemoveItemToMouse(int index);
     bool DeleteItem(int index);
 
+    void printInventory();
+
+    std::array<slot, 16> GetSlots() const {
+        return Slots;
+    }
 };
 
 
