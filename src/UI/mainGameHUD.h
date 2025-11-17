@@ -11,6 +11,7 @@
 #include "TGUI/Widgets/Button.hpp"
 #include "TGUI/Widgets/Label.hpp"
 #include "MainGameHUDWidgets/playerEquipmentWidget.h"
+#include "MainGameHUDWidgets/playerInventoryWidget.h"
 
 class playerEquipmentWidget;
 class playerStats;
@@ -28,6 +29,7 @@ class mainGameHUD {
     std::unique_ptr<playerNameAndLevel> PlayerNameLevel = nullptr;
     std::unique_ptr<playerStats> PlayerStats = nullptr;
     std::unique_ptr<playerEquipmentWidget> EquipmentWidget = nullptr;
+    std::unique_ptr<playerInventoryWidget> InventoryWidget = nullptr;
 
      // Button (Debug only)
      tgui::Button::Ptr DebugButtonForWindow = nullptr;

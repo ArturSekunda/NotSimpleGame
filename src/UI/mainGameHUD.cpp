@@ -23,12 +23,14 @@ void mainGameHUD::createHUD(tgui::Gui &gui) {
     PlayerNameLevel = std::make_unique<playerNameAndLevel>();
     PlayerStats = std::make_unique<playerStats>();
     EquipmentWidget = std::make_unique<playerEquipmentWidget>();
+    InventoryWidget = std::make_unique<playerInventoryWidget>();
 
     PanelsLayouts->CombineAll(gui);
     PlayerNameLevel->initializeLabels(PanelsLayouts->Layouts["PlayerNameEXPLayout"]->cast<tgui::VerticalLayout>());
     ProgressBars->initializeBars(PanelsLayouts->Layouts["StatsLayout"]->cast<tgui::VerticalLayout>());
     PlayerStats->initializeLabels(PanelsLayouts->Layouts["GridStats"]->cast<tgui::Grid>());
     EquipmentWidget->initializeIcons(PanelsLayouts->Panels["S_EquipmentPanel"]->cast<tgui::Panel>());
+    InventoryWidget->initializeIcons(PanelsLayouts->Panels["S_InventoryPanel"]->cast<tgui::Panel>());
 
 
 }
@@ -58,6 +60,7 @@ void mainGameHUD::UpdateUI(const player &p) {
     PlayerNameLevel->UpdateLabels(p.getPlayerName(), p.getLevel());
     ProgressBars->UpdateBars(p);
     PlayerStats->UpdateLabels(p.getStats());
+    InventoryWidget->UpdateInventory(p.getInventory());
 
 
 }

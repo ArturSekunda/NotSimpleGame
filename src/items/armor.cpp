@@ -20,6 +20,9 @@ armor armor::CreateNewArmor(int playerLevel, int itemID) {
     auto probs = newArmor.GetArmorEnchantProbabilities(static_cast<Rarity>(HowMuchRare));
     newArmor.GenerateArmorEnchants(static_cast<Rarity>(HowMuchRare), probs);
 
+    auto& ECT = enumConversionTextures::getInstance();
+    newArmor.setTextureByPath(ECT.GetRarityTexturePaths().at(static_cast<Rarity>(HowMuchRare)));
+
     newArmor.ApplyArmorEnchants();
 
 
@@ -50,6 +53,8 @@ armor armor::CreateNewArmor(ArmorType AType, int playerLevel, int itemID) {
 
     newArmor.ApplyArmorEnchants();
 
+    auto& ECT = enumConversionTextures::getInstance();
+    newArmor.setTextureByPath(ECT.GetRarityTexturePaths().at(static_cast<Rarity>(HowMuchRare)));
 
     newArmor.setGenItemType(ItemType::ARMOR);
     newArmor.setArmorType(AType);

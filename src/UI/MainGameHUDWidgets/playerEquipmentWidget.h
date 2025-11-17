@@ -1,6 +1,5 @@
 #ifndef NOTSIMPLEGAME_PLAYEREQUIPMENTWIDGET_H
 #define NOTSIMPLEGAME_PLAYEREQUIPMENTWIDGET_H
-#include "SFML/Graphics/Texture.hpp"
 #include "TGUI/Widgets/Panel.hpp"
 #include "TGUI/Widgets/Picture.hpp"
 

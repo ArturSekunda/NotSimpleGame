@@ -25,6 +25,7 @@ public:
     std::array<slot, 16>& GetSlots() {
         return Slots;
     }
+
 };
 
 
