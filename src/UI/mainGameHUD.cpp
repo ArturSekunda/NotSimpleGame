@@ -11,6 +11,7 @@ void mainGameHUD::CleanUp() {
         PlayerNameLevel.reset();
         PlayerStats.reset();
         EquipmentWidget.reset();
+        InventoryWidget.reset();
 
         DebugButtonForWindow = nullptr;
     }
@@ -61,6 +62,7 @@ void mainGameHUD::UpdateUI(const player &p) {
     ProgressBars->UpdateBars(p);
     PlayerStats->UpdateLabels(p.getStats());
     InventoryWidget->UpdateInventory(p.getInventory());
+
 
 
 }

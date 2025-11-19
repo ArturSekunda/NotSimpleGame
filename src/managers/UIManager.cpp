@@ -59,6 +59,7 @@ void UIManager::UpdateAllUI(player &p, float deltaTime) {
     }
 }
 
+
 void UIManager::CleanAllUI() {
 
     std::cout << "DEBUG: UIManager::CleanAllUI() START\n";

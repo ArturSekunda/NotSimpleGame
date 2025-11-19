@@ -1,18 +1,18 @@
 #include "core/game.h"
-#include "managers/UIManager.h"
 #include <TGUI/TGUI.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
 
-#include "inventory/Inventory.h"
+#include "handlers/eventHandler.h"
 #include "managers/inputManager.h"
 
 int main() {
     sf::Clock DeltaTimeClock;
     int frameCount = 0;
     sf::Clock FPSClock;
+    std::unique_ptr<game> gameInstance  = std::make_unique<game>();
 
 
-    game::getInstance().initializeEntities();
+    gameInstance->initializeEntities();
 
     sf::ContextSettings settings;
     settings.antialiasingLevel = 4;
@@ -21,9 +21,9 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Test", sf::Style::Default, settings);
     tgui::Gui gui{window};
 
-    game::getInstance().renderUI(gui);
+    gameInstance->renderUI(gui);
 
-    game::getInstance().getUIManager()->UpdateTextSizes(window.getSize().x, window.getSize().y);
+    gameInstance->getUIManager()->UpdateTextSizes(window.getSize().x, window.getSize().y);
 
 
     window.setFramerateLimit(60);
@@ -40,6 +40,7 @@ int main() {
         // Event Handler
         while (window.pollEvent(event)) {
             gui.handleEvent(event);
+            eventHandler::getInstance().ListenEvents(event, window);
 
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
                 window.close();
@@ -47,17 +48,14 @@ int main() {
 
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::I) {
                 std::cout << "DEBUG: Inventory printed to console\n";
-                game::getInstance().getPlayerPtr()->getInventory().printInventory();
+                gameInstance->getPlayerPtr().getInventory().printInventory();
 
             }
-
-            game::getInstance().isLMBPressed = event.type == sf::Event::MouseButtonPressed;
-
 
             if (event.type == sf::Event::Resized){
                 CameraView.setSize(event.size.width, event.size.height);
                 window.setView(CameraView);
-                game::getInstance().getUIManager()->UpdateTextSizes(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
+                gameInstance->getUIManager()->UpdateTextSizes(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
             }
         }
 
@@ -71,14 +69,14 @@ int main() {
 
 
         // Delta Time Calculation
-        game::getInstance().setDeltaTime(DeltaTimeClock.restart().asSeconds());
+        gameInstance->setDeltaTime(DeltaTimeClock.restart().asSeconds());
 
         // Update Game Logic
-        game::getInstance().Updater();
+        gameInstance->Updater();
 
         window.clear();
 
-        game::getInstance().render(window, CameraView);
+        gameInstance->render(window, CameraView);
 
         gui.draw();
 
@@ -86,6 +84,6 @@ int main() {
         window.display();
     }
     std::cout << "DEBUG: Cleaning UI before main() ends\n";
-    game::getInstance().getUIManager()->CleanAllUI();
+    gameInstance->getUIManager()->CleanAllUI();
     return 0;
 }

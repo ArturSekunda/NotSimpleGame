@@ -5,6 +5,8 @@
 #define NOTSIMPLEGAME_INPUTMANAGER_H
 #include <memory>
 #include <vector>
+
+#include "SFML/System/Clock.hpp"
 #include "SFML/System/Vector2.hpp"
 
 class projectileEntity;
@@ -24,7 +26,9 @@ public:
     }
     sf::Vector2f pMovementDirection(float deltaTime,float speed);
 
-    void isMouseButtonPressed(bool &isLMBPressed, sf::Vector2f playerPosition, std::vector<std::unique_ptr<projectileEntity>>& projectiles);
+    sf::Clock clickClock;
+
+    void isMouseButtonPressed(sf::Vector2f playerPosition, std::vector<std::unique_ptr<projectileEntity>>& projectiles);
 };
 
 

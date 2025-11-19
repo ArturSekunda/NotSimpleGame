@@ -38,6 +38,7 @@ public:
     mainGameHUD() = default;
     ~mainGameHUD() = default;
 
+
     void CleanUp();
 
     void createHUD(tgui::Gui& gui);

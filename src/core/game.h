@@ -27,20 +27,15 @@ public:
     game() = default;
     ~game() = default;
 
-    static game& getInstance() {
-        static game instance;
-        return instance;
-    }
-
 public: // Initialization and Getters
 
     void initializeEntities();
 
     // Const version to only read player
-    const player* getPlayerPtr() const;
+    const player& getPlayerPtr() const;
 
     // Non-const version to modify player
-    player* getPlayerPtr();
+    player& getPlayerPtr();
 
     sf::Shape &getPlayerShape();
 
@@ -51,12 +46,10 @@ public: // Initialization and Getters
 
     bool DeveloperMode = true;
 
-    bool isLMBPressed = false;
-
 
     // Getters for collision boxes
     sf::RectangleShape& getPlayerCollisionBox() {
-        return *getPlayerPtr()->getCollisionBox();
+        return *getPlayerPtr().getCollisionBox();
     }
 
     // Delta Time Setter

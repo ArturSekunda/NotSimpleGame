@@ -1,6 +1,7 @@
 #include "inputManager.h"
 #include "entities/player/player.h"
 #include "entities/projectile/projectileEntity.h"
+#include "handlers/eventHandler.h"
 #include "SFML/Window/Keyboard.hpp"
 
 // Function to get player movement direction based on keyboard input
@@ -30,9 +31,10 @@ sf::Vector2f inputManager::pMovementDirection(float deltaTime, float speed) {
     return direction;
 }
 
-void inputManager::isMouseButtonPressed(bool &isLMBPressed, sf::Vector2f playerPosition, std::vector<std::unique_ptr<projectileEntity>>& projectiles) {
-    if (isLMBPressed == true) {
+void inputManager::isMouseButtonPressed(sf::Vector2f playerPosition, std::vector<std::unique_ptr<projectileEntity>>& projectiles) {
+    bool IsHoldingMouse = eventHandler::getInstance().getWhenMouseClicked();
+    if (IsHoldingMouse == true && clickClock.getElapsedTime().asSeconds() >= 0.3f) {
         projectiles.push_back(std::make_unique<projectileEntity>(playerPosition, sf::Vector2f(0.f, -500.f), 2.0f));
-        isLMBPressed = false;
+        clickClock.restart();
     }
 }

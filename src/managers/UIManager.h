@@ -50,6 +50,7 @@ public:
 
     void UpdateAllUI(player& p, float deltaTime);
 
+
     void CleanAllUI();
 
     bool IsDebugWindowVisible() const {

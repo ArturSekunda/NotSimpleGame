@@ -106,6 +106,8 @@ add_executable(main src/main.cpp
         src/inventory/enemyEquipment.h
         src/entities/projectile/projectileEntity.cpp
         src/entities/projectile/projectileEntity.h
+        src/handlers/eventHandler.cpp
+        src/handlers/eventHandler.h
 )
 
 # Link SFML libraries

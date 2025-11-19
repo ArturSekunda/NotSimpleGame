@@ -23,9 +23,8 @@ void game::initializeEntities() {
         throw std::runtime_error("Failed to create player instance.");
     }
 
-
     for (int i = 0; i <= 1; i++) {
-        auto enemy = std::make_unique<basicEnemy>(i, getPlayerPtr()->getLevel());
+        auto enemy = std::make_unique<basicEnemy>(i, getPlayerPtr().getLevel());
 
         itemManagerInstance->CreateWeaponForEnemy(*enemy);
         itemManagerInstance->CreateArmorForEnemy(*enemy);
@@ -35,13 +34,13 @@ void game::initializeEntities() {
 
 }
 // Only to read
-const player * game::getPlayerPtr() const {
-    return playerInstance.get();
+const player& game::getPlayerPtr() const {
+    return *playerInstance;
 }
 
 // To modify player
-player* game::getPlayerPtr() {
-    return playerInstance.get();
+player& game::getPlayerPtr() {
+    return *playerInstance;
 }
 
 // Update game logic, player and enemy states
@@ -88,9 +87,9 @@ void game::Updater() {
         }
     }
     // Update UI
-    UIManagerInstance->UpdateAllUI(*getPlayerPtr(), DeltaTime);
+    UIManagerInstance->UpdateAllUI(getPlayerPtr(), DeltaTime);
 
-    inputManager::getInstance().isMouseButtonPressed(isLMBPressed, getPlayerShape().getPosition(), projectiles);
+    inputManager::getInstance().isMouseButtonPressed(getPlayerShape().getPosition(), projectiles);
     projectileEntity::updateProjectiles(DeltaTime, projectiles);
     projectileEntity::cleanupProjectiles(projectiles);
 }
@@ -161,7 +160,7 @@ void game::renderPlayerAndEnemies(sf::RenderWindow& window) const {
 }
 
 void game::renderUI(tgui::Gui &gui) {
-    UIManagerInstance->RenderMainGameHUD(gui, *getPlayerPtr(), DeveloperMode);
+    UIManagerInstance->RenderMainGameHUD(gui, getPlayerPtr(), DeveloperMode);
 
 }
 
