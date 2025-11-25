@@ -15,9 +15,13 @@ baseEquipment::baseEquipment() {
 }
 
 // Equip weapon to the weapon slot
-bool baseEquipment::EquipWeapon(const std::shared_ptr<weapon>& weap) {
+bool baseEquipment::EquipWeapon(const std::shared_ptr<weapon>& weap, int index) {
     if (weaponSlot != nullptr) {
         std::cout << "Weapon slot is already occupied!" << std::endl;
+        return false;
+    }
+    if (index != 0) {
+        std::cout << "Invalid index for weapon slot!" << std::endl;
         return false;
     }
     weaponSlot = weap;
@@ -25,27 +29,59 @@ bool baseEquipment::EquipWeapon(const std::shared_ptr<weapon>& weap) {
 }
 
 // Equip armor to the appropriate slot
-bool baseEquipment::EquipArmor(std::shared_ptr<armor> arm) {
+bool baseEquipment::EquipArmor(std::shared_ptr<armor> arm, int index) {
     ArmorType type = arm->getArmorType();
-    if (armorSlots.at(type) == nullptr) {
-        armorSlots[type] = std::move(arm);
-        return true;
-    }else {
-        std::cout << "This armor slot is already occupied!" << std::endl;
-        return false;
+
+    switch (index) {
+        case 1:
+            if (type != ArmorType::HELMET) {
+                std::cout << "Armor type does not match helmet slot!" << std::endl;
+                return false;
+            }else {
+                armorSlots[ArmorType::HELMET] = arm;
+                return true;
+            }
+        case 2:
+            if (type != ArmorType::CHESTPLATE) {
+                std::cout << "Armor type does not match chestplate slot!" << std::endl;
+                return false;
+            }else {
+                armorSlots[ArmorType::CHESTPLATE] = arm;
+                return true;
+            }
+        case 3:
+            if (type != ArmorType::LEGGINGS) {
+                std::cout << "Armor type does not match leggings slot!" << std::endl;
+                return false;
+            }else {
+                armorSlots[ArmorType::LEGGINGS] = arm;
+                return true;
+            }
+        case 4:
+            if (type != ArmorType::BOOTS) {
+                std::cout << "Armor type does not match boots slot!" << std::endl;
+                return false;
+            }else {
+                armorSlots[ArmorType::BOOTS] = arm;
+                return true;
+            }
+        default:
+            return false;
     }
 }
 
 // Equip item to the appropriate slot and add bonus stats to the entity
-bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& entity) {
+bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& entity, int index) {
     ItemType itemType = item->getItemType();
     switch (itemType) {
         case ItemType::WEAPON: {
             if (std::shared_ptr<weapon> weap = std::dynamic_pointer_cast<weapon>(item)) {
-                if (EquipWeapon(weap)) {
+                if (EquipWeapon(weap, index)) {
                     AddBonusStats(weap->getBonusStats(),entity);
                     //weap->DisplayWeaponInfo();
                     return true;
+                }else {
+                    return false;
                 }
             } else {
                 std::cout << "Failed to cast item to weapon!" << std::endl;
@@ -54,10 +90,12 @@ bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& 
         }
         case ItemType::ARMOR: {
             if (std::shared_ptr<armor> arm = std::dynamic_pointer_cast<armor>(item)) {
-                 if(EquipArmor(arm)) {
+                 if(EquipArmor(arm, index)) {
                      AddBonusStats(arm->getBonusStats(),entity);
                      //arm->DisplayArmorInfo();
                      return true;
+                 }else {
+                     return false;
                  }
             } else {
                 std::cout << "Failed to cast item to armor!" << std::endl;

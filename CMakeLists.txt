@@ -108,6 +108,7 @@ add_executable(main src/main.cpp
         src/entities/projectile/projectileEntity.h
         src/handlers/eventHandler.cpp
         src/handlers/eventHandler.h
+        src/UI/helpers/mouseContainer.h
 )
 
 # Link SFML libraries

@@ -12,6 +12,7 @@
 #include "TGUI/Widgets/Label.hpp"
 #include "MainGameHUDWidgets/playerEquipmentWidget.h"
 #include "MainGameHUDWidgets/playerInventoryWidget.h"
+#include "helpers/mouseContainer.h"
 
 class playerEquipmentWidget;
 class playerStats;
@@ -38,6 +39,10 @@ public:
     mainGameHUD() = default;
     ~mainGameHUD() = default;
 
+    MouseContainer Mouse;
+
+    player* HolderPlayer;
+
 
     void CleanUp();
 
@@ -45,9 +50,13 @@ public:
 
     void initializeDebugButtons(tgui::Gui& gui, UIManager* uiManager, player& player);
 
-    void UpdateUI(const player& p);
+    void UpdateUI(player& p);
 
     void UpdateTextSizes(float width, float height);
+
+    void SetHolderPlayer(player& p) {
+        HolderPlayer = &p;
+    }
 
 };
 

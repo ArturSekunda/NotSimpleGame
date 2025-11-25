@@ -40,6 +40,10 @@ public:
         return DebuggingWindow->getDebugHandlerInstance().getWantToShowCollisionBoxes();
     }
 
+    void setHolderPlayerForHUD(player& p) {
+        MainGameHUD->SetHolderPlayer(p);
+    }
+
     void CreateDebugWindow(tgui::Gui& gui, player& player);
 
     void DestroyDebugWindow();

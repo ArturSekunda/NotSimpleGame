@@ -4,6 +4,7 @@
 #include "managers/UIManager.h"
 #include "MainGameHUDWidgets/playerEquipmentWidget.h"
 
+
 void mainGameHUD::CleanUp() {
     {
         ProgressBars.reset();
@@ -12,6 +13,7 @@ void mainGameHUD::CleanUp() {
         PlayerStats.reset();
         EquipmentWidget.reset();
         InventoryWidget.reset();
+        Mouse.Destroy();
 
         DebugButtonForWindow = nullptr;
     }
@@ -32,6 +34,9 @@ void mainGameHUD::createHUD(tgui::Gui &gui) {
     PlayerStats->initializeLabels(PanelsLayouts->Layouts["GridStats"]->cast<tgui::Grid>());
     EquipmentWidget->initializeIcons(PanelsLayouts->Panels["S_EquipmentPanel"]->cast<tgui::Panel>());
     InventoryWidget->initializeIcons(PanelsLayouts->Panels["S_InventoryPanel"]->cast<tgui::Panel>());
+    Mouse.Initialize(PanelsLayouts->Panels["MainPanel"]->cast<tgui::Panel>());
+    InventoryWidget->UIInventory(HolderPlayer->getInventory(), Mouse);
+    EquipmentWidget->UIEquipment(HolderPlayer->getEquipment(), *HolderPlayer, Mouse);
 
 
 }
@@ -57,14 +62,13 @@ void mainGameHUD::initializeDebugButtons(tgui::Gui &gui, UIManager* uiManager, p
 }
 
 
-void mainGameHUD::UpdateUI(const player &p) {
+void mainGameHUD::UpdateUI(player &p) {
+    Mouse.UpdatePosition();
     PlayerNameLevel->UpdateLabels(p.getPlayerName(), p.getLevel());
     ProgressBars->UpdateBars(p);
     PlayerStats->UpdateLabels(p.getStats());
-    InventoryWidget->UpdateInventory(p.getInventory());
-
-
-
+    InventoryWidget->UpdateUISlots(p.getInventory());
+    EquipmentWidget->UpdateUISlots(p.getEquipment().getArmorSlots(), p.getEquipment().getWeaponSlot());
 }
 
 

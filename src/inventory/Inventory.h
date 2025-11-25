@@ -17,8 +17,9 @@ class Inventory {
     std::array<slot, 16> Slots;
 public:
     bool AddItem(const std::shared_ptr<itemBase>& item, int index);
-    std::shared_ptr<itemBase> RemoveItemToMouse(int index);
-    bool DeleteItem(int index);
+    bool RemoveItem(int index);
+
+    std::shared_ptr<itemBase> getItemFromSlot(int index);
 
     void printInventory();
 

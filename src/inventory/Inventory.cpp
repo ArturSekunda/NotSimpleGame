@@ -19,6 +19,27 @@ bool Inventory::AddItem(const std::shared_ptr<itemBase> &item, int index) {
     }
 }
 
+bool Inventory::RemoveItem(int index) {
+    if (Slots[index].isOccupied == true) {
+        Slots[index].isOccupied = false;
+        Slots[index].item = nullptr;
+        return true;
+    }else {
+        std::cerr << "Slot " << index << " is already empty.\n";
+        return false;
+    }
+}
+
+std::shared_ptr<itemBase>  Inventory::getItemFromSlot(int index) {
+    if (index < 0 || index >= Slots.size()) {
+        return nullptr;
+    }
+    if (Slots[index].isOccupied) {
+        return Slots[index].item;
+    }
+    return nullptr;
+}
+
 void Inventory::printInventory() {
     for (const auto& newclmap: Slots) {
         if (newclmap.isOccupied && newclmap.item) {

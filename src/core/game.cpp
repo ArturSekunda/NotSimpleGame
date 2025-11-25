@@ -23,6 +23,8 @@ void game::initializeEntities() {
         throw std::runtime_error("Failed to create player instance.");
     }
 
+    UIManagerInstance->setHolderPlayerForHUD(getPlayerPtr());
+
     for (int i = 0; i <= 1; i++) {
         auto enemy = std::make_unique<basicEnemy>(i, getPlayerPtr().getLevel());
 
@@ -63,6 +65,9 @@ void game::Updater() {
         }
     }
 
+    // Update UI
+    UIManagerInstance->UpdateAllUI(getPlayerPtr(), DeltaTime);
+
     // Collision Detection
     std::vector<std::string> collidingEnemies = collisionHandler::getInstance()
         .checkAllCollisions(getPlayerShape(), entityList);
@@ -86,8 +91,6 @@ void game::Updater() {
             }
         }
     }
-    // Update UI
-    UIManagerInstance->UpdateAllUI(getPlayerPtr(), DeltaTime);
 
     inputManager::getInstance().isMouseButtonPressed(getPlayerShape().getPosition(), projectiles);
     projectileEntity::updateProjectiles(DeltaTime, projectiles);

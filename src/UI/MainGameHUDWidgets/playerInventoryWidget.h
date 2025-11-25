@@ -1,9 +1,13 @@
 #ifndef NOTSIMPLEGAME_PLAYERINVENTORYWIDGET_H
 #define NOTSIMPLEGAME_PLAYERINVENTORYWIDGET_H
+#include <utility>
+
 #include "inventory/Inventory.h"
 #include "items/itemBase.h"
 #include "TGUI/Widgets/Panel.hpp"
 #include "TGUI/Widgets/Picture.hpp"
+
+struct MouseContainer;
 
 struct UISlot {
     tgui::Picture::Ptr icon;
@@ -27,6 +31,7 @@ struct UISlot {
         if (!icon) {
             throw std::runtime_error("Failed to create inventory slot icon");
         }
+
         icon->setSize("20%", "20%");
         icon->setPosition(
             (std::to_string(7 + index % 4 * 20) + "%").data(),
@@ -35,25 +40,24 @@ struct UISlot {
         parentPanel->add(icon);
         cachedTexturePath = "../src/core/assets/equipment/empty_slot.png";
     }
-    void OnClick(sf::Vector2i mousePos, Inventory& inventoryPlayer) {
-        icon->onClick([inventoryPlayer, mousePos,this]() {
-            if (cachedTexturePath == "../src/core/assets/equipment/empty_slot.png") {
-                std::cout << "Clicked on empty slot at index " << slotIndex << std::endl;
-                return;
-            }
-        });
-    }
 };
 
 class playerInventoryWidget {
     std::array<UISlot,16> inventoryUISlots;
 
+
 public:
     void initializeIcons(const tgui::Panel::Ptr& parentPanel);
 
-    void UpdateInventory(Inventory& inventoryPlayer);
+    void UIInventory(Inventory &inventoryPlayer, MouseContainer &mouse_container);
 
-    void OnClickItemSlot(Inventory& inventoryPlayer);
+    void UpdateUISlots(Inventory &inventoryPlayer) {
+        for (auto& UISlot: inventoryUISlots) {
+            UISlot.Update(inventoryPlayer);
+        }
+    }
+
+
 };
 
 

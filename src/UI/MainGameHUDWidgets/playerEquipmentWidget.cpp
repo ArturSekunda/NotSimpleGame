@@ -1,51 +1,45 @@
 #include "playerEquipmentWidget.h"
 
+#include "entities/baseEntity.h"
+#include "inventory/playerEquipment.h"
+
 
 void playerEquipmentWidget::initializeIcons(const tgui::Panel::Ptr& parentPanel) {
-    weaponIcon = tgui::Picture::create("../src/core/assets/equipment/empty_slot.png");
-    HelmetIcon = tgui::Picture::create("../src/core/assets/equipment/empty_slot.png");
-    ChestplateIcon = tgui::Picture::create("../src/core/assets/equipment/empty_slot.png");
-    LeggingsIcon = tgui::Picture::create("../src/core/assets/equipment/empty_slot.png");
-    BootsIcon = tgui::Picture::create("../src/core/assets/equipment/empty_slot.png");
-
-    if (!weaponIcon || !HelmetIcon || !ChestplateIcon || !LeggingsIcon || !BootsIcon) {
-        throw std::runtime_error("Failed to create equipment icons");
+    for (int i = 0; i < 5; ++i) {
+        equipmentUISlots[i].Initialize(parentPanel, i);
+        equipmentUISlots[i].icon->setSize("20%", "20%");
     }
+    equipmentUISlots[0].icon->setPosition("5%", "1%");
+    equipmentUISlots[1].icon->setPosition("75%", "1%");
+    equipmentUISlots[2].icon->setPosition("75%", "22%");
+    equipmentUISlots[3].icon->setPosition("75%", "43%");
+    equipmentUISlots[4].icon->setPosition("75%", "64%");
 
-    EquipmentIcons = {
-        weaponIcon,
-        HelmetIcon,
-        ChestplateIcon,
-        LeggingsIcon,
-        BootsIcon
-    };
-
-
-    int i = 0;
-    for (auto& newclmap: EquipmentIcons) {
-        newclmap->setSize("20%","20%");
-        newclmap->onClick([i](){
-            std::cout << i << std::endl;
-        });
-        i++;
-    }
-
-    weaponIcon->setPosition("5%", "1%");
-    HelmetIcon->setPosition("75%", "1%");
-    ChestplateIcon->setPosition("75%", "22%");
-    LeggingsIcon->setPosition("75%", "43%");
-    BootsIcon->setPosition("75%", "64%");
-
-    for (auto& newclmap: EquipmentIcons) {
-
-        parentPanel->add(newclmap);
-    }
 }
 
-void playerEquipmentWidget::UpdateEquipment(const std::shared_ptr<weapon> &weap, const std::shared_ptr<armor> &helmet,
-    const std::shared_ptr<armor> &chestplate, const std::shared_ptr<armor> &leggings,
-    const std::shared_ptr<armor> &boots) {
+void playerEquipmentWidget::UIEquipment(playerEquipment &E_Player,baseEntity& entity, MouseContainer &mouse_container) {
+        for (auto& UISlot: equipmentUISlots) {
+            UISlot.icon->onClick([&mouse_container, &UISlot, &entity, &E_Player]() {
+                auto index = UISlot.slotIndex;
+                if (mouse_container.itemPointer == nullptr && E_Player.getItemFromSlot(index) != nullptr) {
+                    mouse_container.holdItem(E_Player.getItemFromSlot(index));
+                    E_Player.RemoveItem(index);
+                    return;
+                }
+                if (mouse_container.itemPointer != nullptr && E_Player.getItemFromSlot(index) == nullptr) {
+                    if (E_Player.EquipItem(mouse_container.itemPointer,entity, index)) {
+                        mouse_container.Clear();
+                    }else {
+                        std::cout << "Failed to equip item to slot " << index << std::endl;
+                    }
+                    return;
+                }
+            });
+        }
+}
 
-
-
+void playerEquipmentWidget::UpdateUISlots(std::map<ArmorType, std::shared_ptr<armor>>& armorSlots,const std::shared_ptr<weapon>& weap) {
+    for (auto newclmap: equipmentUISlots) {
+        newclmap.Update(armorSlots, weap);
+    }
 }

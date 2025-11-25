@@ -8,6 +8,9 @@ public:
     playerEquipment() = default;
     ~playerEquipment() override = default;
 
+    std::shared_ptr<itemBase> getItemFromSlot(int index);
+    void RemoveItem(int index);
+
 };
 
 

@@ -19,11 +19,19 @@ public:
     virtual ~baseEquipment() = default;
 
 
-    bool EquipWeapon(const std::shared_ptr<weapon> &weap);
-    bool EquipArmor(std::shared_ptr<armor> arm);
-    bool EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& entity);
+    bool EquipWeapon(const std::shared_ptr<weapon> &weap, int index);
+    bool EquipArmor(std::shared_ptr<armor> arm, int index);
+    bool EquipItem(const std::shared_ptr<itemBase> &item, baseEntity &entity, int index);
 
     static void AddBonusStats(const ItemBonusStats &stats,baseEntity& entity);
+
+    std::map<ArmorType, std::shared_ptr<armor>>& getArmorSlots() {
+        return armorSlots;
+    }
+
+    std::shared_ptr<weapon> getWeaponSlot() {
+        return weaponSlot;
+    }
 
 
 
