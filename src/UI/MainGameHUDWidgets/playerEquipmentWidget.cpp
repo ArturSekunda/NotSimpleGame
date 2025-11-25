@@ -20,14 +20,17 @@ void playerEquipmentWidget::initializeIcons(const tgui::Panel::Ptr& parentPanel)
 void playerEquipmentWidget::UIEquipment(playerEquipment &E_Player,baseEntity& entity, MouseContainer &mouse_container) {
         for (auto& UISlot: equipmentUISlots) {
             UISlot.icon->onClick([&mouse_container, &UISlot, &entity, &E_Player]() {
+
                 auto index = UISlot.slotIndex;
                 if (mouse_container.itemPointer == nullptr && E_Player.getItemFromSlot(index) != nullptr) {
                     mouse_container.holdItem(E_Player.getItemFromSlot(index));
+                    E_Player.RemoveItemStats(index,entity.getStats());
                     E_Player.RemoveItem(index);
                     return;
                 }
                 if (mouse_container.itemPointer != nullptr && E_Player.getItemFromSlot(index) == nullptr) {
                     if (E_Player.EquipItem(mouse_container.itemPointer,entity, index)) {
+
                         mouse_container.Clear();
                     }else {
                         std::cout << "Failed to equip item to slot " << index << std::endl;
@@ -39,7 +42,7 @@ void playerEquipmentWidget::UIEquipment(playerEquipment &E_Player,baseEntity& en
 }
 
 void playerEquipmentWidget::UpdateUISlots(std::map<ArmorType, std::shared_ptr<armor>>& armorSlots,const std::shared_ptr<weapon>& weap) {
-    for (auto newclmap: equipmentUISlots) {
+    for (auto& newclmap: equipmentUISlots) {
         newclmap.Update(armorSlots, weap);
     }
 }

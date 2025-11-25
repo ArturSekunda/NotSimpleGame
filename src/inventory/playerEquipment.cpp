@@ -1,5 +1,6 @@
 #include "playerEquipment.h"
 
+
 std::shared_ptr<itemBase> playerEquipment::getItemFromSlot(int index) {
     switch (index) {
         case 0:
@@ -20,18 +21,23 @@ std::shared_ptr<itemBase> playerEquipment::getItemFromSlot(int index) {
 void playerEquipment::RemoveItem(int index) {
     switch (index) {
         case 0:
+            std::cout << "Removing weapon from slot" << std::endl;
             weaponSlot = nullptr;
             break;
         case 1:
+            std::cout << "Removing HELMET from slot" << std::endl;
             armorSlots[ArmorType::HELMET] = nullptr;
             break;
         case 2:
+            std::cout << "Removing CHESTPLATE from slot" << std::endl;
             armorSlots[ArmorType::CHESTPLATE] = nullptr;
             break;
         case 3:
+            std::cout << "Removing LEGGINGS from slot" << std::endl;
             armorSlots[ArmorType::LEGGINGS] = nullptr;
             break;
         case 4:
+            std::cout << "Removing BOOTS from slot" << std::endl;
             armorSlots[ArmorType::BOOTS] = nullptr;
             break;
         default:
