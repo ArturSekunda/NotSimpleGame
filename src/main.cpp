@@ -26,7 +26,7 @@ int main() {
     gameInstance->getUIManager()->UpdateTextSizes(window.getSize().x, window.getSize().y);
 
 
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(180);
 
     // Camera
     sf::View CameraView = window.getDefaultView();

@@ -2,7 +2,7 @@
 #define NOTSIMPLEGAME_ENTITYSTRUCTS_H
 
 #include "entityEnums.h"
-
+#include <vector>
 struct baseStats{
 
     int strength = 0;
@@ -25,6 +25,16 @@ struct baseStats{
     void setLuck(int l) { luck = l; }
     void setCharisma(int c) { charisma = c; }
     void setVitality(int v) { vitality = v; }
+
+    void substractAllStats(const std::vector<int> &stats) {
+        strength -= stats[0];
+        dexterity -= stats[1];
+        intelligence -= stats[2];
+        endurance -= stats[3];
+        luck -= stats[4];
+        charisma -= stats[5];
+        vitality -= stats[6];
+    }
 
     void addStrength(int s) {
         if (points <= 0) {

@@ -29,6 +29,10 @@ struct ItemBonusStats {
     int charisma = 0;
     int vitality = 0;
 
+    std::vector<int> toVector() const {
+        return {strength, dexterity, intelligence, endurance, luck, charisma, vitality};
+    }
+
 };
 
 struct EnchantmentWeapon {

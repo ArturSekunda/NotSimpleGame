@@ -25,6 +25,7 @@ bool baseEquipment::EquipWeapon(const std::shared_ptr<weapon>& weap, int index) 
         return false;
     }
     weaponSlot = weap;
+    Weapon_cachedBonusStats = weap->getBonusStats();
     return true;
 }
 
@@ -39,6 +40,7 @@ bool baseEquipment::EquipArmor(std::shared_ptr<armor> arm, int index) {
                 return false;
             }else {
                 armorSlots[ArmorType::HELMET] = arm;
+                Helmet_cachedBonusStats = arm->getBonusStats();
                 return true;
             }
         case 2:
@@ -47,6 +49,7 @@ bool baseEquipment::EquipArmor(std::shared_ptr<armor> arm, int index) {
                 return false;
             }else {
                 armorSlots[ArmorType::CHESTPLATE] = arm;
+                Chestplate_cachedBonusStats = arm->getBonusStats();
                 return true;
             }
         case 3:
@@ -55,6 +58,7 @@ bool baseEquipment::EquipArmor(std::shared_ptr<armor> arm, int index) {
                 return false;
             }else {
                 armorSlots[ArmorType::LEGGINGS] = arm;
+                Leggings_cachedBonusStats = arm->getBonusStats();
                 return true;
             }
         case 4:
@@ -63,7 +67,7 @@ bool baseEquipment::EquipArmor(std::shared_ptr<armor> arm, int index) {
                 return false;
             }else {
                 armorSlots[ArmorType::BOOTS] = arm;
-
+                Boots_cachedBonusStats = arm->getBonusStats();
                 return true;
             }
         default:
@@ -109,94 +113,33 @@ bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& 
     }
 }
 
-// Add bonus stats to the entity based on its type
-void baseEquipment::AddBonusStats(const ItemBonusStats &stats,baseEntity& entity) {
+void baseEquipment::AddBonusStats(const ItemBonusStats &stats, baseEntity& entity) {
     switch (entity.getEntityID().type) {
         case EntityType::PLAYER: {
             auto& p = dynamic_cast<player&>(entity);
-            if (weaponSlot) {
-                p.getStats().strength += stats.strength;
-                p.getStats().dexterity += stats.dexterity;
-                p.getStats().charisma += stats.charisma;
-                p.getStats().endurance += stats.endurance;
-                p.getStats().intelligence += stats.intelligence;
-                p.getStats().luck += stats.luck;
-                p.getStats().vitality += stats.vitality;
-                Weapon_cachedBonusStats = stats;
-            }
-
-            for (const auto& [type, armor] : armorSlots) {
-                if (armor) {
-                    p.getStats().strength += stats.strength;
-                    p.getStats().dexterity += stats.dexterity;
-                    p.getStats().charisma += stats.charisma;
-                    p.getStats().endurance += stats.endurance;
-                    p.getStats().intelligence += stats.intelligence;
-                    p.getStats().luck += stats.luck;
-                    p.getStats().vitality += stats.vitality;
-                    switch (type) {
-                        case ArmorType::HELMET:
-                            Helmet_cachedBonusStats = armor->getBonusStats();
-                            break;
-                        case ArmorType::CHESTPLATE:
-                            Chestplate_cachedBonusStats = armor->getBonusStats();
-                            break;
-                        case ArmorType::LEGGINGS:
-                            Leggings_cachedBonusStats = armor->getBonusStats();
-                            break;
-                        case ArmorType::BOOTS:
-                            Boots_cachedBonusStats = armor->getBonusStats();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
+            p.getStats().strength += stats.strength;
+            p.getStats().dexterity += stats.dexterity;
+            p.getStats().charisma += stats.charisma;
+            p.getStats().endurance += stats.endurance;
+            p.getStats().intelligence += stats.intelligence;
+            p.getStats().luck += stats.luck;
+            p.getStats().vitality += stats.vitality;
             break;
         }
         case EntityType::BASIC_ENEMY: {
             auto& enemy = dynamic_cast<basicEnemy&>(entity);
-            if (weaponSlot) {
-                enemy.getStats().strength += stats.strength;
-                enemy.getStats().dexterity += stats.dexterity;
-                enemy.getStats().charisma += stats.charisma;
-                enemy.getStats().endurance += stats.endurance;
-                enemy.getStats().intelligence += stats.intelligence;
-                enemy.getStats().luck += stats.luck;
-                enemy.getStats().vitality += stats.vitality;
-                Weapon_cachedBonusStats = weaponSlot->getBonusStats();
-            }
+            enemy.getStats().strength += stats.strength;
+            enemy.getStats().dexterity += stats.dexterity;
+            enemy.getStats().charisma += stats.charisma;
+            enemy.getStats().endurance += stats.endurance;
+            enemy.getStats().intelligence += stats.intelligence;
+            enemy.getStats().luck += stats.luck;
+            enemy.getStats().vitality += stats.vitality;
+            break;
+        }
+        default:
+            std::cout << "Entity type not supported for weapon bonus stats!" << std::endl;
+            break;
+    }
+}
 
-            for (const auto& [type, armor] : armorSlots) {
-                if (armor) {
-                    enemy.getStats().strength += stats.strength;
-                    enemy.getStats().dexterity += stats.dexterity;
-                    enemy.getStats().charisma += stats.charisma;
-                    enemy.getStats().endurance += stats.endurance;
-                    enemy.getStats().intelligence += stats.intelligence;
-                    enemy.getStats().luck += stats.luck;
-                    enemy.getStats().vitality += stats.vitality;
-                    switch (type) {
-                        case ArmorType::HELMET:
-                            Helmet_cachedBonusStats = armor->getBonusStats();
-                            break;
-                        case ArmorType::CHESTPLATE:
-                            Chestplate_cachedBonusStats = armor->getBonusStats();
-                            break;
-                        case ArmorType::LEGGINGS:
-                            Leggings_cachedBonusStats = armor->getBonusStats();
-                            break;
-                        case ArmorType::BOOTS:
-                            Boots_cachedBonusStats = armor->getBonusStats();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
-                default:
-                std::cout << "Entity type not supported for bonus stats!" << std::endl;
-                break;
-            }
-        }

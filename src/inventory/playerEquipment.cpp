@@ -44,3 +44,41 @@ void playerEquipment::RemoveItem(int index) {
             break;
     }
 }
+
+void playerEquipment::RemoveItemStats(int index, baseStats &P_stats) {
+    switch (index) {
+        case 0:
+            if (weaponSlot) {
+                P_stats.substractAllStats(Weapon_cachedBonusStats.toVector());
+                Weapon_cachedBonusStats = {0,0,0,0,0,0,0};
+            }
+            break;
+        case 1:
+            if (armorSlots[ArmorType::HELMET]) {
+                P_stats.substractAllStats(Helmet_cachedBonusStats.toVector());
+                Helmet_cachedBonusStats = {0,0,0,0,0,0,0};
+            }
+            break;
+        case 2:
+            if (armorSlots[ArmorType::CHESTPLATE]) {
+                P_stats.substractAllStats(Chestplate_cachedBonusStats.toVector());
+                Chestplate_cachedBonusStats = {0,0,0,0,0,0,0};
+            }
+            break;
+        case 3:
+            if (armorSlots[ArmorType::LEGGINGS]) {
+                P_stats.substractAllStats(Leggings_cachedBonusStats.toVector());
+                Leggings_cachedBonusStats = {0,0,0,0,0,0,0};
+            }
+            break;
+        case 4:
+            if (armorSlots[ArmorType::BOOTS]) {
+                P_stats.substractAllStats(Boots_cachedBonusStats.toVector());
+                Boots_cachedBonusStats = {0,0,0,0,0,0,0};
+            }
+            break;
+        default:
+            std::cout << "Invalid index for removing item stats!" << std::endl;
+            break;
+    }
+}

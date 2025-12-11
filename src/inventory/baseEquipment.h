@@ -15,6 +15,7 @@ protected:
     std::shared_ptr<weapon> weaponSlot;
     std::map<ArmorType, std::shared_ptr<armor>> armorSlots;
 
+
     ItemBonusStats Weapon_cachedBonusStats{
         0, 0, 0, 0, 0, 0, 0
         };
@@ -36,10 +37,12 @@ public:
 
 
     bool EquipWeapon(const std::shared_ptr<weapon> &weap, int index);
+
     bool EquipArmor(std::shared_ptr<armor> arm, int index);
+
     bool EquipItem(const std::shared_ptr<itemBase> &item, baseEntity &entity, int index);
 
-    void AddBonusStats(const ItemBonusStats &stats,baseEntity& entity);
+    void AddBonusStats(const ItemBonusStats &stats, baseEntity &entity);
 
     std::map<ArmorType, std::shared_ptr<armor>>& getArmorSlots() {
         return armorSlots;
