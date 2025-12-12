@@ -21,7 +21,10 @@ public:
     ~weapon() override = default;
 
     // OverLoads
-   static weapon CreateNewWeapon(int playerLevel,int itemID);
+    static weapon CreateNewWeapon(int playerLevel,int itemID);
+
+    // Use this for player when he's playing for the first time
+    static weapon CreateNewWeapon(int playerLevel,int itemID, Rarity rarity, WeaponType type, DamageType damageType, MaterialTypeOfItem material);
 
     std::vector<int> GetWeaponEnchantProbabilities(Rarity RR);
 

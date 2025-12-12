@@ -2,6 +2,7 @@
 #define NOTSIMPLEGAME_ENTITYSTRUCTS_H
 
 #include "entityEnums.h"
+#include <string>
 #include <vector>
 struct baseStats{
 
@@ -12,6 +13,15 @@ struct baseStats{
     int luck = 0;
     int charisma = 0;
     int vitality = 0;
+
+    // Cache
+    int CachedStrength = 0;
+    int CachedDexterity = 0;
+    int CachedIntelligence = 0;
+    int CachedEndurance = 0;
+    int CachedLuck = 0;
+    int CachedCharisma = 0;
+    int CachedVitality = 0;
 
     int points = 0;
 
@@ -26,7 +36,7 @@ struct baseStats{
     void setCharisma(int c) { charisma = c; }
     void setVitality(int v) { vitality = v; }
 
-    void substractAllStats(const std::vector<int> &stats) {
+    void subtractStats(const std::vector<int> &stats) {
         strength -= stats[0];
         dexterity -= stats[1];
         intelligence -= stats[2];
@@ -42,6 +52,7 @@ struct baseStats{
         }
         strength += s;
         points -= s;
+
     }
     void addDexterity(int d) {
         if (points <= 0) {
@@ -49,6 +60,7 @@ struct baseStats{
         }
         dexterity += d;
         points -= d;
+
     }
     void addIntelligence(int i) {
         if (points <= 0) {
@@ -56,6 +68,7 @@ struct baseStats{
         }
         intelligence += i;
         points -= i;
+
     }
     void addEndurance(int e) {
         if (points <= 0) {
@@ -63,6 +76,7 @@ struct baseStats{
         }
         endurance += e;
         points -= e;
+
     }
     void addLuck(int l) {
         if (points <= 0) {
@@ -70,6 +84,7 @@ struct baseStats{
         }
         luck += l;
         points -= l;
+
     }
     void addCharisma(int c) {
         if (points <= 0) {
@@ -86,11 +101,10 @@ struct baseStats{
         points -= v;
     }
 
-
 };
 
 struct EntityID {
-    EntityType type;  // PLAYER, BASIC_ENEMY, GOBLIN, NPC...
+    EntityType type;  // PLAYER, BASIC_ENEMY, GOBLIN, ETC...
     int localID;
 
     std::string toString() const {

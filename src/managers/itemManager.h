@@ -25,6 +25,8 @@ public:
     void CreateWeaponForEnemy(basicEnemy& enemy);
     void CreateArmorForEnemy(basicEnemy& enemy);
 
+    void CreateFirstWeaponForPlayer(player& player);
+
     void AddItemToDatabase(const std::shared_ptr<itemBase>& item) {
         ItemDatabase.push_back(item);
     }

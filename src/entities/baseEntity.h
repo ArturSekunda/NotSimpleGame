@@ -25,6 +25,20 @@ class baseEntity {
     float speed;
     bool isAlive;
 
+    float chanceToDodge;
+
+    float baseHP;
+    float baseSpeed;
+    float baseDefense;
+
+    float cachedArmorDefense = 0.0f;
+    float cachedArmorHealth = 0.0f;
+    float cachedArmorMana = 0.0f;
+
+    float equippedArmorDefense = 0.0f;
+    float equippedArmorHealth = 0.0f;
+    float equippedArmorMana = 0.0f;
+
     int level;
 
     std::shared_ptr<sf::Shape> entityShape; // Pointer to a SFML shape representing the entity
@@ -101,22 +115,21 @@ public: // Section for setters
 
 public: // Combat
 
-    void takeDamage(float dmg) {
-        if (dmg < 0) return; // Ignore negative damage
-        health -= dmg;
-        if (health <= 0) {
-            health = 0;
-            isAlive = false;
-        }
-    }
+    void takeDamage(float dmg);
 
-    void heal(float amount) {
-        if (amount < 0) return; // Ignore negative healing
-        health += amount;
-        if (health > maxHealth) {
-            health = maxHealth;
-        }
-    }
+public: // Utility
+
+    void setEquippedArmorDefense(float def) { equippedArmorDefense = def; }
+    void setEquippedArmorHealth(float hp) { equippedArmorHealth = hp; }
+    void setEquippedArmorMana(float mp) { equippedArmorMana = mp; }
+
+    void addEquippedArmorDefense(float def) { equippedArmorDefense += def; }
+    void addEquippedArmorHealth(float hp) { equippedArmorHealth += hp; }
+    void addEquippedArmorMana(float mp) { equippedArmorMana += mp; }
+
+    void removeEquippedArmorDefense(float def) { equippedArmorDefense -= def; }
+    void removeEquippedArmorHealth(float hp) { equippedArmorHealth -= hp; }
+    void removeEquippedArmorMana(float mp) { equippedArmorMana -= mp; }
 };
 
 

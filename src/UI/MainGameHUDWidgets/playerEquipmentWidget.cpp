@@ -24,7 +24,7 @@ void playerEquipmentWidget::UIEquipment(playerEquipment &E_Player,baseEntity& en
                 auto index = UISlot.slotIndex;
                 if (mouse_container.itemPointer == nullptr && E_Player.getItemFromSlot(index) != nullptr) {
                     mouse_container.holdItem(E_Player.getItemFromSlot(index));
-                    E_Player.RemoveItemStats(index,entity.getStats());
+                    E_Player.RemoveItemStats(index,entity.getStats(), entity);
                     E_Player.RemoveItem(index);
                     return;
                 }

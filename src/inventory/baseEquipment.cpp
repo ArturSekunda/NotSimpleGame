@@ -76,16 +76,15 @@ bool baseEquipment::EquipArmor(std::shared_ptr<armor> arm, int index) {
 }
 
 // Equip item to the appropriate slot and add bonus stats to the entity
-bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& entity, int index) {
+bool baseEquipment:: EquipItem(const std::shared_ptr<itemBase>& item, baseEntity& entity, int index) {
     ItemType itemType = item->getItemType();
     switch (itemType) {
         case ItemType::WEAPON: {
             if (std::shared_ptr<weapon> weap = std::dynamic_pointer_cast<weapon>(item)) {
                 if (EquipWeapon(weap, index)) {
-                    AddBonusStats(weap->getBonusStats(),entity);
-                    //weap->DisplayWeaponInfo();
+                    AddBonusStats(weap->getBonusStats(), entity);
                     return true;
-                }else {
+                } else {
                     return false;
                 }
             } else {
@@ -94,14 +93,18 @@ bool baseEquipment::EquipItem(const std::shared_ptr<itemBase>& item,baseEntity& 
             }
         }
         case ItemType::ARMOR: {
-            if (std::shared_ptr<armor> arm = std::dynamic_pointer_cast<armor>(item)) {
-                 if(EquipArmor(arm, index)) {
-                     AddBonusStats(arm->getBonusStats(),entity);
-                     //arm->DisplayArmorInfo();
-                     return true;
-                 }else {
-                     return false;
-                 }
+            if (std::shared_ptr<armor> arm = std:: dynamic_pointer_cast<armor>(item)) {
+                if (EquipArmor(arm, index)) {
+                    AddBonusStats(arm->getBonusStats(), entity);
+
+                    entity.addEquippedArmorDefense(arm->getArmorDefense());
+                    entity.addEquippedArmorHealth(arm->getArmorHealth());
+                    entity.addEquippedArmorMana(arm->getArmorMana());
+
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 std::cout << "Failed to cast item to armor!" << std::endl;
                 return false;

@@ -2,6 +2,7 @@
 
 #include "entities/baseEntity.h"
 #include "entities/enemies/basicEnemy.h"
+#include "entities/player/player.h"
 #include "inventory/baseEquipment.h"
 #include "inventory/enemyEquipment.h"
 #include "items/armor.h"
@@ -36,6 +37,17 @@ void itemManager::CreateArmorForEnemy(basicEnemy &enemy) {
     enemy.getEquipment().EquipItem(Chestplate, enemy, 2);
     enemy.getEquipment().EquipItem(Leggings, enemy, 3);
     enemy.getEquipment().EquipItem(Boots, enemy, 4);
+}
+
+void itemManager::CreateFirstWeaponForPlayer(player &player) {
+    std::shared_ptr<weapon> w = std::make_shared<weapon>(weapon::CreateNewWeapon(player.getLevel(), WeaponID, Rarity::COMMON, WeaponType::SWORD, DamageType::Holy, MaterialTypeOfItem::LEATHER));
+    WeaponID++;
+    if (w) {
+        AddItemToDatabase(w);
+        player.getEquipment().EquipItem(w, player, 0);
+    } else {
+        std::cout << "Failed to create first weapon for player.\n";
+    }
 }
 
 void itemManager::PrintItemDatabase() {

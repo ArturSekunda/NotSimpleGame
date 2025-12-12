@@ -2,14 +2,20 @@
 
 #include "baseEntity.h"
 
+#include "core/darkMath.h"
+
 
 baseEntity::baseEntity(int localID):
 health(100.0f),
 maxHealth(100.0f),
 mana(50),
 maxMana(50),
-defense(0.0f),
-speed(100.0f),
+defense(5.0f),
+speed(200.0f),
+baseHP(maxHealth),
+baseSpeed(speed),
+baseDefense(defense),
+chanceToDodge(0.0f),
 isAlive(true),
 entityShape(nullptr),
 collisionBox(nullptr),
@@ -25,6 +31,79 @@ void baseEntity::Update(float deltaTime) {
     if (health <= 0) {
         isAlive = false;
     }
+
+    bool vitalityChanged = (Stats.CachedVitality != Stats.vitality);
+    bool armorHealthChanged = (cachedArmorHealth != equippedArmorHealth);
+
+    if (vitalityChanged || armorHealthChanged) {
+        int vit = Stats.vitality;
+
+        float baseMaxHealth = baseHP * (1.0f + vit * 0.05f);
+
+        float newMaxHealth = baseMaxHealth + equippedArmorHealth;
+
+        if (health > newMaxHealth) {
+            health = newMaxHealth;
+        }
+
+        maxHealth = newMaxHealth;
+
+        Stats.CachedVitality = Stats.vitality;
+        cachedArmorHealth = equippedArmorHealth;
+    }
+
+    if (Stats. CachedStrength != Stats. strength) {
+        Stats.CachedStrength = Stats.strength;
+    }
+
+    if (Stats. CachedDexterity != Stats.dexterity) {
+        int dex = Stats. dexterity;
+        float newSpeed = baseSpeed * (1.0f + dex * 0.03f);
+        speed = newSpeed;
+        Stats. CachedDexterity = Stats.dexterity;
+    }
+
+    bool enduranceChanged = (Stats. CachedEndurance != Stats. endurance);
+    bool armorDefenseChanged = (cachedArmorDefense != equippedArmorDefense);
+
+    if (enduranceChanged || armorDefenseChanged) {
+        int end = Stats.endurance;
+
+        float baseDefenseFromEnd = baseDefense * (1.0f + end * 0.04f);
+
+        defense = baseDefenseFromEnd + equippedArmorDefense;
+
+        Stats.CachedEndurance = Stats.endurance;
+        cachedArmorDefense = equippedArmorDefense;
+    }
+
+    bool armorManaChanged = (cachedArmorMana != equippedArmorMana);
+
+    if (armorManaChanged) {
+        float baseMaxMana = 50.0f;
+        float newMaxMana = baseMaxMana + equippedArmorMana;
+
+        if (mana > static_cast<int>(newMaxMana)) {
+            mana = static_cast<int>(newMaxMana);
+        }
+
+        maxMana = static_cast<int>(newMaxMana);
+
+        cachedArmorMana = equippedArmorMana;
+    }
+
+    if (Stats.CachedIntelligence != Stats.intelligence) {
+        Stats.CachedIntelligence = Stats.intelligence;
+    }
+
+    if (Stats.CachedLuck != Stats.luck) {
+        Stats.CachedLuck = Stats.luck;
+    }
+
+    if (Stats.CachedCharisma != Stats.charisma) {
+        Stats.CachedCharisma = Stats. charisma;
+    }
+
 }
 
 // Method to get the global bounds of the entity's shape for collision detection
@@ -53,4 +132,18 @@ sf::RectangleShape baseEntity::createCollisionBox() const {
     Box.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
 
     return Box;
+}
+
+void baseEntity::takeDamage(float dmg) {
+    if ((dmg - (defense * 0.1f)) < 0) return;
+    float dodgeRoll = darkMath::getInstance().generateFloatNumber(0.0f, 1.0f);
+    if (dodgeRoll < chanceToDodge) {
+        // Dodged the attack
+        return;
+    }
+    health -= (dmg - (defense * 0.1f));
+    if (health <= 0) {
+        health = 0;
+        isAlive = false;
+    }
 }

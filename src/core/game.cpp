@@ -25,6 +25,8 @@ void game::initializeEntities() {
 
     UIManagerInstance->setHolderPlayerForHUD(getPlayerPtr());
 
+    itemManagerInstance->CreateFirstWeaponForPlayer(getPlayerPtr());
+
     for (int i = 0; i <= 1; i++) {
         auto enemy = std::make_unique<basicEnemy>(i, getPlayerPtr().getLevel());
 
@@ -82,9 +84,10 @@ void game::Updater() {
             auto enemy = dynamic_cast<basicEnemy*>(entity.get());
             if (enemy && bullet->getEntityBounds().intersects(entity->getEntityBounds())) {
                 //std::cout << "Projectile hit Enemy ID: " << entity->getEntityID().toString() << "\n";
-                enemy->setHealth(entity->getHealth()-20);
+                enemy->takeDamage(playerInstance->getEquipment().getWeaponSlot()->getDamage());
                 if (enemy->isDead(playerInstance->getInventory())) {
                     std::cout << "Enemy ID: " << entity->getEntityID().toString() << " is dead.\n";
+                    std::cout << "Player deals " << playerInstance->getEquipment().getWeaponSlot()->getDamage() << " damage.\n";
                     size_t index = &entity - &entityList[0];
                     decreaseEnemyFromList(index);
                 }
@@ -92,7 +95,10 @@ void game::Updater() {
         }
     }
 
-    inputManager::getInstance().isMouseButtonPressed(getPlayerShape().getPosition(), projectiles);
+    if (playerInstance->getEquipment().getWeaponSlot() != nullptr) {
+        inputManager::getInstance().isMouseButtonPressed(getPlayerShape().getPosition(), projectiles);
+    }
+
     projectileEntity::updateProjectiles(DeltaTime, projectiles);
     projectileEntity::cleanupProjectiles(projectiles);
 }

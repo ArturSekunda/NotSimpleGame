@@ -39,6 +39,36 @@ weapon weapon::CreateNewWeapon(int playerLevel, int itemID) {
     return newWeapon;
 }
 
+weapon weapon::CreateNewWeapon(int playerLevel, int itemID, Rarity rarity, WeaponType type, DamageType damageType,
+    MaterialTypeOfItem material) {
+
+    weapon newWeapon;
+
+    auto& EC = enumConversion::getInstance();
+
+    int WPrefix = darkMath::getInstance().UniformIntDistribution(0, static_cast<int>(EC.GetPrefix().size() - 1));
+
+    newWeapon.GenerateWeaponStats(playerLevel,rarity, type, damageType, material);
+
+
+    newWeapon.GenerateWeaponName(static_cast<Prefix>(WPrefix),rarity, type, damageType ,material);
+
+    auto probs = newWeapon.GetWeaponEnchantProbabilities(rarity);
+    newWeapon.GenerateEnchants(rarity, probs);
+
+    newWeapon.ApplyEnchantmentDamage();
+
+    newWeapon.GenerateBonusStats(rarity);
+
+    auto& ECT = enumConversionTextures::getInstance();
+    newWeapon.setTextureByPath(ECT.GetRarityTexturePaths().at(rarity));
+
+    newWeapon.setGenItemType(ItemType::WEAPON);
+    newWeapon.setId(itemID);
+
+    return newWeapon;
+}
+
 std::vector<int> weapon::GetWeaponEnchantProbabilities(Rarity RR) {
     switch (RR) {
         case Rarity::COMMON: return {45,25,15,10,5};

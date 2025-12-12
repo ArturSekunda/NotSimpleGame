@@ -14,7 +14,7 @@ public:
     std::shared_ptr<itemBase> getItemFromSlot(int index);
     void RemoveItem(int index);
 
-    void RemoveItemStats(int index,baseStats& P_stats);
+    void RemoveItemStats(int index, baseStats &P_stats, baseEntity &entity);
 
 
 };
