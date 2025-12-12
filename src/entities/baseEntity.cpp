@@ -135,13 +135,13 @@ sf::RectangleShape baseEntity::createCollisionBox() const {
 }
 
 void baseEntity::takeDamage(float dmg) {
-    if ((dmg - (defense * 0.1f)) < 0) return;
+    if ((dmg - (defense * 0.05f)) < 0) return;
     float dodgeRoll = darkMath::getInstance().generateFloatNumber(0.0f, 1.0f);
     if (dodgeRoll < chanceToDodge) {
         // Dodged the attack
         return;
     }
-    health -= (dmg - (defense * 0.1f));
+    health -= (dmg - (defense * 0.05f));
     if (health <= 0) {
         health = 0;
         isAlive = false;

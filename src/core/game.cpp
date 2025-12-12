@@ -84,12 +84,16 @@ void game::Updater() {
             auto enemy = dynamic_cast<basicEnemy*>(entity.get());
             if (enemy && bullet->getEntityBounds().intersects(entity->getEntityBounds())) {
                 //std::cout << "Projectile hit Enemy ID: " << entity->getEntityID().toString() << "\n";
-                enemy->takeDamage(playerInstance->getEquipment().getWeaponSlot()->getDamage());
-                if (enemy->isDead(playerInstance->getInventory())) {
-                    std::cout << "Enemy ID: " << entity->getEntityID().toString() << " is dead.\n";
+                if (enemy->DamageClock.getElapsedTime().asSeconds() >= 0.25f) {
+                    enemy->takeDamage(playerInstance->getEquipment().getWeaponSlot()->getDamage());
                     std::cout << "Player deals " << playerInstance->getEquipment().getWeaponSlot()->getDamage() << " damage.\n";
-                    size_t index = &entity - &entityList[0];
-                    decreaseEnemyFromList(index);
+                    enemy->DamageClock.restart();
+                    if (enemy->isDead(playerInstance->getInventory())) {
+                        std::cout << "Enemy ID: " << entity->getEntityID().toString() << " is dead.\n";
+                        size_t index = &entity - &entityList[0];
+                        decreaseEnemyFromList(index);
+                        break;
+                    }
                 }
             }
         }

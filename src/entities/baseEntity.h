@@ -6,6 +6,7 @@
 #include "helpers/entityStructs.h"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Shape.hpp"
+#include "SFML/System/Clock.hpp"
 
 struct baseStats;
 class SFML;
@@ -49,6 +50,8 @@ public: // Section for constructor and destructor
      explicit baseEntity(int localID);
 
     virtual ~baseEntity() = default;
+
+    sf::Clock DamageClock;
 
     // Method to update the entity's state
     virtual void Update(float deltaTime);
@@ -112,6 +115,7 @@ public: // Section for setters
 
     // Setters for stats
     void setDefense(float d) { defense = d; }
+
 
 public: // Combat
 
