@@ -1,72 +1,21 @@
-Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+MIT License
 
-Copyright (c) 2025 Artur Sekunda
+Copyright (c) 2025 Artur Patryk Sekunda
 
-================================================================================
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike
-4.0 International License.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-Full legal code: https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
-Human-readable summary: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-================================================================================
-YOU ARE FREE TO:
-================================================================================
-
-✓ Play and use the game
-✓ Modify the game and create mods
-✓ Share the game and your modifications
-✓ Accept donations for your mods or content
-✓ Collaborate and contribute to development
-
-================================================================================
-UNDER THESE CONDITIONS:
-================================================================================
-
-📝 Attribution
-   Give credit to Artur Sekunda and link to this license.
-
-💰 NonCommercial
-   You cannot sell the game or use it for commercial purposes.
-   Accepting donations is OK - selling is NOT.
-
-♻️ ShareAlike
-   Your mods and modifications must use the same CC BY-NC-SA 4.0 license.
-
-================================================================================
-WHAT "NON-COMMERCIAL" MEANS:
-================================================================================
-
-✗ You CANNOT sell the game or modified versions
-✗ You CANNOT use it in commercial products
-✗ You CANNOT charge for mods or add-ons
-✗ You CANNOT put it behind a paywall
-
-✓ You CAN accept voluntary donations
-✓ You CAN use it for educational purposes
-
-================================================================================
-THIRD-PARTY LIBRARIES:
-================================================================================
-
-This software uses third-party libraries (SFML, TGUI, nlohmann/json, SQLite)
-with their own permissive licenses that allow commercial use.
-
-See THIRD-PARTY-LICENSES.md for complete details.
-
-The CC BY-NC-SA 4.0 license applies only to the original game code and content,
-not to third-party libraries.
-
-================================================================================
-DISCLAIMER:
-================================================================================
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
-
-================================================================================
-
-For questions about this license or commercial use permissions:
-GitHub: https://github.com/ArturSekunda/NotSimpleGame
-
-Last updated: October 18, 2025
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
