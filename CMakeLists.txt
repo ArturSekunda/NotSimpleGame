@@ -4,7 +4,9 @@ project(NotSimpleGame LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(BUILD_SHARED_LIBS OFF)
 set(TGUI_BACKEND SFML_GRAPHICS)
+set(SFML_USE_STATIC_STD_LIBS ON)
 
 # Fetch SFML
 include(FetchContent)
@@ -20,13 +22,7 @@ FetchContent_Declare(TGUI
         GIT_SHALLOW ON
 )
 
-FetchContent_Declare(
-        json
-        GIT_REPOSITORY https://github.com/nlohmann/json.git
-        GIT_TAG v3.12.0
-)
-
-FetchContent_MakeAvailable(SFML TGUI json)
+FetchContent_MakeAvailable(SFML TGUI)
 
 # Create your executable
 add_executable(main src/main.cpp
@@ -111,9 +107,7 @@ add_executable(main src/main.cpp
         src/UI/helpers/mouseContainer.h
 )
 
-# Link SFML libraries
 target_link_libraries(main PRIVATE
-        nlohmann_json::nlohmann_json
         tgui
         sfml-graphics
         sfml-audio
@@ -124,15 +118,6 @@ target_link_libraries(main PRIVATE
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
-# Copy DLLs to output directory (Windows)
-if(WIN32)
-    add_custom_command(TARGET main POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE:sfml-network>
-            $<TARGET_FILE:sfml-graphics>
-            $<TARGET_FILE:sfml-audio>
-            $<TARGET_FILE:sfml-window>
-            $<TARGET_FILE:sfml-system>
-            $<TARGET_FILE:tgui>
-            $<TARGET_FILE_DIR:main>)
+if(WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    target_link_options(main PRIVATE -static)
 endif()

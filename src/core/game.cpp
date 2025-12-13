@@ -84,7 +84,7 @@ void game::Updater() {
             auto enemy = dynamic_cast<basicEnemy*>(entity.get());
             if (enemy && bullet->getEntityBounds().intersects(entity->getEntityBounds())) {
                 //std::cout << "Projectile hit Enemy ID: " << entity->getEntityID().toString() << "\n";
-                if (enemy->DamageClock.getElapsedTime().asSeconds() >= 0.25f) {
+                if (enemy->DamageClock.getElapsedTime().asSeconds() >= 0.25f && playerInstance->getEquipment().getWeaponSlot() != nullptr) {
                     enemy->takeDamage(playerInstance->getEquipment().getWeaponSlot()->getDamage());
                     std::cout << "Player deals " << playerInstance->getEquipment().getWeaponSlot()->getDamage() << " damage.\n";
                     enemy->DamageClock.restart();
@@ -99,8 +99,11 @@ void game::Updater() {
         }
     }
 
-    if (playerInstance->getEquipment().getWeaponSlot() != nullptr) {
-        inputManager::getInstance().isMouseButtonPressed(getPlayerShape().getPosition(), projectiles);
+    if (playerInstance->getEquipment().getWeaponSlot() != nullptr && currentView != nullptr) {
+        inputManager:: getInstance().isMouseButtonPressed(
+            getPlayerShape().getPosition(),
+            projectiles,
+            *currentView);
     }
 
     projectileEntity::updateProjectiles(DeltaTime, projectiles);
@@ -130,6 +133,7 @@ sf::Shape& game::getPlayerShape() {
 
 void game::render(sf::RenderWindow &window,sf::View& view) {
 
+    currentView = &view;
 
     // Camera Follow Player
     view.setCenter(getPlayerShape().getPosition());

@@ -1,4 +1,6 @@
 #include "inputManager.h"
+
+#include "core/darkMath.h"
 #include "entities/player/player.h"
 #include "entities/projectile/projectileEntity.h"
 #include "handlers/eventHandler.h"
@@ -31,10 +33,23 @@ sf::Vector2f inputManager::pMovementDirection(float deltaTime, float speed) {
     return direction;
 }
 
-void inputManager::isMouseButtonPressed(sf::Vector2f playerPosition, std::vector<std::unique_ptr<projectileEntity>>& projectiles) {
+void inputManager::isMouseButtonPressed(sf::Vector2f playerPosition, std::vector<std:: unique_ptr<projectileEntity>>& projectiles,const sf::View& view) {
+
     bool IsHoldingMouse = eventHandler::getInstance().getWhenMouseClicked();
-    if (IsHoldingMouse == true && clickClock.getElapsedTime().asSeconds() >= 0.3f) {
-        projectiles.push_back(std::make_unique<projectileEntity>(playerPosition, sf::Vector2f(0.f, -500.f), 2.0f));
+
+    if (IsHoldingMouse && clickClock.getElapsedTime().asSeconds() >= 0.3f) {
+
+        sf::Vector2f mouseWorldPos = eventHandler::getInstance().getMouseWorldPosition(view);
+
+        sf::Vector2f direction = darkMath::getInstance().vectorDirection(playerPosition, mouseWorldPos);
+
+        projectiles.push_back(std:: make_unique<projectileEntity>(
+            playerPosition,
+            500.f,
+            direction,
+            2.0f
+        ));
+
         clickClock.restart();
     }
 }

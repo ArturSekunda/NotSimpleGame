@@ -23,6 +23,8 @@ public:
 
     sf::Vector2i getMousePosition() const;
 
+    sf::Vector2f getMouseWorldPosition(const sf::View& view) const;
+
 
 
 

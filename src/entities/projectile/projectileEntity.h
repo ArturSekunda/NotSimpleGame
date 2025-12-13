@@ -7,14 +7,16 @@
 
 
 class projectileEntity : public sf::Clock, public sf::Vector2f{
+    float speed;
     sf::Vector2f velocity;
     Clock lifetime;
     float maxLifetime;
+    sf::Vector2f Direction;
     std::shared_ptr<sf::Shape> Shape;
     std::shared_ptr<sf::RectangleShape> collisionBox;
 public:
 
-    projectileEntity(sf::Vector2f position, sf::Vector2f velocity, float lifetimeSeconds = 2.0f);
+    projectileEntity(sf::Vector2f position, float speed, sf::Vector2f Direction, float lifetimeSeconds = 2.0f);
     ~projectileEntity() = default;
 
     void update(float deltaTime);

@@ -12,6 +12,7 @@
 class projectileEntity;
 
 namespace sf {
+    class View;
     class RenderWindow;
     class Event;
 }
@@ -28,7 +29,7 @@ public:
 
     sf::Clock clickClock;
 
-    void isMouseButtonPressed(sf::Vector2f playerPosition, std::vector<std::unique_ptr<projectileEntity>>& projectiles);
+    void isMouseButtonPressed(sf::Vector2f playerPosition, std::vector<std::unique_ptr<projectileEntity>>& projectiles, const sf::View& view);
 };
 
 

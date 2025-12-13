@@ -20,6 +20,9 @@ class UIManager;
 class itemManager;
 
 class game {
+
+    sf::View* currentView = nullptr;
+
 public:
     void Updater();
 
@@ -51,6 +54,10 @@ public: // Initialization and Getters
     sf::RectangleShape& getPlayerCollisionBox() {
         return *getPlayerPtr().getCollisionBox();
     }
+
+    void setCurrentView(sf::View& view) { currentView = &view; }
+
+    sf::View* getCurrentView() const { return currentView; }
 
     // Delta Time Setter
     void setDeltaTime(float dt) {

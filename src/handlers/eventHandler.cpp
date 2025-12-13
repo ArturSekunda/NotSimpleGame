@@ -13,3 +13,10 @@ bool eventHandler::getWhenMouseClicked() const {
 sf::Vector2i eventHandler::getMousePosition() const {
     return sf::Mouse::getPosition(*window);
 }
+
+sf::Vector2f eventHandler::getMouseWorldPosition(const sf::View& view) const {
+    if (! window) {
+        return sf::Vector2f(0.f, 0.f);
+    }
+    return window->mapPixelToCoords(sf::Mouse::getPosition(*window), view);
+}

@@ -1,6 +1,8 @@
 #include "projectileEntity.h"
 
-projectileEntity::projectileEntity(sf::Vector2f position, sf::Vector2f velocity, float lifetimeSeconds) : velocity(velocity), maxLifetime(lifetimeSeconds) {
+#include <cmath>
+
+projectileEntity::projectileEntity(sf::Vector2f position, float speed,sf::Vector2f Direction, float lifetimeSeconds) : speed(speed), maxLifetime(lifetimeSeconds), Direction(Direction) {
     auto circle = std::make_shared<sf::CircleShape>(5.0f);
     circle->setPosition(position);
     circle->setFillColor(sf::Color::Red);
@@ -9,6 +11,12 @@ projectileEntity::projectileEntity(sf::Vector2f position, sf::Vector2f velocity,
     Shape = circle;
 
     this->collisionBox = std::make_shared<sf::RectangleShape>(createCollisionBox());
+
+    float length = std::sqrt(Direction.x * Direction.x + Direction.y * Direction.y);
+    if (length > 0.f) {
+        Direction /= length;  // Normalizacja do długości 1
+    }
+    velocity = Direction * speed;  // Oblicz rzeczywistą prędkość
 
     lifetime.restart();
 }
