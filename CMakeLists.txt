@@ -105,6 +105,8 @@ add_executable(main src/main.cpp
         src/handlers/eventHandler.cpp
         src/handlers/eventHandler.h
         src/UI/helpers/mouseContainer.h
+        src/core/renderer.cpp
+        src/core/renderer.h
 )
 
 target_link_libraries(main PRIVATE

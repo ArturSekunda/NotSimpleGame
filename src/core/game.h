@@ -2,6 +2,7 @@
 #ifndef NOTSIMPLEGAME_GAME_H
 #define NOTSIMPLEGAME_GAME_H
 
+#include "renderer.h"
 #include "entities/player/player.h"
 #include "entities/enemies/basicEnemy.h"
 #include "managers/itemManager.h"
@@ -20,8 +21,6 @@ class UIManager;
 class itemManager;
 
 class game {
-
-    sf::View* currentView = nullptr;
 
 public:
     void Updater();
@@ -42,10 +41,17 @@ public: // Initialization and Getters
 
     sf::Shape &getPlayerShape();
 
-    UIManager* getUIManager() {
-        return UIManagerInstance.get();
+    renderer& getRenderer() {
+        return *rendererInstance;
     }
 
+    std::vector<std::unique_ptr<projectileEntity>>& getProjectiles() {
+        return projectiles;
+    }
+
+    std::vector<std::unique_ptr<baseEntity>>& getEntityList() {
+        return entityList;
+    }
 
     bool DeveloperMode = true;
 
@@ -54,10 +60,6 @@ public: // Initialization and Getters
     sf::RectangleShape& getPlayerCollisionBox() {
         return *getPlayerPtr().getCollisionBox();
     }
-
-    void setCurrentView(sf::View& view) { currentView = &view; }
-
-    sf::View* getCurrentView() const { return currentView; }
 
     // Delta Time Setter
     void setDeltaTime(float dt) {
@@ -93,16 +95,6 @@ void addEntityToList(std::unique_ptr<T> entity) {
 
     size_t getEntityIDListSize() const { return entityIDList.size(); }
 
-public: // Rendering
-    void render(sf::RenderWindow &window, sf::View &view);
-    void renderUI(tgui::SFML_GRAPHICS::Gui& gui);
-
-protected: // Render Helpers
-
-    void renderDebug(sf::RenderWindow& window);
-
-    void renderPlayerAndEnemies(sf::RenderWindow& window) const;
-
 
 protected: // Debug and instantiates
 
@@ -114,9 +106,9 @@ protected: // Debug and instantiates
 
     std::unique_ptr<player> playerInstance;
 
-    std::unique_ptr<UIManager> UIManagerInstance;
-
     std::unique_ptr<itemManager> itemManagerInstance;
+
+    std::unique_ptr<renderer> rendererInstance;
 
     std::vector<std::unique_ptr<projectileEntity>> projectiles;
 

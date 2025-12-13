@@ -21,9 +21,9 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Test", sf::Style::Default, settings);
     tgui::Gui gui{window};
 
-    gameInstance->renderUI(gui);
+    gameInstance->getRenderer().renderUI(gui, gameInstance->DeveloperMode, gameInstance->getPlayerPtr());
 
-    gameInstance->getUIManager()->UpdateTextSizes(window.getSize().x, window.getSize().y);
+    gameInstance->getRenderer().getUIManager().UpdateTextSizes(window.getSize().x, window.getSize().y);
 
 
     window.setFramerateLimit(180);
@@ -55,7 +55,7 @@ int main() {
             if (event.type == sf::Event::Resized){
                 CameraView.setSize(event.size.width, event.size.height);
                 window.setView(CameraView);
-                gameInstance->getUIManager()->UpdateTextSizes(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
+                gameInstance->getRenderer().getUIManager().UpdateTextSizes(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
             }
         }
 
@@ -76,7 +76,14 @@ int main() {
 
         window.clear();
 
-        gameInstance->render(window, CameraView);
+        gameInstance->getRenderer().render(
+            window,
+            CameraView,
+            gameInstance->getPlayerPtr(),
+            gameInstance->DeveloperMode,
+            gameInstance->getProjectiles(),
+            gameInstance->getEntityList()
+            );
 
         gui.draw();
 
@@ -84,6 +91,6 @@ int main() {
         window.display();
     }
     std::cout << "DEBUG: Cleaning UI before main() ends\n";
-    gameInstance->getUIManager()->CleanAllUI();
+    gameInstance->getRenderer().getUIManager().CleanAllUI();
     return 0;
 }

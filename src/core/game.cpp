@@ -16,14 +16,14 @@
 void game::initializeEntities() {
 
     playerInstance = std::make_unique<player>(0);
-    UIManagerInstance = std::make_unique<UIManager>();
+    rendererInstance = std::make_unique<renderer>();
     itemManagerInstance = std::make_unique<itemManager>();
 
     if (!playerInstance) {
         throw std::runtime_error("Failed to create player instance.");
     }
 
-    UIManagerInstance->setHolderPlayerForHUD(getPlayerPtr());
+    rendererInstance->getUIManager().setHolderPlayerForHUD(getPlayerPtr());
 
     itemManagerInstance->CreateFirstWeaponForPlayer(getPlayerPtr());
 
@@ -68,7 +68,7 @@ void game::Updater() {
     }
 
     // Update UI
-    UIManagerInstance->UpdateAllUI(getPlayerPtr(), DeltaTime);
+    rendererInstance->getUIManager().UpdateAllUI(getPlayerPtr(), DeltaTime);
 
     // Collision Detection
     std::vector<std::string> collidingEnemies = collisionHandler::getInstance()
@@ -99,11 +99,11 @@ void game::Updater() {
         }
     }
 
-    if (playerInstance->getEquipment().getWeaponSlot() != nullptr && currentView != nullptr) {
+    if (playerInstance->getEquipment().getWeaponSlot() != nullptr && rendererInstance->hasView()) {
         inputManager:: getInstance().isMouseButtonPressed(
             getPlayerShape().getPosition(),
             projectiles,
-            *currentView);
+            rendererInstance->getView());
     }
 
     projectileEntity::updateProjectiles(DeltaTime, projectiles);
@@ -129,55 +129,5 @@ sf::Shape& game::getPlayerShape() {
         throw std::runtime_error("Player shape is null");
     }
     return *shape;
-}
-
-void game::render(sf::RenderWindow &window,sf::View& view) {
-
-    currentView = &view;
-
-    // Camera Follow Player
-    view.setCenter(getPlayerShape().getPosition());
-    window.setView(view);
-
-    renderPlayerAndEnemies(window);
-
-    projectileEntity::drawProjectiles(window, projectiles);
-
-    if (DeveloperMode) {
-        renderDebug(window);
-    }
-
-
-}
-
-void game::renderDebug(sf::RenderWindow &window) {
-
-    if (UIManagerInstance->getDebugWindow() != nullptr){
-        if (UIManagerInstance->getWantToShowCollisionBoxes()) {
-             collisionHandler::getInstance().render(window, getPlayerCollisionBox(), entityList, getPlayerShape());
-                collisionHandler::getInstance().renderProjectileCollisionBox(window, projectiles);
-        }
-    }
-
-
-}
-
-void game::renderPlayerAndEnemies(sf::RenderWindow& window) const {
-    // Render player
-    if (playerInstance && playerInstance->getEntityShape()) {
-        window.draw(*playerInstance->getEntityShape());
-    }
-
-    // Render enemies
-    for (const auto& entity : entityList) {
-        if (entity && entity->getEntityShape()) {
-            window.draw(*entity->getEntityShape());
-        }
-    }
-}
-
-void game::renderUI(tgui::Gui &gui) {
-    UIManagerInstance->RenderMainGameHUD(gui, getPlayerPtr(), DeveloperMode);
-
 }
 
