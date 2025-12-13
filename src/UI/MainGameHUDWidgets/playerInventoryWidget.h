@@ -14,11 +14,13 @@ struct UISlot {
     int slotIndex;
     std::string cachedTexturePath;
 
+    const std::string ASSETS_BASE = "assets/";
+
     void Update(Inventory& inventory) {
         auto& slot = inventory.GetSlots()[slotIndex];
         std::string newPath = slot.isOccupied && slot.item
             ? slot.item->getTexturePath()
-            : "../src/core/assets/equipment/empty_slot.png";
+            : ASSETS_BASE + "equipment/empty_slot.png";
 
         if (cachedTexturePath != newPath) {
             cachedTexturePath = newPath;
@@ -27,7 +29,7 @@ struct UISlot {
     }
     void Initialize(const tgui::Panel::Ptr& parentPanel, int index) {
         slotIndex = index;
-        icon = tgui::Picture::create("../src/core/assets/equipment/empty_slot.png");
+        icon = tgui::Picture::create((ASSETS_BASE + "equipment/empty_slot.png").data());
         if (!icon) {
             throw std::runtime_error("Failed to create inventory slot icon");
         }
@@ -38,7 +40,7 @@ struct UISlot {
             (std::to_string(7 + index / 4 * 20) + "%").data()
         );
         parentPanel->add(icon);
-        cachedTexturePath = "../src/core/assets/equipment/empty_slot.png";
+        cachedTexturePath = ASSETS_BASE + "equipment/empty_slot.png";
     }
 };
 

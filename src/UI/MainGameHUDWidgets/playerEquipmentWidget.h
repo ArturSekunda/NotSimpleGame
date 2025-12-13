@@ -17,11 +17,13 @@ struct UIEquipmentSlot {
     int slotIndex;
     std::string cachedTexturePath;
 
+    const std::string ASSETS_BASE = "assets/";
+
     void Update(const std::map<ArmorType, std::shared_ptr<armor>>& armorSlots,
         const std::shared_ptr<weapon>& weaponSlot) {
         std::string newPath;
             if (slotIndex == 0) {
-                newPath = weaponSlot ? weaponSlot->getTexturePath() : "../src/core/assets/equipment/empty_slot.png";
+                newPath = weaponSlot ? weaponSlot->getTexturePath() : ASSETS_BASE + "equipment/empty_slot.png";
             } else {
                 ArmorType type;
                 switch (slotIndex) {
@@ -38,14 +40,14 @@ struct UIEquipmentSlot {
                         type = ArmorType::BOOTS;
                         break;
                     default:
-                        newPath = "../src/core/assets/equipment/empty_slot.png";
+                        newPath = ASSETS_BASE + "equipment/empty_slot.png";
                         break;
                 }
                 auto it = armorSlots.find(type);
                 if (it != armorSlots.end() && it->second) {
                     newPath = it->second->getTexturePath();
                 } else {
-                    newPath = "../src/core/assets/equipment/empty_slot.png";
+                    newPath = ASSETS_BASE + "equipment/empty_slot.png";
                 }
             }
 
@@ -56,13 +58,13 @@ struct UIEquipmentSlot {
     }
     void Initialize(const tgui::Panel::Ptr& parentPanel, int index) {
         slotIndex = index;
-        icon = tgui::Picture::create("../src/core/assets/equipment/empty_slot.png");
+        icon = tgui::Picture::create((ASSETS_BASE + "equipment/empty_slot.png").data());
         if (!icon) {
             throw std::runtime_error("Failed to create inventory slot icon");
         }
 
         parentPanel->add(icon);
-        cachedTexturePath = "../src/core/assets/equipment/empty_slot.png";
+        cachedTexturePath = ASSETS_BASE + "equipment/empty_slot.png";
     }
 };
 

@@ -12,6 +12,7 @@ class enumConversionTextures {
         RarityToFilepath();
     }
     std::map<Rarity, std::string> RarityTexturePaths;
+    const std::string ASSETS_BASE = "assets/";
 public:
     // Singletone
     static enumConversionTextures& getInstance() {

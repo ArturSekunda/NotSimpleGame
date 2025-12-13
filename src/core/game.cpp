@@ -71,12 +71,18 @@ void game::Updater() {
     rendererInstance->getUIManager().UpdateAllUI(getPlayerPtr(), DeltaTime);
 
     // Collision Detection
-    std::vector<std::string> collidingEnemies = collisionHandler::getInstance()
-        .checkAllCollisions(getPlayerShape(), entityList);
+    std::vector<baseEntity*> collidingEnemies = collisionHandler::getInstance().checkAllCollisions(getPlayerShape(), entityList);
 
     // Handle Collisions
     for (const auto& enemyIDStr: collidingEnemies) {
-        //std::cout << "Collision with Enemy ID: " << enemyIDStr << "\n";
+        auto enemy = dynamic_cast<basicEnemy*>(enemyIDStr);
+        if (enemy) {
+            if (playerInstance->DamageClock.getElapsedTime().asSeconds() >= 0.5f) {
+                playerInstance->takeDamage(enemy->getEquipment().getWeaponSlot()->getDamage());
+                std::cout << "Enemy ID: " << enemy->getEntityID().toString() << " deals " << enemy->getEquipment().getWeaponSlot()->getDamage() << " damage to Player.\n";
+                playerInstance->DamageClock.restart();
+            }
+        }
     }
 
     for (const auto& bullet: projectiles) {

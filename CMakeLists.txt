@@ -118,6 +118,12 @@ target_link_libraries(main PRIVATE
         sfml-network
 )
 
+add_custom_command(TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/core/assets
+        $<TARGET_FILE_DIR:main>/assets
+)
+
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
 if(WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU")
