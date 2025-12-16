@@ -46,12 +46,6 @@ int main() {
                 window.close();
             }
 
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::I) {
-                std::cout << "DEBUG: Inventory printed to console\n";
-                gameInstance->getEntitiesManager().getPlayerPtr().getInventory().printInventory();
-
-            }
-
             if (event.type == sf::Event::Resized){
                 CameraView.setSize(event.size.width, event.size.height);
                 window.setView(CameraView);
@@ -62,7 +56,7 @@ int main() {
         // FPS Calculation
         frameCount++;
         if (FPSClock.getElapsedTime().asSeconds() >= 1.0f) {
-            window.setTitle("SFML Test - FPS: " + std::to_string(frameCount));
+            window.setTitle("NotSimpleGame - FPS: " + std::to_string(frameCount));
             frameCount = 0;
             FPSClock.restart();
         }

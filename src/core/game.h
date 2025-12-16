@@ -26,6 +26,13 @@ class game {
 public:
     void Updater();
 
+    sf::Clock WaveClock;
+    sf::Clock WaveLabelClock;
+
+    bool showWaveLabel = false;
+
+    inline static int WaveCounter = 0;
+
 public:
     game() = default;
     ~game() = default;
@@ -33,6 +40,8 @@ public:
 public: // Initialization and Getters
 
     void initializeEntities();
+
+    void CreateNewEnemyWave(int enemyCount);
 
     renderer& getRenderer() {
         return *rendererInstance;

@@ -19,8 +19,8 @@ public:
     renderer();
     ~renderer() = default;
 
-    void renderDebug(sf::RenderWindow &window, sf::RectangleShape &playerCollisionBox, sf::Shape &playerShape, std::vector<std::unique_ptr<
-                     basicEnemy>> entityList, std::vector<std::unique_ptr<projectileEntity>> &projectiles);
+    void renderDebug(sf::RenderWindow &window, sf::RectangleShape &playerCollisionBox, sf::Shape &playerShape, const std::vector<std::
+                     unique_ptr<basicEnemy>> &entityList, std::vector<std::unique_ptr<projectileEntity>> &projectiles);
 
     void renderPlayerAndEnemies(sf::RenderWindow &window, player &playerInstance, std::vector<std::unique_ptr<basicEnemy>>& entityList) const;
 

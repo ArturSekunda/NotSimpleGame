@@ -109,6 +109,8 @@ add_executable(main src/main.cpp
         src/core/renderer.h
         src/managers/entitiesManager.cpp
         src/managers/entitiesManager.h
+        src/UI/MainGameHUDWidgets/waveCounter.cpp
+        src/UI/MainGameHUDWidgets/waveCounter.h
 )
 
 target_link_libraries(main PRIVATE

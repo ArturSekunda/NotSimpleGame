@@ -13,6 +13,7 @@ void mainGameHUD::CleanUp() {
         PlayerStats.reset();
         EquipmentWidget.reset();
         InventoryWidget.reset();
+        WaveCounterWidget.reset();
         Mouse.Destroy();
 
         DebugButtonForWindow = nullptr;
@@ -27,6 +28,7 @@ void mainGameHUD::createHUD(tgui::Gui &gui) {
     PlayerStats = std::make_unique<playerStats>();
     EquipmentWidget = std::make_unique<playerEquipmentWidget>();
     InventoryWidget = std::make_unique<playerInventoryWidget>();
+    WaveCounterWidget = std::make_unique<waveCounter>();
 
     PanelsLayouts->CombineAll(gui);
     PlayerNameLevel->initializeLabels(PanelsLayouts->Layouts["PlayerNameEXPLayout"]->cast<tgui::VerticalLayout>());
@@ -34,6 +36,7 @@ void mainGameHUD::createHUD(tgui::Gui &gui) {
     PlayerStats->initializeLabels(PanelsLayouts->Layouts["GridStats"]->cast<tgui::Grid>());
     EquipmentWidget->initializeIcons(PanelsLayouts->Panels["S_EquipmentPanel"]->cast<tgui::Panel>());
     InventoryWidget->initializeIcons(PanelsLayouts->Panels["S_InventoryPanel"]->cast<tgui::Panel>());
+    WaveCounterWidget->initializeLabel(PanelsLayouts->Layouts["WaveCounter"]->cast<tgui::VerticalLayout>());
     Mouse.Initialize(PanelsLayouts->Panels["MainPanel"]->cast<tgui::Panel>());
     InventoryWidget->UIInventory(HolderPlayer->getInventory(), Mouse);
     EquipmentWidget->UIEquipment(HolderPlayer->getEquipment(), *HolderPlayer, Mouse);
@@ -76,5 +79,7 @@ void mainGameHUD::UpdateTextSizes(float width, float height) {
     PlayerNameLevel->UpdateTextSizes(width, height);
     ProgressBars->UpdateTextSize(width, height);
     PlayerStats->UpdateTextSizes(width, height);
+    WaveCounterWidget->UpdateTextSize(width, height);
+
 
 }

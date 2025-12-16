@@ -25,14 +25,14 @@ void renderer::render(sf::RenderWindow &window, sf::View &view, player &playerIn
     projectileEntity::drawProjectiles(window, projectiles);
 
     if (DeveloperMode) {
-        renderDebug(window, *playerInstance.getCollisionBox(), *playerInstance.getEntityShape(), std::move(entityList), projectiles);
+        renderDebug(window, *playerInstance.getCollisionBox(), *playerInstance.getEntityShape(), entityList, projectiles);
     }
 
 
 }
 
 void renderer::renderDebug(sf::RenderWindow &window, sf::RectangleShape &playerCollisionBox, sf::Shape &playerShape, const std::vector<std::
-                           unique_ptr<basicEnemy>> entityList, std::vector<std::unique_ptr<projectileEntity>> &projectiles) {
+                           unique_ptr<basicEnemy>>& entityList, std::vector<std::unique_ptr<projectileEntity>> &projectiles) {
 
     if (UIManagerInstance->getDebugWindow() != nullptr){
         if (UIManagerInstance->getWantToShowCollisionBoxes()) {

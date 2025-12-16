@@ -5,9 +5,9 @@
 
 #include <iostream>
 #include <memory>
+#include <thread>
 
 #include "managers/UIManager.h"
-#include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
 
 #include "managers/inputManager.h"
@@ -19,10 +19,21 @@ void game::initializeEntities() {
     rendererInstance = std::make_unique<renderer>();
 
     entitiesManagerInstance->CreatePlayerOnStartup();
-    entitiesManagerInstance->CreateBasicEnemy(3);
 
     rendererInstance->getUIManager().setHolderPlayerForHUD(entitiesManagerInstance->getPlayerPtr());
 
+}
+
+void game::CreateNewEnemyWave(int enemyCount) {
+
+    rendererInstance->getUIManager().getMainGameHUD()
+        .getWaveCounterWidget().UpdateWaveLabel(WaveCounter, true);
+
+    WaveLabelClock.restart();
+    showWaveLabel = true;
+
+    entitiesManagerInstance->CreateBasicEnemy(enemyCount);
+    WaveCounter++;
 }
 
 // Update game logic, player and enemy states
@@ -36,6 +47,18 @@ void game::Updater() {
 
     // Collision Detection
     std::vector<basicEnemy*> collidingEnemies = collisionHandler::getInstance().checkAllCollisions(entitiesManagerInstance->getPlayerShape(), entitiesManagerInstance->getBasicEnemyList());
+
+    if (showWaveLabel && WaveLabelClock.getElapsedTime().asSeconds() >= 3.0f) {
+        rendererInstance->getUIManager().getMainGameHUD()
+            .getWaveCounterWidget().UpdateWaveLabel(WaveCounter, false);
+        showWaveLabel = false;
+    }
+
+    if (WaveClock.getElapsedTime().asSeconds() >= 5.0f) {
+        std::cout << "Spawning new enemy wave.. .\n";
+        CreateNewEnemyWave(5 + WaveCounter);
+        WaveClock.restart();
+    }
 
     // Handle Collisions
     for (const auto& enemyIDStr: collidingEnemies) {

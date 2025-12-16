@@ -12,10 +12,13 @@ void panelsWithLayouts::CombineAll(tgui::Gui &gui) {
 
     initializeStatsGridPanel();
 
+    initializeWaveCounterLayout();
+
     Layouts = {
         {"PlayerNameEXPLayout", PlayerNameEXPLayout},
         {"StatsLayout", StatsLayout},
-        {"GridStats", StatsGrid}
+        {"GridStats", StatsGrid},
+        {"WaveCounter", WaveCounter}
     };
     Panels = {
         {"MainPanel", MainPanel},
@@ -111,4 +114,18 @@ void panelsWithLayouts::initializeStatsGridPanel() {
     StatsGrid->setSize("30%", "90%");
     StatsGrid->setPosition("45%", "0%");
     Top_InfoPanel->add(StatsGrid);
+}
+
+void panelsWithLayouts::initializeWaveCounterLayout() {
+    WaveCounter = tgui::VerticalLayout::create();
+    if (!WaveCounter) {
+        throw std::runtime_error("Failed to create wave counter");
+    }
+
+    // Stats Layout
+    WaveCounter->setSize("50%", "20%");
+    WaveCounter->setPosition("45%", "50%");
+    WaveCounter->getRenderer()->setSpaceBetweenWidgets(20);
+    WaveCounter->getRenderer()->setPadding(5);
+    MainPanel->add(WaveCounter);
 }

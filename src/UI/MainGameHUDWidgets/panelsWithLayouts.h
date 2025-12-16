@@ -18,6 +18,7 @@ class panelsWithLayouts {
     tgui::VerticalLayout::Ptr PlayerNameEXPLayout = nullptr;
     tgui::VerticalLayout::Ptr StatsLayout = nullptr;
     tgui::Grid::Ptr StatsGrid = nullptr;
+    tgui::VerticalLayout::Ptr WaveCounter = nullptr;
 public:
 
     void CombineAll(tgui::Gui &gui);
@@ -29,6 +30,8 @@ public:
     void initializeStatsLayout();
 
     void initializeStatsGridPanel();
+
+    void initializeWaveCounterLayout();
 
 
     std::map<std::string, tgui::Widget::Ptr> Layouts;

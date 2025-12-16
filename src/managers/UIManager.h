@@ -26,6 +26,9 @@ public:
     debugWindow* getDebugWindow() {
         return DebuggingWindow.get();
     }
+    mainGameHUD& getMainGameHUD() {
+        return *MainGameHUD;
+    }
     UIManager() = default;
     ~UIManager() = default;
 
