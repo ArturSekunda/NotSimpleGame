@@ -7,6 +7,7 @@
 #include "TGUI/Backend/SFML-Graphics.hpp"
 #include "managers/UIManager.h"
 
+class basicEnemy;
 class UIManager;
 
 class renderer {
@@ -19,12 +20,12 @@ public:
     ~renderer() = default;
 
     void renderDebug(sf::RenderWindow &window, sf::RectangleShape &playerCollisionBox, sf::Shape &playerShape, std::vector<std::unique_ptr<
-                     baseEntity>> &entityList, std::vector<std::unique_ptr<projectileEntity>> &projectiles);
+                     basicEnemy>> entityList, std::vector<std::unique_ptr<projectileEntity>> &projectiles);
 
-    void renderPlayerAndEnemies(sf::RenderWindow &window, player &playerInstance, std::vector<std::unique_ptr<baseEntity>>& entityList) const;
+    void renderPlayerAndEnemies(sf::RenderWindow &window, player &playerInstance, std::vector<std::unique_ptr<basicEnemy>>& entityList) const;
 
     void render(sf::RenderWindow &window, sf::View &view, player &playerInstance, bool DeveloperMode, std::vector<std::unique_ptr<
-                projectileEntity>> &projectiles, std::vector<std::unique_ptr<baseEntity>> &entityList);
+                projectileEntity>> &projectiles, std::vector<std::unique_ptr<basicEnemy>> &entityList);
 
     void renderUI(tgui::SFML_GRAPHICS::Gui &gui, bool &DeveloperMode, player &playerPointer);
 

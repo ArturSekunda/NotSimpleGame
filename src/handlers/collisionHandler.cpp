@@ -15,9 +15,9 @@ bool collisionHandler::isColliding(const sf::Shape &player, const sf::Shape &ene
 }
 
 // Check collisions with all enemies and return indices of colliding ones
-std::vector<baseEntity*> collisionHandler::checkAllCollisions(const sf::Shape &player, const std::vector<std::unique_ptr<baseEntity>>& entitylist) {
+std::vector<basicEnemy*> collisionHandler::checkAllCollisions(const sf::Shape &player, const std::vector<std::unique_ptr<basicEnemy>>& entitylist) {
 
-     std::vector<baseEntity*> collisions;
+     std::vector<basicEnemy*> collisions;
 
      for (const auto& entity : entitylist) {
           if (entity && isColliding(player, *entity->getEntityShape())) {
@@ -29,7 +29,7 @@ std::vector<baseEntity*> collisionHandler::checkAllCollisions(const sf::Shape &p
 }
 
 void collisionHandler::render(sf::RenderWindow &window, sf::RectangleShape& playerCollisionBox,
-     const std::vector<std::unique_ptr<baseEntity>> &entitylist,const sf::Shape& playerShape) {
+     const std::vector<std::unique_ptr<basicEnemy>> &entitylist,const sf::Shape& playerShape) {
 
 
           // Collision box for player

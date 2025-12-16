@@ -4,11 +4,15 @@
 #include "entities/projectile/projectileEntity.h"
 #include "handlers/collisionHandler.h"
 #include <memory>
+
+#include "entities/enemies/basicEnemy.h"
+
 renderer::renderer() {
     UIManagerInstance = std::make_unique<UIManager>();
 }
 
-void renderer::render(sf::RenderWindow &window,sf::View& view, player& playerInstance, bool DeveloperMode, std::vector<std::unique_ptr<projectileEntity>>& projectiles, std::vector<std::unique_ptr<baseEntity>>& entityList) {
+void renderer::render(sf::RenderWindow &window, sf::View &view, player &playerInstance, bool DeveloperMode, std::vector<std::unique_ptr<
+                      projectileEntity>> &projectiles, std::vector<std::unique_ptr<basicEnemy>> &entityList) {
 
     currentView = &view;
 
@@ -21,13 +25,14 @@ void renderer::render(sf::RenderWindow &window,sf::View& view, player& playerIns
     projectileEntity::drawProjectiles(window, projectiles);
 
     if (DeveloperMode) {
-        renderDebug(window, *playerInstance.getCollisionBox(), *playerInstance.getEntityShape(), entityList, projectiles);
+        renderDebug(window, *playerInstance.getCollisionBox(), *playerInstance.getEntityShape(), std::move(entityList), projectiles);
     }
 
 
 }
 
-void renderer::renderDebug(sf::RenderWindow &window, sf::RectangleShape& playerCollisionBox, sf::Shape& playerShape, std::vector<std::unique_ptr<baseEntity>>& entityList, std::vector<std::unique_ptr<projectileEntity>>& projectiles) {
+void renderer::renderDebug(sf::RenderWindow &window, sf::RectangleShape &playerCollisionBox, sf::Shape &playerShape, const std::vector<std::
+                           unique_ptr<basicEnemy>> entityList, std::vector<std::unique_ptr<projectileEntity>> &projectiles) {
 
     if (UIManagerInstance->getDebugWindow() != nullptr){
         if (UIManagerInstance->getWantToShowCollisionBoxes()) {
@@ -39,7 +44,7 @@ void renderer::renderDebug(sf::RenderWindow &window, sf::RectangleShape& playerC
 
 }
 
-void renderer::renderPlayerAndEnemies(sf::RenderWindow& window, player& playerInstance, std::vector<std::unique_ptr<baseEntity>>& entityList) const {
+void renderer::renderPlayerAndEnemies(sf::RenderWindow& window, player& playerInstance, std::vector<std::unique_ptr<basicEnemy>>& entityList) const {
     // Render player
     if (playerInstance.getEntityShape()) {
         window.draw(*playerInstance.getEntityShape());

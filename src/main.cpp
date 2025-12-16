@@ -21,7 +21,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Test", sf::Style::Default, settings);
     tgui::Gui gui{window};
 
-    gameInstance->getRenderer().renderUI(gui, gameInstance->DeveloperMode, gameInstance->getPlayerPtr());
+    gameInstance->getRenderer().renderUI(gui, gameInstance->DeveloperMode, gameInstance->getEntitiesManager().getPlayerPtr());
 
     gameInstance->getRenderer().getUIManager().UpdateTextSizes(window.getSize().x, window.getSize().y);
 
@@ -48,7 +48,7 @@ int main() {
 
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::I) {
                 std::cout << "DEBUG: Inventory printed to console\n";
-                gameInstance->getPlayerPtr().getInventory().printInventory();
+                gameInstance->getEntitiesManager().getPlayerPtr().getInventory().printInventory();
 
             }
 
@@ -79,10 +79,10 @@ int main() {
         gameInstance->getRenderer().render(
             window,
             CameraView,
-            gameInstance->getPlayerPtr(),
+            gameInstance->getEntitiesManager().getPlayerPtr(),
             gameInstance->DeveloperMode,
-            gameInstance->getProjectiles(),
-            gameInstance->getEntityList()
+            gameInstance->getEntitiesManager().getProjectiles(),
+            gameInstance->getEntitiesManager().getBasicEnemyList()
             );
 
         gui.draw();

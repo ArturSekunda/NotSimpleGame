@@ -107,6 +107,8 @@ add_executable(main src/main.cpp
         src/UI/helpers/mouseContainer.h
         src/core/renderer.cpp
         src/core/renderer.h
+        src/managers/entitiesManager.cpp
+        src/managers/entitiesManager.h
 )
 
 target_link_libraries(main PRIVATE

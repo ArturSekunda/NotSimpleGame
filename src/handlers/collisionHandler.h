@@ -32,9 +32,9 @@ public:
 
     bool isColliding(const sf::Shape& player, const sf::Shape& enemy);
 
-    std::vector<baseEntity*> checkAllCollisions(const sf::Shape &player, const std::vector<std::unique_ptr<baseEntity>>& entitylist);
+    std::vector<basicEnemy*> checkAllCollisions(const sf::Shape &player, const std::vector<std::unique_ptr<basicEnemy>>& entitylist);
     auto render(sf::RenderWindow &window, sf::RectangleShape &playerCollisionBox,
-                const std::vector<std::unique_ptr<baseEntity> > &entitylist, const sf::Shape &playerShape) -> void;
+                const std::vector<std::unique_ptr<basicEnemy> > &entitylist, const sf::Shape &playerShape) -> void;
     auto renderProjectileCollisionBox(sf::RenderWindow &window, std::vector<std::unique_ptr<projectileEntity>>& projectiles) -> void;
 
 
