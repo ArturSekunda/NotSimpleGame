@@ -77,6 +77,7 @@ void entitiesManager::Updater(float DeltaTime, renderer& rendererInstance) {
                     enemy->DamageClock.restart();
 
                     if (enemy->isDead(playerInstance->getInventory())) {
+                        playerInstance->levelUp(enemy->EXP);
                         std::cout << "Enemy ID: " << entity->getEntityID().toString() << " is dead.\n";
                         enemiesToRemove.push_back(entity->getEntityID());
                         break;

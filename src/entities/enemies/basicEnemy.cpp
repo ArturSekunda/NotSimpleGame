@@ -35,9 +35,10 @@ basicEnemy::basicEnemy(int localID, int playerLevel, sf::Vector2f playerPos, ent
     }
     this->level = darkMath::getInstance().generateIntNumber(playerLevel, playerLevel + 5);
     this->speed = darkMath::getInstance().generateFloatNumber(50.f, 150.f);
-    this->health = darkMath::getInstance().generateFloatNumber(50.f*level, 50.f+50.f*level);
+    this->health = darkMath::getInstance().generateFloatNumber(50.f+(50.f*level*0.3f), 100.f+(50.f*level*0.3f));
     this->maxHealth = this->health;
     this->isAlive = true;
+    this->EXP = darkMath::getInstance().generateFloatNumber(10.f+(50.f*level*0.2f), 50.f+(50.f*level*0.2f));
     EManager = entitiesManager;
 
 

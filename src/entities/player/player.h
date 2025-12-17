@@ -31,12 +31,12 @@ private:
     float EXP = 50.f;
     float EXP_MAX = 100.f;
 
-    void levelUp();
-
 
 public:
     explicit player(int localID = 0);
     ~player() override = default;
+
+    void levelUp(float EnemyEXP);
 
     virtual void Update(float deltaTime) override;
 

@@ -19,6 +19,8 @@ public:
     explicit basicEnemy(int localID,int playerLevel, sf::Vector2f playerPos, entitiesManager* entitiesManager);
     ~basicEnemy() override = default;
 
+    float EXP = 0.f;
+
     virtual void Update(float deltaTime) override;
 
     void chasePlayer(sf::Shape &player, const float &deltaTime);
