@@ -52,6 +52,12 @@ public:
     std::vector<std::unique_ptr<basicEnemy>>& getBasicEnemyList() {
         return L_BasicEnemy;
     }
+
+    void removeItemFromDatabase(const std::shared_ptr<itemBase>& item) {
+        if (item) {
+            ItemManager->RemoveItemFromDatabase(item);
+        }
+    }
 };
 
 

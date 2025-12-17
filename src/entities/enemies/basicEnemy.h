@@ -4,6 +4,7 @@
 #define NOTSIMPLEGAME_BASICENEMY_H
 #include "entities/baseEntity.h"
 #include "inventory/enemyEquipment.h"
+#include "managers/entitiesManager.h"
 
 class enemyEquipment;
 class player;
@@ -12,8 +13,10 @@ class basicEnemy : public baseEntity {
 
     enemyEquipment equipment;
 
+    entitiesManager* EManager;
+
 public:
-    explicit basicEnemy(int localID,int playerLevel);
+    explicit basicEnemy(int localID,int playerLevel, sf::Vector2f playerPos, entitiesManager* entitiesManager);
     ~basicEnemy() override = default;
 
     virtual void Update(float deltaTime) override;
@@ -26,6 +29,7 @@ public:
         return equipment;
     }
 protected:
+
     void createRandomEnemyShape();
 
 };

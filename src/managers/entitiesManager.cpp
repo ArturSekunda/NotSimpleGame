@@ -26,7 +26,7 @@ void entitiesManager::CreateBasicEnemy(int enemyCount) {
 
     for (int i = 0; i < enemyCount; i++) {
 
-        auto enemy = std::make_unique<basicEnemy>(EntitiesIDCounter, playerInstance->getLevel());
+        auto enemy = std::make_unique<basicEnemy>(EntitiesIDCounter, playerInstance->getLevel(), playerInstance->getEntityShape()->getPosition(), this);
 
 
         ItemManager->CreateArmorForEnemy(*enemy);
@@ -40,11 +40,10 @@ void entitiesManager::CreateBasicEnemy(int enemyCount) {
 }
 
 void entitiesManager::RemoveDeadBasicEnemies(const EntityID& EnemiesID) {
-    auto it = std::ranges::remove_if(L_BasicEnemy,
-                                     [&EnemiesID](const std::unique_ptr<basicEnemy>& entity) {
-                                         return entity->getEntityID().type == EnemiesID.type &&
-                                                entity->getEntityID().localID == EnemiesID.localID;
-                                     }).begin();
+    auto it = std::ranges::remove_if(L_BasicEnemy, [&EnemiesID](const std::unique_ptr<basicEnemy>& entity)
+        {
+            return entity->getEntityID().type == EnemiesID.type && entity->getEntityID().localID == EnemiesID.localID;
+        }).begin();
 
     L_BasicEnemy.erase(it, L_BasicEnemy.end());
 }

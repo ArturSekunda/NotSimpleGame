@@ -17,6 +17,7 @@ void game::initializeEntities() {
 
     entitiesManagerInstance = std::make_unique<entitiesManager>();
     rendererInstance = std::make_unique<renderer>();
+    rendererInstance->getUIManager().getMainGameHUD().SetHolderEntitiesManager(*entitiesManagerInstance);
 
     entitiesManagerInstance->CreatePlayerOnStartup();
 
@@ -54,15 +55,20 @@ void game::Updater() {
         showWaveLabel = false;
     }
 
-    if (WaveClock.getElapsedTime().asSeconds() >= 5.0f) {
+    if (WaveClock.getElapsedTime().asSeconds() >= 40.0f || WaveCounter == 1) {
         std::cout << "Spawning new enemy wave.. .\n";
-        CreateNewEnemyWave(5 + WaveCounter);
+        if (WaveCounter % 5 == 0) {
+            std::cout << "Boss Wave Incoming!\n";
+            // For simplicity, boss wave spawns double the enemies
+            CreateNewEnemyWave((3 + WaveCounter) * 2);
+        } else {
+            CreateNewEnemyWave(5 + WaveCounter);
+        }
         WaveClock.restart();
     }
 
     // Handle Collisions
-    for (const auto& enemyIDStr: collidingEnemies) {
-        auto enemy = dynamic_cast<basicEnemy*>(enemyIDStr);
+    for (const auto& enemy: collidingEnemies) {
         if (enemy) {
             if (entitiesManagerInstance->getPlayerPtr().DamageClock.getElapsedTime().asSeconds() >= 0.5f) {
                 entitiesManagerInstance->getPlayerPtr().takeDamage(enemy->getEquipment().getWeaponSlot()->getDamage());
@@ -73,4 +79,3 @@ void game::Updater() {
     }
 
 }
-

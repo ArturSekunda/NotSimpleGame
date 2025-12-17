@@ -15,6 +15,7 @@
 #include "helpers/mouseContainer.h"
 #include "MainGameHUDWidgets/waveCounter.h"
 
+class entitiesManager;
 class playerEquipmentWidget;
 class playerStats;
 class playerNameAndLevel;
@@ -45,6 +46,8 @@ public:
 
     player* HolderPlayer;
 
+    entitiesManager* HolderEntitiesManager;
+
     waveCounter& getWaveCounterWidget() {
         return *WaveCounterWidget;
     }
@@ -61,6 +64,10 @@ public:
 
     void SetHolderPlayer(player& p) {
         HolderPlayer = &p;
+    }
+
+    void SetHolderEntitiesManager(entitiesManager& em) {
+        HolderEntitiesManager = &em;
     }
 
 };

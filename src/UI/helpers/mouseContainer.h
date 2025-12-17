@@ -29,6 +29,7 @@ struct MouseContainer {
         itemPointer = nullptr;
     }
 
+
     void holdItem(const std::shared_ptr<itemBase>& item) {
         if (item) {
             weaponPicture->getRenderer()->setTexture(tgui::Texture(item->getTexturePath()));

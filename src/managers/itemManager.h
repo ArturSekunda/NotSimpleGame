@@ -31,6 +31,14 @@ public:
         ItemDatabase.push_back(item);
     }
 
+    void RemoveItemFromDatabase(const std::shared_ptr<itemBase>& item) {
+        auto it = std::remove_if(ItemDatabase.begin(), ItemDatabase.end(),
+            [item](const std::shared_ptr<itemBase>& items) {
+                return item;
+            });
+        ItemDatabase.erase(it, ItemDatabase.end());
+    }
+
     void PrintItemDatabase();
 
 };

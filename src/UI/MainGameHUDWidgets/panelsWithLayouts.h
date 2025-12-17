@@ -13,6 +13,7 @@ class panelsWithLayouts {
     tgui::Panel::Ptr Top_InfoPanel = nullptr;
     tgui::Panel::Ptr S_EquipmentPanel = nullptr;
     tgui::Panel::Ptr S_InventoryPanel = nullptr;
+    tgui::Panel::Ptr C_DropItemPanel = nullptr;
 
     // Layouts
     tgui::VerticalLayout::Ptr PlayerNameEXPLayout = nullptr;

@@ -25,7 +25,8 @@ void panelsWithLayouts::CombineAll(tgui::Gui &gui) {
         {"Side_PlayerPanel", Side_PlayerPanel},
         {"Top_InfoPanel", Top_InfoPanel},
         {"S_EquipmentPanel", S_EquipmentPanel},
-        {"S_InventoryPanel", S_InventoryPanel}
+        {"S_InventoryPanel", S_InventoryPanel},
+        {"C_DropItemPanel", C_DropItemPanel}
     };
 
 }
@@ -75,6 +76,15 @@ void panelsWithLayouts::initializePanels(tgui::Gui &gui) {
     S_InventoryPanel->setPosition("5%", "50%");
     S_InventoryPanel->getRenderer()->setBackgroundColor(tgui::Color(70, 70, 70, 200));
     Side_PlayerPanel->add(S_InventoryPanel);
+
+    C_DropItemPanel = tgui::Panel::create();
+    if (!C_DropItemPanel) {
+        throw std::runtime_error("Failed to create drop item panel");
+    }
+    C_DropItemPanel->setSize("80%", "85%");
+    C_DropItemPanel->setPosition("0%", "15%");
+    C_DropItemPanel->getRenderer()->setBackgroundColor(tgui::Color(0, 0, 0, 0));
+    MainPanel->add(C_DropItemPanel);
 }
 
 void panelsWithLayouts::initializePlayerNameEXPLayout() {

@@ -3,6 +3,7 @@
 #include "entities/player/player.h"
 #include "managers/UIManager.h"
 #include "MainGameHUDWidgets/playerEquipmentWidget.h"
+#include "managers/entitiesManager.h"
 
 
 void mainGameHUD::CleanUp() {
@@ -40,6 +41,13 @@ void mainGameHUD::createHUD(tgui::Gui &gui) {
     Mouse.Initialize(PanelsLayouts->Panels["MainPanel"]->cast<tgui::Panel>());
     InventoryWidget->UIInventory(HolderPlayer->getInventory(), Mouse);
     EquipmentWidget->UIEquipment(HolderPlayer->getEquipment(), *HolderPlayer, Mouse);
+
+    std::shared_ptr<tgui::Panel> DropPanel = PanelsLayouts->Panels["C_DropItemPanel"]->cast<tgui::Panel>();
+
+    DropPanel->onClick([this]() {
+        HolderEntitiesManager->removeItemFromDatabase(Mouse.itemPointer);
+        Mouse.Clear();
+    });
 
 
 }

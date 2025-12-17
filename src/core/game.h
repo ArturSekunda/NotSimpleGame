@@ -31,7 +31,7 @@ public:
 
     bool showWaveLabel = false;
 
-    inline static int WaveCounter = 0;
+    inline static int WaveCounter = 1;
 
 public:
     game() = default;

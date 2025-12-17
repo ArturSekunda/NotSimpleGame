@@ -1,7 +1,8 @@
 #include "enemyEquipment.h"
 #include "inventory/Inventory.h"
+#include "managers/entitiesManager.h"
 
-bool enemyEquipment::TryAddItemToSlot(Inventory &inventory, std::shared_ptr<itemBase> item) {
+bool enemyEquipment::TryAddItemToSlot(Inventory &inventory, std::shared_ptr<itemBase> item, entitiesManager& entitiesManager) {
     for (auto& slot: inventory.GetSlots()) {
         if (slot.isOccupied == false) {
             slot.item = item;
@@ -10,16 +11,17 @@ bool enemyEquipment::TryAddItemToSlot(Inventory &inventory, std::shared_ptr<item
             return true;
         }
     }
+    entitiesManager.removeItemFromDatabase(item);
     return false;
 }
 
-void enemyEquipment::DropEquipmentOnDeath(Inventory &playerInventory) {
+void enemyEquipment::DropEquipmentOnDeath(Inventory &playerInventory, entitiesManager& entitiesManager) {
     if (weaponSlot != nullptr) {
-        TryAddItemToSlot(playerInventory, weaponSlot);
+        TryAddItemToSlot(playerInventory, weaponSlot, entitiesManager);
     }
     for (auto& [type, arm] : armorSlots) {
         if (arm != nullptr) {
-            TryAddItemToSlot(playerInventory, arm);
+            TryAddItemToSlot(playerInventory, arm, entitiesManager);
         }
     }
 }

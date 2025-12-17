@@ -11,7 +11,7 @@
 
 
 
-basicEnemy::basicEnemy(int localID, int playerLevel) : baseEntity(localID) {
+basicEnemy::basicEnemy(int localID, int playerLevel, sf::Vector2f playerPos, entitiesManager* entitiesManager) : baseEntity(localID) {
 
     entityID.type = EntityType::BASIC_ENEMY;
     entityID.localID = localID;
@@ -23,8 +23,8 @@ basicEnemy::basicEnemy(int localID, int playerLevel) : baseEntity(localID) {
     }
     // Set initial position
     auto position = sf::Vector2f(
-        darkMath::getInstance().generateFloatNumber(0.f, 800.f),
-        darkMath::getInstance().generateFloatNumber(0.f, 600.f)
+        darkMath::getInstance().generateFloatNumber(playerPos.x - 800.f, playerPos.x + 800.f),
+        darkMath::getInstance().generateFloatNumber(playerPos.y - 800.f, playerPos.y + 800.f)
     );
     entityShape->setPosition(position);
     if (entityShape) {
@@ -38,6 +38,7 @@ basicEnemy::basicEnemy(int localID, int playerLevel) : baseEntity(localID) {
     this->health = darkMath::getInstance().generateFloatNumber(50.f*level, 50.f+50.f*level);
     this->maxHealth = this->health;
     this->isAlive = true;
+    EManager = entitiesManager;
 
 
 }
@@ -92,7 +93,7 @@ bool basicEnemy::isDead(Inventory& playerInventory) {
         return false;
     }
 
-    equipment.DropEquipmentOnDeath(playerInventory);
+    equipment.DropEquipmentOnDeath(playerInventory, *EManager);
 
     return true;
 }
