@@ -72,7 +72,7 @@ void entitiesManager::Updater(float DeltaTime, renderer& rendererInstance) {
                 if (enemy->DamageClock.getElapsedTime().asSeconds() >= 0.25f
                     && playerInstance->getEquipment().getWeaponSlot() != nullptr) {
 
-                    enemy->takeDamage(playerInstance->getEquipment().getWeaponSlot()->getDamage());
+                    enemy->takeDamage(playerInstance->getEquipment().getWeaponSlot()->getDamage() + playerInstance->getStats().strength);
                     std::cout << "Player deals " << playerInstance->getEquipment().getWeaponSlot()->getDamage() << " damage.\n";
                     enemy->DamageClock.restart();
 

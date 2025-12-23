@@ -38,11 +38,11 @@ void player::setPlayerStats() {
 }
 
 void player::levelUp(float EnemyEXP) {
-    if (EXP >= EXP_MAX && level < levelMax) {
+    this->EXP += EnemyEXP;
+    if ((EXP >= EXP_MAX || EXP == EXP_MAX) && level < levelMax) {
         EXP -= EXP_MAX;
         level++;
         EXP_MAX *= 1.2f;
-        EXP += EnemyEXP;
 
         maxHealth += 20.f;
         health = maxHealth;
@@ -52,8 +52,6 @@ void player::levelUp(float EnemyEXP) {
         Stats.addPoints(1);
         std::cout << "Player leveled up to level " << level << "!\n";
         std::cout << "Points: " << Stats.points << "\n";
-    }else {
-        this->EXP += EnemyEXP;
     }
 }
 

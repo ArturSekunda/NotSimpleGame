@@ -111,6 +111,8 @@ add_executable(main src/main.cpp
         src/managers/entitiesManager.h
         src/UI/MainGameHUDWidgets/waveCounter.cpp
         src/UI/MainGameHUDWidgets/waveCounter.h
+        src/UI/MainGameHUDWidgets/playerAddPointsToStats.cpp
+        src/UI/MainGameHUDWidgets/playerAddPointsToStats.h
 )
 
 target_link_libraries(main PRIVATE

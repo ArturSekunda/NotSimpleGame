@@ -1,4 +1,3 @@
-
 #include "debugWindow.h"
 
 #include "entities/player/player.h"

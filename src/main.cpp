@@ -18,7 +18,7 @@ int main() {
     settings.antialiasingLevel = 4;
 
     // Create a Window and render it
-    sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML Test", sf::Style::Default, settings);
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "NotSimpleGame - FPS: ", sf::Style::Default, settings);
     tgui::Gui gui{window};
 
     gameInstance->getRenderer().renderUI(gui, gameInstance->DeveloperMode, gameInstance->getEntitiesManager().getPlayerPtr());
@@ -32,7 +32,7 @@ int main() {
     sf::View CameraView = window.getDefaultView();
 
     // Game Loop
-    while (window.isOpen()) {
+    while (window.isOpen() && gameInstance->getEntitiesManager().getPlayerPtr().getIsAlive()) {
 
         // Create an event
         sf::Event event;

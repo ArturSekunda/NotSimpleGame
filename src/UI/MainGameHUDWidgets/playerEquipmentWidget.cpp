@@ -1,5 +1,4 @@
 #include "playerEquipmentWidget.h"
-
 #include "entities/baseEntity.h"
 #include "inventory/playerEquipment.h"
 

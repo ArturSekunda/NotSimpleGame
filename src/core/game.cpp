@@ -62,7 +62,7 @@ void game::Updater() {
             // For simplicity, boss wave spawns double the enemies
             CreateNewEnemyWave((3 + WaveCounter) * 2);
         } else {
-            CreateNewEnemyWave(5 + WaveCounter);
+            CreateNewEnemyWave(3 + WaveCounter);
         }
         WaveClock.restart();
     }
@@ -73,6 +73,10 @@ void game::Updater() {
             if (entitiesManagerInstance->getPlayerPtr().DamageClock.getElapsedTime().asSeconds() >= 0.5f) {
                 entitiesManagerInstance->getPlayerPtr().takeDamage(enemy->getEquipment().getWeaponSlot()->getDamage());
                 std::cout << "Enemy ID: " << enemy->getEntityID().toString() << " deals " << enemy->getEquipment().getWeaponSlot()->getDamage() << " damage to Player.\n";
+                if (entitiesManagerInstance->getPlayerPtr().getHealth() == 0.f || entitiesManagerInstance->getPlayerPtr().getHealth() < 0.f) {
+                    std::cout << "Player is dead! Game Over.\n";
+                    entitiesManagerInstance->getPlayerPtr().setIsAlive(false);
+                }
                 entitiesManagerInstance->getPlayerPtr().DamageClock.restart();
             }
         }
