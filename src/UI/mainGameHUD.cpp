@@ -15,6 +15,7 @@ void mainGameHUD::CleanUp() {
         EquipmentWidget.reset();
         InventoryWidget.reset();
         WaveCounterWidget.reset();
+        PlayerAddPointsWidget.reset();
         Mouse.Destroy();
 
         DebugButtonForWindow = nullptr;
@@ -30,6 +31,7 @@ void mainGameHUD::createHUD(tgui::Gui &gui) {
     EquipmentWidget = std::make_unique<playerEquipmentWidget>();
     InventoryWidget = std::make_unique<playerInventoryWidget>();
     WaveCounterWidget = std::make_unique<waveCounter>();
+    PlayerAddPointsWidget = std::make_unique<playerAddPointsToStats>();
 
     PanelsLayouts->CombineAll(gui);
     PlayerNameLevel->initializeLabels(PanelsLayouts->Layouts["PlayerNameEXPLayout"]->cast<tgui::VerticalLayout>());
@@ -41,6 +43,9 @@ void mainGameHUD::createHUD(tgui::Gui &gui) {
     Mouse.Initialize(PanelsLayouts->Panels["MainPanel"]->cast<tgui::Panel>());
     InventoryWidget->UIInventory(HolderPlayer->getInventory(), Mouse);
     EquipmentWidget->UIEquipment(HolderPlayer->getEquipment(), *HolderPlayer, Mouse);
+    PlayerAddPointsWidget->initializeWindow(gui, *HolderPlayer);
+    PlayerAddPointsWidget->HandleButtonClicks(HolderPlayer->getStats());
+    PlayerAddPointsWidget->initializeOpenerButton(PanelsLayouts->Panels["S_EquipmentPanel"]->cast<tgui::Panel>());
 
     std::shared_ptr<tgui::Panel> DropPanel = PanelsLayouts->Panels["C_DropItemPanel"]->cast<tgui::Panel>();
 
@@ -80,6 +85,7 @@ void mainGameHUD::UpdateUI(player &p) {
     PlayerStats->UpdateLabels(p.getStats());
     InventoryWidget->UpdateUISlots(p.getInventory());
     EquipmentWidget->UpdateUISlots(p.getEquipment().getArmorSlots(), p.getEquipment().getWeaponSlot());
+    PlayerAddPointsWidget->UpdateTextInfo(p.getStats());
 }
 
 
@@ -88,6 +94,7 @@ void mainGameHUD::UpdateTextSizes(float width, float height) {
     ProgressBars->UpdateTextSize(width, height);
     PlayerStats->UpdateTextSizes(width, height);
     WaveCounterWidget->UpdateTextSize(width, height);
+    PlayerAddPointsWidget->UpdateSizes(width, height);
 
 
 }

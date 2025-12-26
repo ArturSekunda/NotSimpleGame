@@ -13,6 +13,7 @@
 #include "MainGameHUDWidgets/playerEquipmentWidget.h"
 #include "MainGameHUDWidgets/playerInventoryWidget.h"
 #include "helpers/mouseContainer.h"
+#include "MainGameHUDWidgets/playerAddPointsToStats.h"
 #include "MainGameHUDWidgets/waveCounter.h"
 
 class entitiesManager;
@@ -34,6 +35,7 @@ class mainGameHUD {
     std::unique_ptr<playerEquipmentWidget> EquipmentWidget = nullptr;
     std::unique_ptr<playerInventoryWidget> InventoryWidget = nullptr;
     std::unique_ptr<waveCounter> WaveCounterWidget = nullptr;
+    std::unique_ptr<playerAddPointsToStats> PlayerAddPointsWidget = nullptr;
 
      // Button (Debug only)
      tgui::Button::Ptr DebugButtonForWindow = nullptr;

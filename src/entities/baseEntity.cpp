@@ -38,16 +38,27 @@ void baseEntity::Update(float deltaTime) {
     if (vitalityChanged || armorHealthChanged) {
         int vit = Stats.vitality;
 
+        float oldMaxHealth = maxHealth;
         float baseMaxHealth = baseHP * (1.0f + vit * 0.05f);
-
         float newMaxHealth = baseMaxHealth + equippedArmorHealth;
 
-        if (health > newMaxHealth) {
-            health = newMaxHealth;
+        if (newMaxHealth > oldMaxHealth) {
+            if (oldMaxHealth > 0) {
+                float healthRatio = health / oldMaxHealth;
+                health = newMaxHealth * healthRatio;
+            } else {
+                health = newMaxHealth;
+            }
+        } else if (newMaxHealth < oldMaxHealth) {
+            float healthDifference = oldMaxHealth - newMaxHealth;
+            health = std::max(health - healthDifference, 0.0f);
+
+            if (health > newMaxHealth) {
+                health = newMaxHealth;
+            }
         }
 
         maxHealth = newMaxHealth;
-
         Stats.CachedVitality = Stats.vitality;
         cachedArmorHealth = equippedArmorHealth;
     }
